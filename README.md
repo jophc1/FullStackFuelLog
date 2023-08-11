@@ -5,7 +5,11 @@ The purpose of this application is to log and digitize fuel usage for a company 
 
 
 ### Features
-
+* Graphing and tablular reports
+* Multi-vehicle tracking
+* Trip and fuel usage monitoring
+* Individual employee monthly usage report
+* Simple and intuitive UI
 
 ### Target Audience
 This application is targetted towards companies that are need of tracking fleets of vehicles with access to fuel usage and distance data.
