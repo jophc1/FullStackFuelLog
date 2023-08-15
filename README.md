@@ -26,6 +26,7 @@ This application is targetted towards companies that are need of tracking fleets
 
 ##### Documentation
 * Microsoft powerpoint
+* Canva.com
 * Jira
 
 ### Dataflow Diagram
