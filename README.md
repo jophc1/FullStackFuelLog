@@ -33,7 +33,10 @@ This application is targetted towards companies that are in need of tracking fle
 
 ### Dataflow Diagram
 
-### Apllication Architecture Diagram
+[Dataflow Diagram](./docs/data%20flow%20diagram/dataflow%20diagram.png)
+![dataflow-diagram](./docs/data%20flow%20diagram/dataflow%20diagram.png)
+
+### Application Architecture Diagram
 
 [Architecture Diagram](./docs/Fuel%20App%20Wireframes/Architecture%20Diagram.png)
 ![architecture-diagram](./docs/Fuel%20App%20Wireframes/Architecture%20Diagram.png)
