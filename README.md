@@ -1,4 +1,4 @@
-# FullStackFuelLog
+# Fuel Log Application (Full-stack)
 
 ### Purpose of this Application
 The purpose of this application is to log and digitize fuel usage for a company entity that has a fleet of vehicles.
@@ -34,6 +34,9 @@ This application is targetted towards companies that are in need of tracking fle
 ### Dataflow Diagram
 
 ### Apllication Architecture Diagram
+
+[Architecture Diagram](./docs/Fuel%20App%20Wireframes/Architecture%20Diagram.png)
+![architecture-diagram](./docs/Fuel%20App%20Wireframes/Architecture%20Diagram.png)
 
 ### User Stories
 
