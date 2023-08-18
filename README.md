@@ -36,6 +36,27 @@ This application is targetted towards companies that are in need of tracking fle
 [Dataflow Diagram](./docs/data%20flow%20diagram/dataflow%20diagram.png)
 ![dataflow-diagram](./docs/data%20flow%20diagram/dataflow%20diagram.png)
 
+- **1.0.** The employer or employee fills out a form with their login details which is submitted as a POST request. The details are verified using the stored data in D1.
+- **2.0.** When the employee logs in, a GET request retrives the employee's log reports from the database.
+- **3.0.** The employe fills out a form to record a log which has a vehicle selection and the form is submitted with a POST request. The submitted data is stored in D1.
+- **4.0.** The employee fills out a form with their current password and new password which is then submitted and sent as a PUT request. The password is updated in D1.
+- **5.0.** When the employer logs in, a GET request retrives log, vehicle, and employee data from the database.
+- **6.0.** Vehicle details from the database are returned to the employer
+- **7.0.** The employer fills out a form with vehicle details and selects an image to upload. The vechicle data is sent as a POST request, the image file is stored in F1 while the vechile data along with the image URL is stored in D1.
+- **8.0.** When the employer selects a vehicle to delete, the vehicle ID is used to locate the vehicle record in D1 and delete the record. In F1, the image key, which is also the vehicle ID is used to locate the image file and delete it from the storage.
+- **9.0.** The employer edits a form which has the current vehicle details, when the form is submitted, the data is sent as a PUT request and the vehicle data is updated in D1.
+- **10.0.**  When the employer selects an employee to delete, the employee ID is used to locate the employee record in D1 and delete the record.
+- **11.0.** When the employer navigates to the employees page on the employer dashboard, a GET request retrives all the employee records stored in D1.
+- **12.0.** The employer fills out a form with employee details. When the form is submitted, the data is sent as a POST request. The data is stored in D1.
+- **13.0.** The employer edits a form which has the current details of the employee. When the form is submitted, the data is sent as a PUT request and the record of the employee in D1 is updated with the incoming data.
+- **14.0.** When the employer selects a log to delete, the log ID is used to locate the log record in D1 and delete the record.
+- **15.0.** When the employer navigates to the logs page, a GET request retrives all the log records stored in D1.
+- **16.0.** When the employer accepts the log deletion request, a POST request sends the log ID. The log ID is used to locate the log record in D1 and delete the record. The review log record is also deleted from D1.
+- **16.1.** The log is deleted from D1 following the acceptance of the log deletion.
+- **17.0.** When the employer rejects the log deletion request, the review log record is deleted.
+- **17.1.** The review log record is deleted from D1 following the rejection of the log deletion.
+- **18.0.** After the user has submitted a new log entry, the user can request a deletion of the log entry. When the user requests a log deletion, a record of the request is stored in D1 with the log ID and employee ID.
+
 ### Application Architecture Diagram
 
 [Architecture Diagram](./docs/Fuel%20App%20Wireframes/Architecture%20Diagram.png)
