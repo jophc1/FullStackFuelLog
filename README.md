@@ -1,8 +1,12 @@
 # Fuel Log Application (Full-stack)
 
 ### Purpose of this Application
-The purpose of this application is to log and digitize fuel usage for a company entity that has a fleet of vehicles.
 
+Fuel usage is one of the largest expenses for a company that operates and maintains a fleet of vehicles for business usage. To help keep track of the fuel usages that a company uses, an fast and easy to use application that is centered around logging instances of fuel refillments of a vehicle can give assistance to determining how much fuel different company assets require.    
+   
+The benefits of a fuel log application, apart from keeping track of fuel usage, are that as it records the distance travelled between fuel logs which can give other valuable information about maintainence issues for a vehicle (e.g how far a vehicle has travelled since its last maintaince, or how far the tyres have travelled since being installed etc) helps to educate the importance of better driving habits and could predicate the fuel usage in upcoming months based on the history of fuel usage from prior records.   
+   
+Overall the fuel usage data from vehicle assets can provide useful analytical trends for a company so that it can better manage fuel costs over the running service periods of company assets.
 
 ### Features
 * Graphing and tablular reports
