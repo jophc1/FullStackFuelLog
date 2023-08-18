@@ -1,7 +1,7 @@
 # FullStackFuelLog
 
 ### Purpose of this Application
-The purpose of this application is to log and digitize fuel usage for a company entity that has a fleet of vehicles. 
+The purpose of this application is to log and digitize fuel usage for a company entity that has a fleet of vehicles.
 
 
 ### Features
@@ -12,7 +12,7 @@ The purpose of this application is to log and digitize fuel usage for a company 
 * Simple and intuitive UI
 
 ### Target Audience
-This application is targetted towards companies that are need of tracking fleets of vehicles with access to fuel usage and distance data.
+This application is targetted towards companies that are in need of tracking fleets of vehicles with access to fuel usage and distance data. The application uses the recorded data to generate useful reports for the company in an easy-to-understand way, allowing for the company to potentially have the ability to budget and plan for fuel expenses.
 
 ### Tech Stack
 ##### Application and Data
@@ -23,11 +23,13 @@ This application is targetted towards companies that are need of tracking fleets
 * JavaScript
 * CSS
 * HTML
+* AWS S3
 
 ##### Documentation
 * Microsoft powerpoint
 * Canva.com
 * Jira
+* Draw.io
 
 ### Dataflow Diagram
 
@@ -50,10 +52,16 @@ As an employer, I want my employees to be able to record their trips so that it 
 ##### User story 5
 As an employee, I want a user friendly UI with minimual input so that I can record a log as efficiently as possible.
 
-##### User story 6
-
-
 ### Wireframes
+
+[Mobile Wireframe](./docs/Fuel%20App%20Wireframes/Mobile.png)
+![mobile-wire-frame](./docs/Fuel%20App%20Wireframes/Mobile.png)
+
+[Tablet Wireframe](./docs/Fuel%20App%20Wireframes/Tablet.png)
+![tablet-wire-frame](./docs/Fuel%20App%20Wireframes/Tablet.png)
+
+[Desktop Wireframe](./docs/Fuel%20App%20Wireframes/Desktop.png)
+![desktop-wire-frame](./docs/Fuel%20App%20Wireframes/Desktop.png)
 
 ### Jira Kanban Screenshots
 
