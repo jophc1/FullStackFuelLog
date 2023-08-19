@@ -10,7 +10,8 @@
     "lint": "npx eslint '**/*js'",
     "fix": "npx eslint '**/*js' --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed": "node ./db/seed.js"
+    "seed": "node ./db/seed.js",
+    "salt": "node bcrypt_salt.js"
   },
   "repository": {
     "type": "git",
@@ -26,9 +27,12 @@
   },
   "homepage": "https://github.com/jophc1/FullStackFuelLog#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "envfile": "^6.18.0",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.3"
   },
   "devDependencies": {
