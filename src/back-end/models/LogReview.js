@@ -8,6 +8,9 @@ const logReviewSchema = mongoose.Schema({
   log_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Log'
+  },
+  date: {
+    type: Date
   }
 })
 
