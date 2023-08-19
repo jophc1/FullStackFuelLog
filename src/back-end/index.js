@@ -1,5 +1,5 @@
-import app from "./app"
+import app from "./app.js"
 
 const port = 4001
 
-app.listen(4001)
+app.listen(port)
