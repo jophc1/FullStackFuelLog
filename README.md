@@ -96,5 +96,21 @@ As an employee, I want a user friendly UI with minimual input so that I can reco
 
 ### Jira Kanban Screenshots
 
+Timeline screenshot showing the epics created from user stories
+![timeline-screenshot](./docs/Jira-screenshots/timeline.png)
 
+Timeline expanded
+![timeline-screenshot](./docs/Jira-screenshots/timeline-expanded.png)
+
+Timeline Task selected
+![timeline-task-screenshot](./docs/Jira-screenshots/task-selected.png)
+
+Board with tasks filtered for Jordan
+![board-task-screenshot-Jordan](./docs/Jira-screenshots/board-filtered-jordan.png)
+
+Board with tasks filtered for Josh
+![board-task-screenshot-Josh](./docs/Jira-screenshots/josh_filter.png)
+
+Board with tasks currently in progress filtered for Jordan
+![board-task-screenshot-in-progress](./docs/Jira-screenshots/tasks-in-progress.png)
 
