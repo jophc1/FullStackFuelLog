@@ -48,7 +48,15 @@ router.delete('/:id', deleteObjectS3ForUpdate, async (req, res) => {
 
 router.put('/:id', deleteObjectS3ForUpdate, postToS3, async (req, res) => {
   try {
-    let url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.body.asset_id}`
+    let url
+    // check if asset_id has changed
+    // if asset_id has changed and image has not been updated, keep the old asset id to use for image key in S3 bucket
+    const oldVehicleData = await VehicleModel.findById(req.params.id).exec()
+    oldVehicleData.asset_id != req.body.asset_id && !req.files.image ? 
+    url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${oldVehicleData.asset_id}`
+    :
+    url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.body.asset_id}`
+
     let vehicleUpdated = {
       ...req.body,
       vehicleImage_URL: url
