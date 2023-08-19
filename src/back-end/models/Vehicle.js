@@ -1,0 +1,37 @@
+import mongoose from 'mongoose'
+
+const vehicleSchema = mongoose.Schema({
+  asset_ID: { 
+    type: String,
+    required: true,
+    unique: true
+  },
+  registration: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  make: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  model: {
+    type: String,
+    required: true
+  },
+  year: {
+    type: Number,
+    required: true,
+    cast: false
+  },
+  vehicleImage_URL: {
+    type: String,
+    required: true,
+    unique: true
+  }
+})
+
+const VehicleModel = mongoose.model('Vehicle', vehicleSchema)
+
+export default VehicleModel
