@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const deletedReview = await LogReviewModel.findByIdAndDelete()
+    const deletedReview = await LogReviewModel.findByIdAndDelete(req.params.id)
     deletedReview ? res.sendStatus(200) : res.status(400).send({ error: 'Review not found' })
   } catch (err) {
     res.status(500).send({ error: err.message })
