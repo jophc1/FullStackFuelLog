@@ -84,84 +84,84 @@ const logVehicleOne = [
     fuel_added: 150,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[0],
-    date: '2023-06-07'
+    date: new Date('2023-06-07')
   },
   {
     current_odo: 9402,
     fuel_added: 100,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[0],
-    date: '2023-06-13'
+    date: new Date('2023-06-13')
   },
   {
     current_odo: 9740,
     fuel_added: 80,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[0],
-    date: '2023-06-15'
+    date: new Date('2023-06-15')
   },
   {
     current_odo: 9989,
     fuel_added: 50,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[0],
-    date: '2023-06-20'
+    date: new Date('2023-06-20')
   },
   {
     current_odo: 10233,
     fuel_added: 56,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[0],
-    date: '2023-06-28'
+    date: new Date('2023-06-28')
   },
   {
     current_odo: 10456,
     fuel_added: 42,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[0],
-    date: '2023-07-02'
+    date: new Date('2023-07-02')
   },
   {
     current_odo: 11021,
     fuel_added: 120,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[0],
-    date: '2023-07-10'
+    date: new Date('2023-07-10')
   },
   {
     current_odo: 11427,
     fuel_added: 85,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[0],
-    date: '2023-07-20'
+    date: new Date('2023-07-20')
   },
   {
     current_odo: 12203,
     fuel_added: 180,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[0],
-    date: '2023-07-28'
+    date: new Date('2023-07-28')
   },
   {
     current_odo: 13109,
     fuel_added: 185,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[0],
-    date: '2023-08-05'
+    date: new Date('2023-08-05')
   },
   {
     current_odo: 13501,
     fuel_added: 82,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[0],
-    date: '2023-08-07'
+    date: new Date('2023-08-07')
   },
   {
     current_odo: 13689,
     fuel_added: 32,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[0],
-    date: '2023-08-13'
+    date: new Date('2023-08-13')
   }
 ]
 
@@ -171,84 +171,84 @@ const logVehicleTwo = [
     fuel_added: 150,
     user_id: arrayUsers[2],
     vehicl_id: insertedVehicles[1],
-    date: '2023-06-07'
+    date: new Date('2023-06-07')
   },
   {
     current_odo: 2402,
     fuel_added: 200,
     user_id: arrayUsers[2],
     vehicl_id: insertedVehicles[1],
-    date: '2023-06-13'
+    date: new Date('2023-06-13')
   },
   {
     current_odo: 2740,
     fuel_added: 125,
     user_id: arrayUsers[2],
     vehicl_id: insertedVehicles[1],
-    date: '2023-06-15'
+    date: new Date('2023-06-15')
   },
   {
     current_odo: 2989,
     fuel_added: 89,
     user_id: arrayUsers[2],
     vehicl_id: insertedVehicles[1],
-    date: '2023-06-20'
+    date: new Date('2023-06-20')
   },
   {
     current_odo: 3233,
     fuel_added: 108,
     user_id: arrayUsers[2],
     vehicl_id: insertedVehicles[1],
-    date: '2023-06-28'
+    date: new Date('2023-06-28')
   },
   {
     current_odo: 3456,
     fuel_added: 85,
     user_id: arrayUsers[2],
     vehicl_id: insertedVehicles[1],
-    date: '2023-07-02'
+    date: new Date('2023-07-02')
   },
   {
     current_odo: 4021,
     fuel_added: 250,
     user_id: arrayUsers[2],
     vehicl_id: insertedVehicles[1],
-    date: '2023-07-10'
+    date: new Date('2023-07-10')
   },
   {
     current_odo: 4427,
     fuel_added: 170,
     user_id: arrayUsers[2],
     vehicl_id: insertedVehicles[1],
-    date: '2023-07-20'
+    date: new Date('2023-07-20')
   },
   {
     current_odo: 4703,
     fuel_added: 125,
     user_id: arrayUsers[2],
     vehicl_id: insertedVehicles[1],
-    date: '2023-07-28'
+    date: new Date('2023-07-28')
   },
   {
     current_odo: 5109,
     fuel_added: 169,
     user_id: arrayUsers[2],
     vehicl_id: insertedVehicles[1],
-    date: '2023-08-05'
+    date: new Date('2023-08-05')
   },
   {
     current_odo: 5501,
     fuel_added: 180,
     user_id: arrayUsers[2],
     vehicl_id: insertedVehicles[1],
-    date: '2023-08-07'
+    date: new Date('2023-08-07')
   },
   {
     current_odo: 6389,
     fuel_added: 350,
     user_id: arrayUsers[2],
     vehicl_id: insertedVehicles[1],
-    date: '2023-08-13'
+    date: new Date('2023-08-13')
   }
 ]
 
@@ -258,84 +258,84 @@ const logVehicleThree = [
     fuel_added: 150,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[2],
-    date: '2023-06-09'
+    date: new Date('2023-06-09')
   },
   {
     current_odo: 9402,
     fuel_added: 125,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[1],
-    date: '2023-06-10'
+    date: new Date('2023-06-10')
   },
   {
     current_odo: 9740,
     fuel_added: 78,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[2],
-    date: '2023-06-25'
+    date: new Date('2023-06-25')
   },
   {
     current_odo: 9989,
     fuel_added: 56,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[2],
-    date: '2023-06-29'
+    date: new Date('2023-06-29')
   },
   {
     current_odo: 10233,
     fuel_added: 80,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[2],
-    date: '2023-07-07'
+    date: new Date('2023-07-07')
   },
   {
     current_odo: 10456,
     fuel_added: 60,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[2],
-    date: '2023-07-18'
+    date: new Date('2023-07-18')
   },
   {
     current_odo: 11021,
     fuel_added: 180,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[2],
-    date: '2023-07-22'
+    date: new Date('2023-07-22')
   },
   {
     current_odo: 11427,
     fuel_added: 105,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[2],
-    date: '2023-07-27'
+    date: new Date('2023-07-27')
   },
   {
     current_odo: 12203,
     fuel_added: 210,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[2],
-    date: '2023-07-29'
+    date: new Date('2023-07-29')
   },
   {
     current_odo: 13109,
     fuel_added: 224,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[2],
-    date: '2023-08-04'
+    date: new Date('2023-08-04')
   },
   {
     current_odo: 13501,
     fuel_added: 102,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[2],
-    date: '2023-08-09'
+    date: new Date('2023-08-09')
   },
   {
     current_odo: 13689,
     fuel_added: 29,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[2],
-    date: '2023-08-17'
+    date: new Date('2023-08-17')
   }
 ]
 
@@ -345,85 +345,90 @@ const logVehicleFour = [
     fuel_added: 200,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[3],
-    date: '2023-06-09'
+    date: new Date('2023-06-09')
   },
   {
     current_odo: 21402,
     fuel_added: 130,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[3],
-    date: '2023-06-10'
+    date: new Date('2023-06-10')
   },
   {
     current_odo: 21740,
     fuel_added: 90,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[3],
-    date: '2023-06-25'
+    date: new Date('2023-06-25')
   },
   {
     current_odo: 21989,
     fuel_added: 60,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[3],
-    date: '2023-06-29'
+    date: new Date('2023-06-29')
   },
   {
     current_odo: 22233,
     fuel_added: 82,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[3],
-    date: '2023-07-07'
+    date: new Date('2023-07-07')
   },
   {
     current_odo: 22456,
     fuel_added: 52,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[3],
-    date: '2023-07-18'
+    date: new Date('2023-07-18')
   },
   {
     current_odo: 23021,
     fuel_added: 172,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[3],
-    date: '2023-07-22'
+    date: new Date('2023-07-22')
   },
   {
     current_odo: 23427,
     fuel_added: 106,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[3],
-    date: '2023-07-27'
+    date: new Date('2023-07-27')
   },
   {
     current_odo: 24203,
     fuel_added: 210,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[3],
-    date: '2023-07-29'
+    date: new Date('2023-07-29')
   },
   {
     current_odo: 25109,
     fuel_added: 234,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[3],
-    date: '2023-08-04'
+    date: new Date('2023-08-04')
   },
   {
     current_odo: 25501,
     fuel_added: 109,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[3],
-    date: '2023-08-09'
+    date: new Date('2023-08-09')
   },
   {
     current_odo: 25689,
     fuel_added: 40,
     user_id: arrayUsers[1],
     vehicl_id: insertedVehicles[3],
-    date: '2023-08-17'
+    date: new Date('2023-08-17')
   }
 ]
+
+await LogModel.deleteMany()
+console.log('Logs deleted')
+const insertedLogs = await LogModel.insertMany([...logVehicleOne, ...logVehicleTwo, ...logVehicleThree, ...logVehicleFour])
+console.log('Logs inserted')
 
 dbClose()
