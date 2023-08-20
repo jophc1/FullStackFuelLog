@@ -2,7 +2,7 @@ import { Router } from 'express'
 import VehicleModel from '../models/Vehicle.js'
 import fileUpload from 'express-fileupload'
 import { postToS3 } from '../middleware/post_to_s3.js'
-import { deleteObjectS3ForUpdate } from '../middleware/delete_object_s3.js'
+import { deleteObjectS3 } from '../middleware/delete_object_s3.js'
 
 const router = Router()
 router.use(fileUpload())
@@ -11,10 +11,10 @@ router.get('/', async (req, res) => {
   res.send(await VehicleModel.find())
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:asset_id', async (req, res) => {
   try {
-    const vehicle = await VehicleModel.findById(req.params.id).exec()
-    vehicle ? res.send(vehicle) : res.status(404).send({ error: 'Vehicle not found' })
+    const vehicle = await VehicleModel.find({asset_id: `${req.params.asset_id}`})
+    vehicle ? res.send(vehicle) : res.status(404).send({ error: 'Vehicle not found' }) 
   } catch (err) {
     res.status(500).send({ error: err.message })
   }
@@ -37,21 +37,21 @@ router.post('/', postToS3, async (req, res) => {
   }
 })
 
-router.delete('/:id', deleteObjectS3ForUpdate, async (req, res) => {
+router.delete('/:asset_id', deleteObjectS3, async (req, res) => {
   try {
-    const vehicle = await VehicleModel.findByIdAndDelete(req.params.id)
+    const vehicle = await VehicleModel.deleteOne({ asset_id: req.params.asset_id })
     vehicle ? res.sendStatus(200) : res.status(400).send({ error: 'Vehicle not found' })
   } catch (err) {
     res.status(500).send({ error: err.message })
   }
 })
 
-router.put('/:id', deleteObjectS3ForUpdate, postToS3, async (req, res) => {
+router.put('/:asset_id', postToS3, async (req, res) => {
   try {
     let url
     // check if asset_id has changed
     // if asset_id has changed and image has not been updated, keep the old asset id to use for image key in S3 bucket
-    const oldVehicleData = await VehicleModel.findById(req.params.id).exec()
+    const oldVehicleData = await VehicleModel.find({ asset_id: req.params.asset_id }).exec()
     oldVehicleData.asset_id != req.body.asset_id && !req.files.image ? 
     url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${oldVehicleData.asset_id}`
     :
@@ -61,8 +61,8 @@ router.put('/:id', deleteObjectS3ForUpdate, postToS3, async (req, res) => {
       ...req.body,
       vehicleImage_URL: url
      }
-    const vehicle = await VehicleModel.findByIdAndUpdate(req.params.id, vehicleUpdated, { new: true })
-    vehicle ? res.send(vehicle) : res.status(404).send({ error: 'Vehicle not found' })
+    const vehicle = await VehicleModel.updateOne({ asset_id: req.params.asset_id }, vehicleUpdated, { new: true })
+    vehicle ? res.send(vehicleUpdated) : res.status(404).send({ error: 'Vehicle not found' })
   } catch (err) {
     res.status(500).send({ error: err.message })
   }

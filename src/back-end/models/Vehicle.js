@@ -22,7 +22,6 @@ const vehicleSchema = mongoose.Schema({
   year: {
     type: Number,
     required: true,
-    cast: false
   },
   vehicleImage_URL: {
     type: String,

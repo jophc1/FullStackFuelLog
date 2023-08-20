@@ -3,6 +3,9 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 async function postToS3 (req, res, next) {
   try {
     if (req.files.image) {
+      let KEY
+      req.method == 'POST' ? KEY = `${req.body.asset_id}.png` : KEY = `${req.params.asset_id}.png`
+      
       const client = new S3Client({
         region: process.env.AWS_REGION
       })
@@ -11,7 +14,7 @@ async function postToS3 (req, res, next) {
       // create a new put object command
       const command = new PutObjectCommand({
         Bucket: process.env.AWS_S3_BUCKET,
-        Key: `${req.body.asset_id}.png`,  
+        Key: KEY,  
         Body: uploadedImg,
         ContentType: 'image/png'
       })
