@@ -1,5 +1,5 @@
 import { Router } from "express"
-import LogReviewModel from "../models/LogReview"
+import LogReviewModel from "../models/LogReview.js"
 
 const router = Router()
 
