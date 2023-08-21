@@ -62,7 +62,7 @@ router.put('/:asset_id', postToS3, async (req, res) => {
       vehicleImage_URL: url
      }
     const vehicle = await VehicleModel.updateOne({ asset_id: req.params.asset_id }, vehicleUpdated, { new: true })
-    vehicle ? res.send(vehicleUpdated) : res.status(404).send({ error: 'Vehicle not found' })
+    vehicle.matchedCount && vehicle.acknowledged ? res.send(vehicleUpdated) : res.status(404).send({ error: 'Vehicle not found' })
   } catch (err) {
     res.status(500).send({ error: err.message })
   }
