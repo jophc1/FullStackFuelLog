@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from'dotenv'
 import vehicleRouter from './routes/vehicle_routes.js'
 import logReviewRouter from './routes/log_review_routes.js'
+import authRouter from './routes/auth_routes.js'
 import { dbConnect } from './db/db.js'
 
 dotenv.config()
@@ -15,5 +16,6 @@ app.use(express.json())
 // collection routes
 app.use('/vehicles', vehicleRouter)
 app.use('/logs/reviews', logReviewRouter)
+app.use('/login', authRouter)
 
 export default app
