@@ -5,6 +5,7 @@ import vehicleRouter from './routes/vehicle_routes.js'
 import logReviewRouter from './routes/log_review_routes.js'
 import authRouter from './routes/auth_routes.js'
 import analyticalRouter from './routes/analytical_routes.js'
+import logsRouter from './routes/log_routes.js'
 import { dbConnect } from './db/db.js'
 import employerUserRouter from './routes/user_routes.js'
 import cookieParser from 'cookie-parser'
@@ -31,5 +32,6 @@ app.use('/logs/reviews', logReviewRouter)
 app.use('/employed', employerUserRouter)
 app.use('/login', authRouter)
 app.use('/reports', analyticalRouter)
+app.use('/logs', logsRouter)
 
 export default app

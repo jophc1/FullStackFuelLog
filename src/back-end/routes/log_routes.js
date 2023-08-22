@@ -1,6 +1,7 @@
 import { Router } from "express"
 import LogModel from "../models/Log.js"
 import { errorAuth, authAccess, verifyAdmin } from '../middleware/auth_mw.js'
+import mongoose from "mongoose"
 
 const router = Router()
 
@@ -22,8 +23,14 @@ router.get('/:id', verifyAdmin, async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     // get
-    const newLog = await LogModel.create({...req.body, user_id: req.jwtIdentity._id})
-    res.send(newLog)
+    const vehicleID = new mongoose.Types.ObjectId(req.body.vehicle_id)
+    const lastLog = await LogModel.find({ vehicle_id: vehicleID}).sort({current_odo: 1})
+    if (req.body.current_odo > lastLog[0].current_odo) {
+      const newLog = await LogModel.create({...req.body, user_id: req.jwtIdentity.id})
+      res.send(newLog)
+    } else {
+      throw new Error(`Current ODO must be greater than ${lastLog[0].current_odo}`)
+    }
   } catch (err) {
     res.status(500).send({ error: err.message })
   }

@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:asset_id', async (req, res) => {
   try {
-    const vehicle = await VehicleModel.find({asset_id: `${req.params.asset_id}`})
+    const vehicle = await VehicleModel.findOne({asset_id: `${req.params.asset_id}`})
     vehicle ? res.send(vehicle) : res.status(404).send({ error: 'Vehicle not found' }) 
   } catch (err) {
     res.status(500).send({ error: err.message })
