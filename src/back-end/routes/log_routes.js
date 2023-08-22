@@ -21,8 +21,8 @@ router.get('/:id', verifyAdmin, async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    // get 
-    const newLog = await LogModel.create(req.body)
+    // get
+    const newLog = await LogModel.create({...req.body, user_id: req.jwtIdentity._id})
     res.send(newLog)
   } catch (err) {
     res.status(500).send({ error: err.message })
