@@ -1,7 +1,11 @@
 import { Router } from "express"
 import LogReviewModel from "../models/LogReview.js"
+import { errorAuth, authAccess, verifyAdmin } from '../middleware/auth_mw.js'
 
 const router = Router()
+
+router.use(authAccess)
+router.use(verifyAdmin)
 
 router.get('/', async (req, res) => {
   res.send(await LogReviewModel.find())
@@ -33,5 +37,7 @@ router.delete('/:id', async (req, res) => {
     res.status(500).send({ error: err.message })
   }
 })
+
+router.use(errorAuth)
 
 export default router

@@ -1,5 +1,5 @@
 import express from 'express'
-import { errorAuth, validateBasicAuth, verifyAuth, getJwtIdentityFromCookie } from '../middleware/auth_mw.js'
+import { errorAuth, validateBasicAuth, verifyAuth } from '../middleware/auth_mw.js'
 
 const router = express.Router()
 
@@ -9,18 +9,14 @@ const router = express.Router()
 // validate basic auth will extract username_id and password from 'authorization' header, split the details from 'Basic ', and decode from Buffer
 // the next middleware verifyAuth finds the user by the decoded username_id, then compares the passwords
 
+
 // login route, return is_admin in response to differentiate employee and employer for front end dashboard render
 router.get('/', validateBasicAuth, verifyAuth, async (req, res) => {
-  
-    const jwtUserIdentity = getJwtIdentityFromCookie(req.cookies)
-    const loginMessage = { message: '' }
-    if (jwtUserIdentity.isAdmin) {
-        loginMessage.message = "Login as admin/employer"
-      } else {
-        loginMessage.message = "Login as normal user/employee"
-      }
-    res.status(200).send(loginMessage)
-  
+    console.log("start get login")
+   
+    console.log("end get login")
+    res.status(200).send({ message: "Login successful" })
+   
 })
 
 router.use(errorAuth)

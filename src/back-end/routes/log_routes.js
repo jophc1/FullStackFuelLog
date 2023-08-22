@@ -1,13 +1,16 @@
 import { Router } from "express"
 import LogModel from "../models/Log.js"
+import { errorAuth, authAccess, verifyAdmin } from '../middleware/auth_mw.js'
 
 const router = Router()
 
-router.get('/', async (req, res) => {
+router.use(authAccess)
+
+router.get('/', verifyAdmin, async (req, res) => {
   res.send(await LogModel.find())
 })
-
-router.get('/:id', async (req, res) => {
+// the log id will be the mongoDB generated _id
+router.get('/:id', verifyAdmin, async (req, res) => {
   try {
     const logs = await LogModel.findById(req.params.id)
     logs ? res.send(logs) : res.status(404).send({ error: 'Log not found' })
@@ -18,14 +21,15 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const newLog =  await LogModel.create(req.body)
+    // get 
+    const newLog = await LogModel.create(req.body)
     res.send(newLog)
   } catch (err) {
     res.status(500).send({ error: err.message })
   }
 })
-
-router.delete('/:id', async (req, res) => {
+// the log id will be the mongoDB generated _id
+router.delete('/:id', verifyAdmin, async (req, res) => {
   try {
     const deletedLog = await LogModel.findByIdAndDelete(req.params.id)
     deletedLog ? res.sendStatus(200) : res.status(404).send({ error: 'Log not found' })
@@ -33,5 +37,7 @@ router.delete('/:id', async (req, res) => {
     res.status(500).send({ error: err.message })
   }
 })
+
+router.use(errorAuth)
 
 export default router
