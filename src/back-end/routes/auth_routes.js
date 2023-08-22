@@ -10,13 +10,9 @@ const router = express.Router()
 // the next middleware verifyAuth finds the user by the decoded username_id, then compares the passwords
 
 
-// login route, return is_admin in response to differentiate employee and employer for front end dashboard render
+// login route, sending response so that cookie is sent to client set in verifyAuth
 router.get('/', validateBasicAuth, verifyAuth, async (req, res) => {
-    console.log("start get login")
-   
-    console.log("end get login")
     res.status(200).send({ message: "Login successful" })
-   
 })
 
 router.use(errorAuth)

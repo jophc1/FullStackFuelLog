@@ -49,7 +49,7 @@ const verifyAuth = async (req,res,next) => {
     if (!matchPassword) {
       throw new Error("Invalid Username/password") 
     } else {
-      const jwtUser = { username_id: req.userAuthKey.username_id, isAdmin: user.isAdmin }
+      const jwtUser = { username_id: req.userAuthKey.username_id, isAdmin: user.isAdmin, name: user.name }
       res.setHeader('Set-Cookie', [
       `accessToken=${jwtGenerate(jwtUser)}; HttpOnly; Max-Age=${24*3600}; SameSite=Secure` // added Secure so that only localhost or https schemes can be used
       ])
@@ -67,15 +67,23 @@ const authAccess = async (req,res,next) => {
     if (!req.cookies.accessToken){
     throw new Error("Access denied, login first")
     }
-    const jwtIdentity = getJwtIdentityFromCookie(req.cookies)
-    const user = await UserModel.findOne({ username_id: jwtIdentity.username_id })
+
+    jwt.verify(req.cookies.accessToken, process.env.JWT_SECRET_KEY, (error, jwtIdentity) => {
+      if (error) {
+      throw new Error("Access denied, user not authenticated")
+      }
+      req.jwtIdentity = jwtIdentity
+    })
+
+    // const jwtIdentity = getJwtIdentityFromCookie(req.cookies)
+    const user = await UserModel.findOne({ username_id: req.jwtIdentity.username_id })
     // if user no longer exists in db
     if (!user) {
       res.setHeader('Set-Cookie', [`accessToken=""; expires=${new Date().toUTCString()}; HttpOnly; SameSite=Secure`])
       throw new Error("User no longer exists") 
     }
     // valid cookie and jwt with a user, continue
-    req.jwtIdentity = jwtIdentity
+    // req.jwtIdentity = jwtIdentity
     next()
   } catch (err) {
     next(err)

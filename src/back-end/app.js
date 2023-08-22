@@ -8,6 +8,7 @@ import analyticalRouter from './routes/analytical_routes.js'
 import { dbConnect } from './db/db.js'
 import employerUserRouter from './routes/user_routes.js'
 import cookieParser from 'cookie-parser'
+import helmet from 'helmet'
 
 dotenv.config()
 dbConnect()
@@ -16,6 +17,13 @@ const app = express()
 app.use(cookieParser())
 app.use(cors())
 app.use(express.json())
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      "script-src": ["'self'"],
+    }
+  }
+}))
 
 // collection routes
 app.use('/vehicles', vehicleRouter)

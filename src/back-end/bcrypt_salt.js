@@ -24,5 +24,4 @@ fs.readFile(pathToEnvFile, 'utf8', function (err, data) {
       // Can be commented or deleted
       console.log("File Saved") 
   })
-
 })
