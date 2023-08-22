@@ -146,7 +146,23 @@ router.get('/graph/bar/vehicles/usage/past/6/months', async (req, res) => {
         }
       },
     ])
-    res.send(vehicles)
+    // gather and sort data based on months, data saved in vehicles is sorted by vehicle id and months
+    // response object will have month keys and the values of each month will be an object with keys totalMonthlyUsage and distanceTravelledPerFill
+    const respObjec = {}
+    // months are identified by numbers i.e. June is 6, July is 7 etc.
+    // go through each collection add the totalMonthlyUsage field for each month
+    vehicles.forEach(vehicle => {
+      respObjec[vehicle._id.month] = { totalMonthlyUsage: vehicle.totalMonthlyUsage, distanceTravelledPerFill: 0 }
+      // sort current_odo for each vehicle 
+      const sortedOdo = vehicle.current_odo.sort(function(a, b){return a - b})
+      // calculate distance travelled between fill for each vehicle during each month and add to the total of distanceTravelledPerFill 
+      for (let i = 0; i < sortedOdo.length; i++) {
+        if (i < sortedOdo.length - 1) {
+          respObjec[vehicle._id.month].distanceTravelledPerFill += sortedOdo[i + 1]- sortedOdo[i]
+        }
+      }
+    })
+    res.send(respObjec)
   } catch (err) {
     res.status(500).send({ error: err.message })
   }
