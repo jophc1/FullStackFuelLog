@@ -33,7 +33,7 @@ router.get('/:start_date_year/:start_date_month/:start_date_day/to/:end_date_yea
       },
       // hide fields
       { $unset: [ "odoMin", "odoMax"] },
-      // populate a vehicle field using the _id.vehicle
+      // populate a vehicle field using the _id.vehicle from the group _id
       { "$lookup": {
           "from": VehicleModel.collection.name,
           "localField": "_id.vehicle",
@@ -42,29 +42,118 @@ router.get('/:start_date_year/:start_date_month/:start_date_day/to/:end_date_yea
         }
       },
     ])
-    console.log(await LogModel.find({ date: { $lte: end_date, $gte: start_date } }))
     res.send(reportAggregate)
   } catch (err) {
     res.status(500).send({ error: err.message })
   }
 })
 
-// employer dashboard graph
-router.get('/graph/:vehicle_id/distance/', async (req, res) => {
-  const idToSearch = new mongoose.Types.ObjectId(req.params.vehicle_id)
-  const graphAggregate = await LogModel.aggregate([
-    { $match: { vehicle_id: idToSearch } },
-  ])
-  const distanceTravelledPerFill = []
-  for (let i = 0; i < graphAggregate.length; i++) {
-    if (i < graphAggregate.length - 1) {
-      distanceTravelledPerFill.push(graphAggregate[i + 1].current_odo - graphAggregate[i].current_odo)
+// employer dashboard line graph
+router.get('/graph/:vehicle_id/line/distance/', async (req, res) => {
+  try {
+    const idToSearch = new mongoose.Types.ObjectId(req.params.vehicle_id)
+    const graphAggregate = await LogModel.aggregate([
+      { $match: { vehicle_id: idToSearch } },
+    ])
+    const distanceTravelledPerFill = {}
+    for (let i = 0; i < graphAggregate.length; i++) {
+      if (i < graphAggregate.length - 1) {
+        distanceTravelledPerFill[`point ${i + 1}`] = {distance: (graphAggregate[i + 1].current_odo - graphAggregate[i].current_odo), fuelAdded: graphAggregate[i + 1].fuel_added}
+      }
     }
+    res.send({
+      distanceTravelledPerFill
+    })
+  } catch (err) {
+    res.status(500).send({ error: err.message })
   }
-  res.send({
-    distanceTravelledPerFill,
-    graphAggregate
-  })
+})
+
+// employer dashboard pie graph
+router.get('/graph/pie/vehicles/usage/all/time', async (req, res) => {
+  try {
+    const vehicles = await LogModel.aggregate([
+      // Stage 1: no grouping
+      { $group: {
+          _id: null,
+          companyTotalUsage: { $sum: '$fuel_added' },
+          usage:  {  $push:  { vehicle: '$vehicle_id' ,  totalUsageForVehicle: { $sum: '$fuel_added' }, } }
+        }
+      },
+      // Stage 2: unpack array elements
+      { "$unwind": "$usage" },
+      // Stage 3: group by vehicle key from element items
+      { $group: {
+          _id:  { 'usage': '$usage.vehicle' },
+          vehicleID: { $first: '$usage.vehicle' },
+          totalUsageforVehicle:  { $sum: '$usage.totalUsageForVehicle' },
+          companyTotalUsage: { $first: '$companyTotalUsage' }
+        }
+      },
+      // Stage 4: remove grouping id
+      {
+        $project: {
+          _id: 0,
+          vehicle: '$usage.vehicle',
+          vehicleID: '$vehicleID',
+          totalUsageforVehicle: '$totalUsageforVehicle',
+          companyTotalUsage: '$companyTotalUsage',
+        }
+      },
+      // populate object keys
+      { "$lookup": {
+          "from": VehicleModel.collection.name,
+          "localField": "vehicleID",
+          "foreignField": "_id",
+          "as": "vehicleID"
+        }
+      },
+    ])
+    // Calulate percentage for each vehicle and add to vehicle objects
+    vehicles.forEach(vehicle => {
+      vehicle.percentage = Number(((vehicle.totalUsageforVehicle / vehicle.companyTotalUsage) * 100).toFixed(2))
+    })
+    res.send({
+      vehicles
+    })
+  } catch (err) {
+    res.status(500).send({ error: err.message })
+  }
+})
+
+// employer dashboard bar graph
+router.get('/graph/bar/vehicles/usage/past/6/months', async (req, res) => {
+  try {
+    const vehicles = await LogModel.aggregate([
+      { $group: {
+          _id:{ month: { $month: '$date' } },
+          totalMonthlyUsage: { $sum: '$fuel_added' },
+          usage:  {  $push:  { vehicle: '$vehicle_id' ,  current_odo: { $sum: '$current_odo' }, month: { $month: '$date' } } }
+        }
+      },
+      // Stage 2: unpack array elements
+      { "$unwind": "$usage" },
+      // Stage 3: group by vehicle key from element items
+      { $group: {
+          _id:  { 'vehicle': '$usage.vehicle', 'month': '$usage.month'  },
+          vehicleID: { $first: '$usage.vehicle' },
+          current_odo:  { $addToSet: '$usage.current_odo' },
+          totalMonthlyUsage: { $first: '$totalMonthlyUsage' }
+        }
+      },
+        // populate object keys
+      { "$lookup": {
+          "from": VehicleModel.collection.name,
+          "localField": "vehicleID",
+          "foreignField": "_id",
+          "as": "vehicleID"
+        }
+      },
+    ])
+    res.send(vehicles)
+  } catch (err) {
+    res.status(500).send({ error: err.message })
+  }
 })
 
 router.use(errorAuth)
