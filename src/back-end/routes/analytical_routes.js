@@ -2,8 +2,12 @@ import LogModel from "../models/Log.js"
 import { Router } from "express"
 import VehicleModel from "../models/Vehicle.js"
 import mongoose from "mongoose"
+import { errorAuth, authAccess, verifyAdmin } from '../middleware/auth_mw.js'
 
 const router = Router()
+
+router.use(authAccess)
+router.use(verifyAdmin)
 
 // employer dashboard table report
 router.get('/:start_date_year/:start_date_month/:start_date_day/to/:end_date_year/:end_date_month/:end_date_day', async (req, res) => {
@@ -62,5 +66,7 @@ router.get('/graph/:vehicle_id/distance/', async (req, res) => {
     graphAggregate
   })
 })
+
+router.use(errorAuth)
 
 export default router

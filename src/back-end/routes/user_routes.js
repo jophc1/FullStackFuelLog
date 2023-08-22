@@ -1,10 +1,12 @@
 import express from 'express'
 import UserModel from '../models/User.js'
 import bcrypt from 'bcrypt'
-
+import { authAccess, verifyAdmin, errorAuth } from '../middleware/auth_mw.js'
 
 const router = express.Router()
 
+router.use(authAccess)
+router.use(verifyAdmin)
 
 // Get all employees route
 router.get('/', async (req, res) => {
@@ -57,5 +59,7 @@ router.put('/:username_id', async (req, res) => {
     res.status(500).send( { error: err.message})
   }
 })
+
+router.use(errorAuth)
 
 export default router
