@@ -104,11 +104,38 @@ describe('App Tests', () => {
       })
     
     })
-    // describe('Employee routes', () => {
+
+    describe('Employee routes', () => {
     
     
-    // })
-    
+    })
   })
-  
+
+  describe('Log routes', () => {
+
+    describe('Employer routes', () => {
+    
+    })
+  })
+
+  describe('Vechicle routes', () => {
+
+    describe('Employer routes', () => {
+    
+    })
+  })
+
+  describe('Log Review routes', () => {
+
+    describe('Employer routes', () => {
+    
+    })
+  })
+
+  describe('Analytical routes', () => {
+
+    describe('Employer routes', () => {
+    
+    })
+  })
 })
