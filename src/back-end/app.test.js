@@ -4,7 +4,7 @@ import request from 'supertest'
 describe('App Tests', () => {
   describe('Authentication', () => {
 
-    test('GET /login', async () => {
+    test('should authenticate admin user when making a request to GET /login', async () => {
       const res = await 
         request(app)
           .get('/login')
@@ -13,7 +13,7 @@ describe('App Tests', () => {
       expect(res.body.message).toBe('Login successful')
     })
 
-    test('no auth returns no auth data in request', async () => {
+    test('should return no auth data in request when no auth header is sent', async () => {
       const res = await 
         request(app)
           .get('/login')
@@ -21,7 +21,7 @@ describe('App Tests', () => {
       expect(res.body.authError).toMatch('No auth')
     })
 
-    test('incorrect auth details', async () => {
+    test('should return error message with incorrect auth details', async () => {
       const res = await
         request(app)
           .get('/login')
@@ -37,6 +37,10 @@ describe('App Tests', () => {
           .auth('10001', 'test password')
           .expect('set-cookie', /accessToken/)
     })
+  })
+
+  describe('Authorisation', () => {
+    
   })
   
 })
