@@ -3,14 +3,18 @@ import React, { useReducer } from "react"
 function reducer (currentState, action) {
   switch (action.type) {
     case 'userAccess':
-      return currentState
+      return {
+        userAccess: action.isAdmin,
+        authorised: action.authorised
+      }
     default:
         return currentState
   }
 }
 
 const initialState = {
-  userAccess: ""
+  userAccess: "",
+  authorised: false
 }
 
 export {
