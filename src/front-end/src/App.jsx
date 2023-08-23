@@ -8,13 +8,16 @@ import EmployerDashboard from './components/employer/EmployerDashboard'
 import './App.css'
 import FuelLogContext from './context.js'
 
+// --- SET ENV VARIABLES --- //
+const ENV = 'dev'
+let API_URL
+ENV === 'prod' ? API_URL = '' : API_URL = 'http://localhost:4001'
+// ------------------------ //
 
-
-const DEV_API_URL = 'http://localhost:4001'
 
 const basicAuthFetch = async (username, password) => {
   try {
-    const res = await fetch(`${DEV_API_URL}/login`, {
+    const res = await fetch(`${API_URL}/auth/login`, {
       headers: {
         'Authorization': `Basic ${btoa(`${username}:${password}`)}`
       }
