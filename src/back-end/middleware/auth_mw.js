@@ -50,6 +50,7 @@ const verifyAuth = async (req,res,next) => {
       throw new Error("Invalid Username/password") 
     } else {
       const jwtUser = { username_id: req.userAuthKey.username_id, isAdmin: user.isAdmin, name: user.name, id: user._id }
+      req.isAdmin = user.isAdmin
       res.setHeader('Set-Cookie', [
       `accessToken=${jwtGenerate(jwtUser)}; HttpOnly; Max-Age=${24*3600}; SameSite=Secure` // added Secure so that only localhost or https schemes can be used
       ])

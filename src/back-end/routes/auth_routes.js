@@ -12,7 +12,8 @@ const router = express.Router()
 
 // login route, sending response so that cookie is sent to client set in verifyAuth
 router.get('/', validateBasicAuth, verifyAuth, async (req, res) => {
-    res.status(200).send({ message: "Login successful" })
+  
+    res.status(200).send({ message: "Login successful", isAdmin: req.isAdmin })
 })
 
 router.use(errorAuth)
