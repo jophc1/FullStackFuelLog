@@ -63,26 +63,44 @@ describe('App Tests', () => {
 
     describe('Employer routes', () => {
       let cookie
+      let testEmployeeID = 99999
 
         beforeAll(async () => {
           const login = await
-          request(app)
-            .get('/login')
-            .auth('10001', 'test password')
+            request(app)
+              .get('/login')
+              .auth('10001', 'test password')
 
           cookie = login.headers['set-cookie']
         })
 
       test('should create a new employee', async () => {
         const res = await
-        request(app)
-          .post('/employed')
-          .set("Cookie", cookie)
-          .send( { name: "testEmployee", username_id: 50004, password: "testPassword" } )
-          expect(res.header['content-type']).toMatch('json')
+          request(app)
+            .post('/employed')
+            .set("Cookie", cookie)
+            .send( { name: "testEmployee", username_id: testEmployeeID, password: "testPassword" } )
+            expect(res.header['content-type']).toMatch('json')
           expect(res.body.password).toBeUndefined()
           expect(res.body.name).toBe("testEmployee")
+      })
 
+      test('should update newly created employee', async () => {
+        const res = await
+          request(app)
+            .put('/employed/' + testEmployeeID)
+            .set("Cookie", cookie)
+            .send( { name: "updateEmployee"})
+          expect(res.body.modifiedCount).toBe(1)
+
+      })
+
+      test('should delete the newly created employee', async () => {
+        const res = await
+          request(app)
+            .delete('/employed/' + testEmployeeID)
+            .set("Cookie", cookie)
+          expect(res.body.deletedCount).toBe(1)
       })
     
     })
