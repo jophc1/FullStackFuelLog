@@ -52,7 +52,7 @@ const verifyAuth = async (req,res,next) => {
       const jwtUser = { username_id: req.userAuthKey.username_id, isAdmin: user.isAdmin, name: user.name, id: user._id }
       req.isAdmin = user.isAdmin
       res.setHeader('Set-Cookie', [
-      `accessToken=${jwtGenerate(jwtUser)}; HttpOnly; Max-Age=${24*3600}; SameSite=Secure: Path=/` // added Secure so that only localhost or https schemes can be used
+      `accessToken=${jwtGenerate(jwtUser)}; HttpOnly; Max-Age=${24*3600}; SameSite=Secure; Path=/` // added Secure so that only localhost or https schemes can be used
       ])
     } 
     next()
@@ -80,7 +80,7 @@ const authAccess = async (req,res,next) => {
     const user = await UserModel.findOne({ username_id: req.jwtIdentity.username_id })
     // if user no longer exists in db
     if (!user) {
-      res.setHeader('Set-Cookie', [`accessToken=" "; Max-Age=0; HttpOnly; SameSite=Secure`])
+      res.setHeader('Set-Cookie', [`accessToken=" "; Max-Age=0; HttpOnly; SameSite=Secure; Path=/`])
       throw new Error("User no longer exists") 
     }
     // valid cookie and jwt with a user, continue
