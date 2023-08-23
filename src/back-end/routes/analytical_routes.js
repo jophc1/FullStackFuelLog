@@ -14,42 +14,33 @@ router.get('/employee/current/month', async (req, res) => {
   try {
     // create date objects for current date at time of query and date for start of month
     const current_date = new Date()
-    const current_month = current_date.getMonth() + 1
+    const current_month = current_date.getMonth()
     const current_year = current_date.getFullYear()
+
     const employeeID = new mongoose.Types.ObjectId(req.jwtIdentity.id)
 
     const monthlyReportEmployee = await LogModel.aggregate([
       { $match: { user_id: employeeID } }, 
       { $group: {
-        _id: { month: { $month: '$date' }, year: { $year: '$date' }},
+        _id: { month: { $month: '$date' }},
         vehicles: { $addToSet: '$vehicle_id' },
-        fuelTotal: { $sum: '$fuel_added' },
-        totalFuelLogs: { $count: {} }
+        fuelTotal: { $sum: '$fuel_added' }
       }},
       { $addFields: {
         vehicleCount: { $size: '$vehicles' }
       }},
-      { $unset: ['vehicles'] },
-      { $project: {
-        _id: 0,
-        month: '$_id.month',
-        year: '$_id.year',
-        fuelTotal: 1,
-        totalFuelLogs: 1,
-        vehicleCount: 1
-      }},
-      { $sort: { month: -1, year: -1 } }
-    ]) 
+      { $unset: '$vehicles' }
+      // { $unwind:'$vehicles'},
+      // { $group: {
+      //   _id: '$_id', 
+      //   vehicleCount: { $sum: '$vehicles' }
+      // }}
+
     
-    if(monthlyReportEmployee.length > 0 && monthlyReportEmployee[0].month == current_month && monthlyReportEmployee[0].year == current_year) {
-      res.send(monthlyReportEmployee[0])
-    } else {
-      res.send({ 
-        fuelTotal: 0,
-        totalFuelLogs: 0,
-        vehicleCount: 0
-      })
-    }
+    ]) 
+
+    res.send(monthlyReportEmployee)
+
 
   } catch (err) {
     res.status(500).send({ error: err.message })
