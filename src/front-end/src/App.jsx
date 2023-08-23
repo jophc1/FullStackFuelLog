@@ -39,6 +39,7 @@ function App() {
       isAdmin: res,
       authorised: true
     })
+    // set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login 
     console.log(res)
     res ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home')
   }
