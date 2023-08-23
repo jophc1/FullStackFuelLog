@@ -5,10 +5,10 @@ import { authAccess, verifyAdmin } from './middleware/auth_mw.js'
 describe('App Tests', () => {
   describe('Authentication', () => {
 
-    test('should authenticate admin user when making a request to GET /login', async () => {
+    test('should authenticate admin user when making a request to GET /auth/login', async () => {
       const res = await 
         request(app)
-          .get('/login')
+          .get('/auth/login')
           .auth('10001', 'test password')
       expect(res.status).toBe(200)
       expect(res.body.message).toBe('Login successful')
@@ -17,7 +17,7 @@ describe('App Tests', () => {
     test('should return no auth data in request when no auth header is sent', async () => {
       const res = await 
         request(app)
-          .get('/login')
+          .get('/auth/login')
       expect(res.status).toBe(500)
       expect(res.body.authError).toMatch('No auth')
     })
@@ -25,7 +25,7 @@ describe('App Tests', () => {
     test('should return error message with incorrect auth details', async () => {
       const res = await
         request(app)
-          .get('/login')
+          .get('/auth/login')
           .auth('10001', 'random')
       expect(res.status).toBe(500)
       expect(res.body.authError).toMatch('Invalid')
@@ -34,7 +34,7 @@ describe('App Tests', () => {
     test('should save cookies with the access token', async () => {
       const res = await
         request(app)
-          .get('/login')
+          .get('/auth/login')
           .auth('10001', 'test password')
           .expect('set-cookie', /accessToken/)
     })
@@ -45,7 +45,7 @@ describe('App Tests', () => {
     test('should prevent access of Employer routes', async () => {
       const login = await
         request(app)
-          .get('/login')
+          .get('/auth/login')
           .auth('10002', 'johnSmith')
 
       const cookie = login.headers['set-cookie']
@@ -68,7 +68,7 @@ describe('App Tests', () => {
         beforeAll(async () => {
           const login = await
             request(app)
-              .get('/login')
+              .get('/auth/login')
               .auth('10001', 'test password')
 
           cookie = login.headers['set-cookie']
