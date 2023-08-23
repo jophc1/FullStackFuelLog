@@ -1,5 +1,6 @@
 import app from './app'
 import request from 'supertest'
+import { authAccess, verifyAdmin } from './middleware/auth_mw.js'
 
 describe('App Tests', () => {
   describe('Authentication', () => {
@@ -40,6 +41,55 @@ describe('App Tests', () => {
   })
 
   describe('Authorisation', () => {
+
+    test('should prevent access of Employer routes', async () => {
+      const login = await
+        request(app)
+          .get('/login')
+          .auth('10002', 'johnSmith')
+
+      const cookie = login.headers['set-cookie']
+
+      const res = await
+        request(app)
+          .get('/employed')
+          .set( "Cookie", cookie)
+        expect(res.body.authError).toMatch("Unauth")
+      // expect(authAccess()).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('User routes', () => {
+
+    describe('Employer routes', () => {
+      let cookie
+
+        beforeAll(async () => {
+          const login = await
+          request(app)
+            .get('/login')
+            .auth('10001', 'test password')
+
+          cookie = login.headers['set-cookie']
+        })
+
+      test('should create a new employee', async () => {
+        const res = await
+        request(app)
+          .post('/employed')
+          .set("Cookie", cookie)
+          .send( { name: "testEmployee", username_id: 50004, password: "testPassword" } )
+          expect(res.header['content-type']).toMatch('json')
+          expect(res.body.password).toBeUndefined()
+          expect(res.body.name).toBe("testEmployee")
+
+      })
+    
+    })
+    // describe('Employee routes', () => {
+    
+    
+    // })
     
   })
   

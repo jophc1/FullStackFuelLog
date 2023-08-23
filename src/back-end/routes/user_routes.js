@@ -22,12 +22,12 @@ router.get('/', async (req, res) => {
 // Create a employee route
 router.post('/', async (req, res) => {
   try {
-    const newEmployee = await UserModel.create({
+    const { _id } = await UserModel.create({
     name: req.body.name,
     username_id: req.body.username_id,
     password: await bcrypt.hash(req.body.password, process.env.SALT_ADD)
     })
-    res.send(newEmployee)
+    res.send(await UserModel.findById(_id, '-password -isAdmin'))
   }
   catch (err){
     res.status(500).send({ error: err.message })
