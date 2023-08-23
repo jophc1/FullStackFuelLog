@@ -1,4 +1,3 @@
-import React, { useReducer } from "react"
 
 function reducer (currentState, action) {
   switch (action.type) {
