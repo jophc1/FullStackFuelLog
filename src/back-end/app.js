@@ -30,7 +30,7 @@ app.use(helmet({
 app.use('/vehicles', vehicleRouter)
 app.use('/logs/reviews', logReviewRouter)
 app.use('/employed', employerUserRouter)
-app.use('/login', authRouter)
+app.use('/auth', authRouter)
 app.use('/reports', analyticalRouter)
 app.use('/logs', logsRouter)
 
