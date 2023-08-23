@@ -9,6 +9,12 @@ import basicAuthFetch from './fetch/auth/basic_fetch.js'
 import './App.css'
 import FuelLogContext from './context.js'
 
+// // --- SET ENV VARIABLES --- //
+// const ENV = import.meta.env.VITE_ENV
+// let API_URL
+// ENV === 'prod' ? API_URL = '' : API_URL = import.meta.env.VITE_API_URL_LOCAL
+// // ------------------------ //
+
 function App() {
   const [store, dispatch] = useReducer(reducer, initialState)
   const { userAccess, authorised } = store
