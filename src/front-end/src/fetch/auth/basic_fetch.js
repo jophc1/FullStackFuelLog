@@ -1,4 +1,4 @@
-import API_URL from "../../env"
+import API_URL from "../../env.js"
 
 const basicAuthFetch = async (username, password) => {
   try {
