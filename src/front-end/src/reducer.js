@@ -4,7 +4,8 @@ function reducer (currentState, action) {
     case 'userAccess':
       return {
         userAccess: action.isAdmin,
-        authorised: action.authorised
+        authorised: action.authorised,
+        userName: action.userName
       }
     default:
         return currentState
@@ -13,7 +14,8 @@ function reducer (currentState, action) {
 
 const initialState = {
   userAccess: "",
-  authorised: false
+  authorised: false,
+  userName: ""
 }
 
 export {

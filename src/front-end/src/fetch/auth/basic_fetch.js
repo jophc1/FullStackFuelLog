@@ -9,7 +9,7 @@ const basicAuthFetch = async (username, password) => {
       credentials: 'include'
     })
     const returnedData = await res.json()
-    return returnedData.isAdmin
+    return returnedData
   } catch (err) {
     console.error(err)
   }
