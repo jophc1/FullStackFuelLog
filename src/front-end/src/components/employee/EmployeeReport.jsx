@@ -7,7 +7,7 @@ const EmployeeReport = () => {
   useEffect(() =>{
     (async () => {
       const res = await fetchMod('GET', 'reports/employee/current/month', '')
-      console.log(res)
+      setEmployeeReport(res)
     })()
   }, [])
 
@@ -19,15 +19,15 @@ const EmployeeReport = () => {
         </tr>
         <tr>
           <td>Fuel Total:</td>
-          <td>300 L</td>
+          <td>{employeeReport.fuelTotal} L</td>
         </tr>
         <tr>
           <td>Vehicles Used:</td>
-          <td>2</td>
+          <td>{employeeReport.totalFuelLogs}</td>
         </tr>
         <tr>
           <td>Log Entries:</td>
-          <td>5</td>
+          <td>{employeeReport.vehicleCount}</td>
         </tr>
       </table>
     </div>
