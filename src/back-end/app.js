@@ -27,6 +27,7 @@ app.use(helmet({
 }))
 
 // collection routes
+
 app.use('/vehicles', vehicleRouter)
 app.use('/logs/reviews', logReviewRouter)
 app.use('/employed', employerUserRouter)

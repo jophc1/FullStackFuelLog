@@ -1,6 +1,10 @@
-import app from './app'
+import app from './app.js'
 import request from 'supertest'
-import { authAccess, verifyAdmin } from './middleware/auth_mw.js'
+import jwt from 'jsonwebtoken'
+import mongoose from 'mongoose'
+import LogModel from './models/Log.js'
+import VehicleModel from './models/Vehicle.js'
+
 
 describe('App Tests', () => {
   describe('Authentication', () => {
@@ -41,21 +45,36 @@ describe('App Tests', () => {
   })
 
   describe('Authorisation', () => {
-
-    test('should prevent access of Employer routes', async () => {
+    
+    let cookie
+    // Don't need to relogin for each test when logout will remove current cookie
+    beforeAll( async () => {
       const login = await
         request(app)
           .get('/auth/login')
           .auth('10002', 'johnSmith')
 
-      const cookie = login.headers['set-cookie']
+      cookie = login.headers['set-cookie']
+    })
+    
+    
+    test('should prevent access of Employer routes', async () => {
 
       const res = await
         request(app)
           .get('/employed')
-          .set( "Cookie", cookie)
+          .set("Cookie", cookie)
         expect(res.body.authError).toMatch("Unauth")
-      // expect(authAccess()).toHaveBeenCalledTimes(1)
+    })
+
+    test('should logout a user successfully', async () => {
+      
+      const res = await
+        request(app)
+          .get('/auth/logout')
+          .expect(200)
+      cookie = res.headers['set-cookie']
+      expect(cookie[0].length).toBe(83) // checking cookie string length, if access token is empty then it should only be 83 long
     })
   })
 
@@ -106,8 +125,58 @@ describe('App Tests', () => {
     })
 
     describe('Employee routes', () => {
+
+        let cookie
+        let userID
+        let latestVehicleOdometer
+        let vehicleIDString
+        let vehicle
     
+        beforeAll(async () => {
+          // search for the first vehicle, get the string version of the _id
+          vehicle = await VehicleModel.findOne()
+          vehicleIDString = vehicle._id.toString()
+          // Get the latest log of the queried vehicle so a recent odometer is obtained
+          const lastLog = await LogModel.find({ vehicle_id: vehicle._id }).sort({current_odo: -1})
+          latestVehicleOdometer = lastLog[0].current_odo  
+          // Login as employee and set cookie
+          const login = await
+            request(app)
+              .get('/auth/login')
+              .auth('10002', 'johnSmith')
+          cookie = login.headers['set-cookie']
+          // Obtain user ID from identity in cookie
+          const jwtString = cookie[0].substring('12', cookie[0].indexOf(';'))
+          const jwtIdentity = jwt.decode(jwtString)
+          userID = new mongoose.Types.ObjectId(jwtIdentity.id)
+        })
+
+      test('should return correct keys monthly report for employee dashboard', async () => {
+        const res = await
+          request(app)
+          .get('/reports/employee/current/month')
+          .set("Cookie", cookie)
+          .expect(200)
+        expect(res.body.fuelTotal).toBeDefined()
+        expect(res.body.totalFuelLogs).toBeDefined()
+        expect(res.body.vehicleCount).toBeDefined() 
+      })
+
+      test('should be able to create a new log', async () => {
+        
+        const res = await
+          request(app)
+          .post('/logs')
+          .set("Cookie", cookie)
+          .send({ fuel_added: 200, current_odo: latestVehicleOdometer + 100, user_id: userID , vehicle_id: vehicleIDString })
+          .expect(200)
+          
+        const recentLog = await LogModel.find({ vehicle_id: vehicle._id }).sort({current_odo: -1})
+        expect(recentLog[0].current_odo).toBe(latestVehicleOdometer + 100)
+        expect(recentLog[0].vehicle_id).toStrictEqual(vehicle._id)
     
+      })
+      
     })
   })
 

@@ -16,7 +16,7 @@ router.get('/login', validateBasicAuth, verifyAuth, async (req, res) => {
 })
 
 router.get('/logout', async (req,res) => {
-  res.setHeader('Set-Cookie', [`accessToken=" "; Max-Age=0; HttpOnly; SameSite=Secure`])
+  res.cookie('accessToken', " ", { httpOnly: true, maxAge: 0 })
   res.sendStatus(200)
 })
 
