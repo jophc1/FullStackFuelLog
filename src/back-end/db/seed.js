@@ -16,7 +16,7 @@ const salt = process.env.SALT_ADD
 
 const users = [
   {
-    name: 'admin',
+    name: 'Empolyer Admin',
     username_id: 10001,
     password: await bcrypt.hash('test password', salt),
     isAdmin: true
