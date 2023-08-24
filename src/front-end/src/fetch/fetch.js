@@ -12,8 +12,10 @@ const fetchMod = async (method, route, data) => {
     : await fetch(`${API_URL}/${route}`, { method })
     // check for content type in response headers
     // if json, parse the data, if plain text assign to returnedData
+    console.log(res)
     let returnedData
     res.headers.get("content-type") === 'application/json' ? returnedData = await res.json() : returnedData = res
+    console.log(res)
     return returnedData
   } catch (err) {
     console.error(err)

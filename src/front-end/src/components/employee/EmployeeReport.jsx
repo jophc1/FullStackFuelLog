@@ -5,7 +5,7 @@ const EmployeeReport = () => {
   const [employeeReport, setEmployeeReport] = useState({})
 
   useEffect(() =>{
-    fetchMod('GET', 'employee/current/month', '')
+    fetchMod('GET', 'reports/employee/current/month', '')
       .then(res => {
         setEmployeeReport(res)
         console.log(res)
