@@ -1,5 +1,5 @@
-import { Router } from "express"
-import LogReviewModel from "../models/LogReview.js"
+import { Router } from 'express'
+import LogReviewModel from '../models/LogReview.js'
 import { errorAuth, authAccess, verifyAdmin } from '../middleware/auth_mw.js'
 
 const router = Router()

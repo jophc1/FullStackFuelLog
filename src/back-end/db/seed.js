@@ -1,16 +1,16 @@
-import LogModel from "../models/Log.js"
-import UserModel from "../models/User.js"
-import VehicleModel from "../models/Vehicle.js"
+import LogModel from '../models/Log.js'
+import UserModel from '../models/User.js'
+import VehicleModel from '../models/Vehicle.js'
 import dotenv from 'dotenv'
-import { dbClose, dbConnect } from "./db.js"
+import { dbClose, dbConnect } from './db.js'
 import bcrypt from 'bcrypt'
 
 dotenv.config()
 
 dbConnect()
 
-await UserModel.deleteMany().then(() => console.log("Seed: users deleted"))
-await LogModel.deleteMany().then(() => console.log("Seed: logs deleted"))
+await UserModel.deleteMany().then(() => console.log('Seed: users deleted'))
+await LogModel.deleteMany().then(() => console.log('Seed: logs deleted'))
 
 const salt = process.env.SALT_ADD
 
@@ -39,36 +39,36 @@ const arrayUsers = await UserModel.insertMany(users)
 
 const vehicles = [
   {
-    asset_id: "HRT1",
-    registration: "XO85IP",
-    make: "Hino",
-    model: "500 Series",
+    asset_id: 'HRT1',
+    registration: 'XO85IP',
+    make: 'Hino',
+    model: '500 Series',
     year: 2022,
-    vehicleImage_URL: "https://fuel-log-app.s3.ap-southeast-2.amazonaws.com/HRT1.png"
+    vehicleImage_URL: 'https://fuel-log-app.s3.ap-southeast-2.amazonaws.com/HRT1.png'
   },
   {
-    asset_id: "HRT2",
-    registration: "X105IK",
-    make: "Fuso",
-    model: "Shogun",
+    asset_id: 'HRT2',
+    registration: 'X105IK',
+    make: 'Fuso',
+    model: 'Shogun',
     year: 2022,
-    vehicleImage_URL: "https://fuel-log-app.s3.ap-southeast-2.amazonaws.com/HRT2.png"
+    vehicleImage_URL: 'https://fuel-log-app.s3.ap-southeast-2.amazonaws.com/HRT2.png'
   },
   {
-    asset_id: "HRT3",
-    registration: "X023IP",
-    make: "Iveco",
-    model: "Eurocargo ML180",
+    asset_id: 'HRT3',
+    registration: 'X023IP',
+    make: 'Iveco',
+    model: 'Eurocargo ML180',
     year: 2022,
-    vehicleImage_URL: "https://fuel-log-app.s3.ap-southeast-2.amazonaws.com/HRT3.png"
+    vehicleImage_URL: 'https://fuel-log-app.s3.ap-southeast-2.amazonaws.com/HRT3.png'
   },
   {
-    asset_id: "HRT4",
-    registration: "X050IK",
-    make: "Fuso",
-    model: "Fighter",
+    asset_id: 'HRT4',
+    registration: 'X050IK',
+    make: 'Fuso',
+    model: 'Fighter',
     year: 2022,
-    vehicleImage_URL: "https://fuel-log-app.s3.ap-southeast-2.amazonaws.com/HRT4.png"
+    vehicleImage_URL: 'https://fuel-log-app.s3.ap-southeast-2.amazonaws.com/HRT4.png'
   }
 ]
 

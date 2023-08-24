@@ -16,8 +16,8 @@ router.get('/', async (req, res) => {
 
 router.get('/:asset_id', async (req, res) => {
   try {
-    const vehicle = await VehicleModel.findOne({asset_id: `${req.params.asset_id}`})
-    vehicle ? res.send(vehicle) : res.status(404).send({ error: 'Vehicle not found' }) 
+    const vehicle = await VehicleModel.findOne({ asset_id: `${req.params.asset_id}` })
+    vehicle ? res.send(vehicle) : res.status(404).send({ error: 'Vehicle not found' })
   } catch (err) {
     res.status(500).send({ error: err.message })
   }
@@ -25,16 +25,16 @@ router.get('/:asset_id', async (req, res) => {
 
 router.post('/', verifyAdmin, postToS3, async (req, res) => {
   try {
-     // save this in database with vehicle data to use to retrive img .png from S3 bucket
-     const url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.body.asset_id}`
-     // create new document
-     const newVehicle = {
+    // save this in database with vehicle data to use to retrive img .png from S3 bucket
+    const url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.body.asset_id}`
+    // create new document
+    const newVehicle = {
       ...req.body,
       vehicleImage_URL: url
-     }
-     // add the document
-     const vehicleAdded = await VehicleModel.create(newVehicle)
-     res.status(201).send(vehicleAdded)
+    }
+    // add the document
+    const vehicleAdded = await VehicleModel.create(newVehicle)
+    res.status(201).send(vehicleAdded)
   } catch (err) {
     res.status(500).send({ error: err.message })
   }
@@ -55,15 +55,14 @@ router.put('/:asset_id', verifyAdmin, postToS3, async (req, res) => {
     // check if asset_id has changed
     // if asset_id has changed and image has not been updated, keep the old asset id to use for image key in S3 bucket
     const oldVehicleData = await VehicleModel.findOne({ asset_id: req.params.asset_id }).exec()
-    oldVehicleData.asset_id != req.body.asset_id && !req.files.image ? 
-    url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${oldVehicleData.asset_id}`
-    :
-    url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.body.asset_id}`
+    oldVehicleData.asset_id !== req.body.asset_id && !req.files.image
+      ? url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${oldVehicleData.asset_id}`
+      : url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.body.asset_id}`
 
-    let vehicleUpdated = {
+    const vehicleUpdated = {
       ...req.body,
       vehicleImage_URL: url
-     }
+    }
     const vehicle = await VehicleModel.updateOne({ asset_id: req.params.asset_id }, vehicleUpdated, { new: true })
     vehicle.matchedCount && vehicle.acknowledged ? res.send(vehicleUpdated) : res.status(404).send({ error: 'Vehicle not found' })
   } catch (err) {

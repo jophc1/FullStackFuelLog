@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import dotenv from'dotenv'
+import dotenv from 'dotenv'
 import vehicleRouter from './routes/vehicle_routes.js'
 import logReviewRouter from './routes/log_review_routes.js'
 import authRouter from './routes/auth_routes.js'
@@ -21,7 +21,7 @@ app.use(express.json())
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
-      "script-src": ["'self'"],
+      'script-src': ["'self'"]
     }
   }
 }))

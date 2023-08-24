@@ -1,4 +1,4 @@
-import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3"
+import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3'
 
 async function deleteObjectS3 (req, res, next) {
   try {

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const vehicleSchema = mongoose.Schema({
-  asset_id: { 
+  asset_id: {
     type: String,
     required: true,
     unique: true
@@ -13,7 +13,7 @@ const vehicleSchema = mongoose.Schema({
   },
   make: {
     type: String,
-    required: true,
+    required: true
   },
   model: {
     type: String,
@@ -21,7 +21,7 @@ const vehicleSchema = mongoose.Schema({
   },
   year: {
     type: Number,
-    required: true,
+    required: true
   },
   vehicleImage_URL: {
     type: String,
