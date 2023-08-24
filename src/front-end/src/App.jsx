@@ -5,15 +5,10 @@ import Login from './components/Login'
 import EmployeeHome from './components/employee/EmployeeHome.jsx'
 import EmployerDashboard from './components/employer/EmployerDashboard'
 import basicAuthFetch from './fetch/auth/basic_fetch.js'
+import fetchMod from './fetch/fetch.js'
 
 import './App.css'
 import FuelLogContext from './context.js'
-
-// // --- SET ENV VARIABLES --- //
-// const ENV = import.meta.env.VITE_ENV
-// let API_URL
-// ENV === 'prod' ? API_URL = '' : API_URL = import.meta.env.VITE_API_URL_LOCAL
-// // ------------------------ //
 
 function App() {
   const [store, dispatch] = useReducer(reducer, initialState)
@@ -28,13 +23,17 @@ function App() {
       authorised: true,
       userName: res.name
     })
-    // set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login 
-    console.log(res)
+    // TODO: set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login 
     res.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home')
   }
 
+  async function userLogout () {
+    const res = await fetchMod('GET', 'auth/logout', '')
+    res === 'OK' ? navigate('/') : console.log('logout failed')
+  }
+
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout}}>
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/employee'>
