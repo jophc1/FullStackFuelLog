@@ -5,13 +5,23 @@ import mongoose from 'mongoose'
 import LogModel from './models/Log.js'
 import VehicleModel from './models/Vehicle.js'
 
+// If returnCookie is set to true, return a cookie instead of returning a response
+async function loginUser(userID, password, returnCookie) {
+  const login = await
+      request(app)
+        .get('/auth/login')
+        .auth(userID, password)
+  if (returnCookie) {
+    const cookie = login.headers['set-cookie']
+    return cookie
+  }
+  return login
+}
+
 describe('App Tests', () => {
   describe('Authentication', () => {
     test('should authenticate admin user when making a request to GET /auth/login', async () => {
-      const res = await
-      request(app)
-        .get('/auth/login')
-        .auth('10001', 'test password')
+      const res = await loginUser('10001', 'test password', false)
       expect(res.status).toBe(200)
       expect(res.body.message).toBe('Login successful')
     })
@@ -25,10 +35,7 @@ describe('App Tests', () => {
     })
 
     test('should return error message with incorrect auth details', async () => {
-      const res = await
-      request(app)
-        .get('/auth/login')
-        .auth('10001', 'random')
+      const res = await loginUser('10001', 'random', false)
       expect(res.status).toBe(500)
       expect(res.body.authError).toMatch('Invalid')
     })
@@ -46,12 +53,7 @@ describe('App Tests', () => {
     let cookie
     // Don't need to relogin for each test when logout will remove current cookie
     beforeAll(async () => {
-      const login = await
-      request(app)
-        .get('/auth/login')
-        .auth('10002', 'johnSmith')
-
-      cookie = login.headers['set-cookie']
+      cookie = await loginUser('10002', 'johnSmith', true)
     })
 
     test('should prevent access of Employer routes', async () => {
@@ -78,12 +80,7 @@ describe('App Tests', () => {
       const testEmployeeID = 99999
 
       beforeAll(async () => {
-        const login = await
-        request(app)
-          .get('/auth/login')
-          .auth('10001', 'test password')
-
-        cookie = login.headers['set-cookie']
+        cookie = await loginUser('10001', 'test password', true)
       })
 
       test('should create a new employee', async () => {
@@ -131,11 +128,7 @@ describe('App Tests', () => {
         const lastLog = await LogModel.find({ vehicle_id: vehicle._id }).sort({ current_odo: -1 })
         latestVehicleOdometer = lastLog[0].current_odo
         // Login as employee and set cookie
-        const login = await
-        request(app)
-          .get('/auth/login')
-          .auth('10002', 'johnSmith')
-        cookie = login.headers['set-cookie']
+        cookie = await loginUser('10002', 'johnSmith', true)
         // Obtain user ID from identity in cookie
         const jwtString = cookie[0].substring('12', cookie[0].indexOf(';'))
         const jwtIdentity = jwt.decode(jwtString)
@@ -167,14 +160,9 @@ describe('App Tests', () => {
       })
 
       test('should be able to remove the newly created log (Employer access)', async () => {
-        // login as admin/employee
-        const login = await
-          request(app)
-            .get('/auth/login')
-            .auth('10001', 'test password')
-          cookie = login.headers['set-cookie']
+        // login as admin/employer and return cookie
+          cookie = await loginUser('10001', 'test password', true)
         // query db for log based on log ID (from test above)
-        
         const recentLogIdString = recentLog[0]._id.toString()
         const deleteLog = await
           request(app)
@@ -195,9 +183,76 @@ describe('App Tests', () => {
   })
 
   describe('Vechicle routes', () => {
+
     describe('Employer routes', () => {
 
+      let cookie
+      let testAssetID = 'TESTID'
+
+        beforeAll(async () => {
+          cookie = await loginUser('10001', 'test password', true)
+        })
+
+      test('should be able to post a new vehicle (no image provided in test)', async () => {
+        const res = await
+          request(app)
+            .post('/vehicles')
+            .set('Cookie', cookie)
+            .send({ asset_id: testAssetID, registration: 'TESTREGO', make: 'GENERIC', model: 'GENERIC', year: 2023 })
+            .expect(201)
+          expect(res.body.asset_id).toBeDefined()
+       })
+
+       test('should be able to update vehicle details', async () => {
+        const res = await
+          request(app)
+            .put('/vehicles/' + testAssetID)
+            .set('Cookie', cookie)
+            .send({ asset_id: testAssetID, registration: 'CHANGEDREGO', year: 2022 })
+            .expect(200)
+          expect(res.body.registration).toBe('CHANGEDREGO')
+          expect(res.body.year).toBe(2022)
+       })
+
+       test('should delete the newly created test vehicle', async () => {
+        const res = await
+          request(app)
+            .delete('/vehicles/' + testAssetID)
+            .set('Cookie', cookie)
+            .expect(200)
+          expect(res.body).toStrictEqual({})
+       })
     })
+
+    describe('Employee routes', () => {
+      
+      let cookie
+      // let testAssetID = 'TESTID'
+
+      beforeAll(async () => {
+        cookie = await loginUser('10002', 'johnSmith', true)
+      })
+
+      test('should be able to get all vehicles', async () => {
+        const res = await
+        request(app)
+          .get('/vehicles')
+          .set('Cookie', cookie)
+          .expect(200)
+        expect(res.body.length).toBeGreaterThan(0)
+       })
+
+       test('should be able to get a vehicle by asset_id', async () => {
+        const res = await
+          request(app)
+          .get('/vehicles/HRT4')
+          .set('Cookie', cookie)
+          .expect(200)
+        expect(res.body.asset_id).toBe('HRT4')        
+       })
+
+    })
+
   })
 
   describe('Log Review routes', () => {
