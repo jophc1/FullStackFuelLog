@@ -17,23 +17,24 @@ import FuelLogContext from './context.js'
 
 function App() {
   const [store, dispatch] = useReducer(reducer, initialState)
-  const { userAccess, authorised } = store
+  const { userAccess, authorised, userName } = store
   const navigate = useNavigate()
 
   async function loginAccess (username, password) {
     const res = await basicAuthFetch(username, password)
     dispatch({
       type: 'userAccess',
-      isAdmin: res,
-      authorised: true
+      isAdmin: res.isAdmin,
+      authorised: true,
+      userName: res.name
     })
     // set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login 
     console.log(res)
-    res ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home')
+    res.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home')
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName}}>
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/employee'>
