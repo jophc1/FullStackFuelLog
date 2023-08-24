@@ -121,6 +121,7 @@ describe('App Tests', () => {
       let latestVehicleOdometer
       let vehicleIDString
       let vehicle
+      let recentLog
 
       beforeAll(async () => {
         // search for the first vehicle, get the string version of the _id
@@ -160,10 +161,30 @@ describe('App Tests', () => {
           .send({ fuel_added: 200, current_odo: latestVehicleOdometer + 100, user_id: userID, vehicle_id: vehicleIDString })
           .expect(200)
 
-        const recentLog = await LogModel.find({ vehicle_id: vehicle._id }).sort({ current_odo: -1 })
+        recentLog = await LogModel.find({ vehicle_id: vehicle._id }).sort({ current_odo: -1 })
         expect(recentLog[0].current_odo).toBe(latestVehicleOdometer + 100)
         expect(recentLog[0].vehicle_id).toStrictEqual(vehicle._id)
       })
+
+      test('should be able to remove the newly created log (Employer access)', async () => {
+        // login as admin/employee
+        const login = await
+          request(app)
+            .get('/auth/login')
+            .auth('10001', 'test password')
+          cookie = login.headers['set-cookie']
+        // query db for log based on log ID (from test above)
+        
+        const recentLogIdString = recentLog[0]._id.toString()
+        const deleteLog = await
+          request(app)
+            .delete('/logs/' + recentLogIdString)
+            .set('Cookie', cookie)
+            .expect(200)
+        // Check that deleted log is in response with 200 status
+        expect(deleteLog.body).toStrictEqual({})
+      })
+
     })
   })
 
