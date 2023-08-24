@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import FuelLogContext from '../../context.js'
-import EmployeeProfile from './EmployeeProfile'
+import EmployeeProfile from './EmployeeProfile.jsx'
 import fetchMod from '../../fetch/fetch.js'
 import { useNavigate } from 'react-router-dom'
 
-const EmployeeDashboard = () => {
+const EmployeeHome = () => {
   const { authorised } = useContext(FuelLogContext)
   const navigate = useNavigate()
 
@@ -19,7 +19,7 @@ const EmployeeDashboard = () => {
 
   return authorised ? 
   <>
-    <div>EmployeeDashboard</div>
+    <div>EmployeeHome</div>
     <EmployeeProfile />
     <button onClick={handleClick}>Logout</button>
   </>
@@ -27,4 +27,4 @@ const EmployeeDashboard = () => {
   <div>No access</div>
 }
 
-export default EmployeeDashboard
+export default EmployeeHome

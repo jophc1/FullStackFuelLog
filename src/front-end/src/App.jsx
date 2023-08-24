@@ -2,7 +2,7 @@ import { useReducer, useState } from 'react'
 import { reducer, initialState } from './reducer.js'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import Login from './components/Login'
-import EmployeeDashboard from './components/employee/EmployeeDashboard'
+import EmployeeHome from './components/employee/EmployeeHome.jsx'
 import EmployerDashboard from './components/employer/EmployerDashboard'
 import basicAuthFetch from './fetch/auth/basic_fetch.js'
 
@@ -38,7 +38,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/employee'>
-          <Route path='dashboard/home' element={<EmployeeDashboard />} />
+          <Route path='dashboard/home' element={<EmployeeHome />} />
         </Route>
         <Route path='/employer'>
           <Route path='dashboard/home' element={<EmployerDashboard />} />
