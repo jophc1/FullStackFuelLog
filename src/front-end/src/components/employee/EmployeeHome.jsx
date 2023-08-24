@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import FuelLogContext from '../../context.js'
-import EmployeeProfile from './EmployeeProfile.jsx'
+import CompanyButton from '../styled/CompanyButton'
 
-const EmployeeHome = () => {
+const EmployeeHome = ({ children }) => {
   const { authorised, userLogout, userAccess } = useContext(FuelLogContext)
 
   const handleLogoutClick = event => {
@@ -13,7 +13,7 @@ const EmployeeHome = () => {
   return authorised && !userAccess ? 
   <>
     <div>EmployeeHome</div>
-    <EmployeeProfile />
+    {children}
     <button>New Fuel Log</button>
     <button>Change Password</button>
     <button onClick={handleLogoutClick}>Logout</button>
