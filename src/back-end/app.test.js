@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import LogModel from './models/Log.js'
 import VehicleModel from './models/Vehicle.js'
+import LogReviewModel from './models/LogReview.js'
 
 // If returnCookie is set to true, return a cookie instead of returning a response
 async function loginUser(userID, password, returnCookie) {
@@ -74,7 +75,7 @@ describe('App Tests', () => {
     })
   })
 
-  describe('User routes', () => {
+  describe('User routes, Log and Log Review routes', () => {
     describe('Employer routes', () => {
       let cookie
       const testEmployeeID = 99999
@@ -88,10 +89,10 @@ describe('App Tests', () => {
         request(app)
           .post('/employed')
           .set('Cookie', cookie)
-          .send({ name: 'testEmployee', username_id: testEmployeeID, password: 'testPassword' })
+          .send({ name: 'Test Employee', username_id: testEmployeeID, password: 'testPassword' })
         expect(res.header['content-type']).toMatch('json')
         expect(res.body.password).toBeUndefined()
-        expect(res.body.name).toBe('testEmployee')
+        expect(res.body.name).toBe('Test Employee')
       })
 
       test('should update newly created employee', async () => {
@@ -99,7 +100,7 @@ describe('App Tests', () => {
         request(app)
           .put('/employed/' + testEmployeeID)
           .set('Cookie', cookie)
-          .send({ name: 'updateEmployee' })
+          .send({ name: 'Update Employee' })
         expect(res.body.modifiedCount).toBe(1)
       })
 
@@ -119,6 +120,7 @@ describe('App Tests', () => {
       let vehicleIDString
       let vehicle
       let recentLog
+      let recentLogReview
 
       beforeAll(async () => {
         // search for the first vehicle, get the string version of the _id
@@ -159,9 +161,22 @@ describe('App Tests', () => {
         expect(recentLog[0].vehicle_id).toStrictEqual(vehicle._id)
       })
 
+      test('should be able to request a log review', async () => {
+        const res = await
+          request(app)
+            .post('/logs/reviews')
+            .set('Cookie', cookie)
+            .send({ log_id: recentLog[0]._id })
+            .expect(201)
+
+        recentLogReview = await LogReviewModel.find({ employee_id: recentLog[0].user_id }).sort({ date: -1 })
+        expect(res.body.log_id).toBeDefined()
+        expect(res.body.employee_id).toBe(recentLog[0].user_id.toString())
+      })
+
       test('should be able to remove the newly created log (Employer access)', async () => {
         // login as admin/employer and return cookie
-          cookie = await loginUser('10001', 'test password', true)
+        cookie = await loginUser('10001', 'test password', true)
         // query db for log based on log ID (from test above)
         const recentLogIdString = recentLog[0]._id.toString()
         const deleteLog = await
@@ -173,6 +188,25 @@ describe('App Tests', () => {
         expect(deleteLog.body).toStrictEqual({})
       })
 
+      test('should be able to get all log reviews (Employer access)', async () => {
+        const res = await
+          request(app)
+            .get('/logs/reviews')
+            .set('Cookie', cookie)
+            .expect(200)
+       })
+
+      test('should be able to remove the log review (Employer access)', async () => {
+        cookie = await loginUser('10001', 'test password', true)
+        const recentLogReviewIdString = recentLogReview[0]._id.toString()
+        const deleteLogReview = await
+          request(app)
+            .delete('/logs/reviews/' + recentLogReviewIdString)
+            .set('Cookie', cookie)
+            .expect(200)
+        // Check that deleted log is in response with 200 status
+        expect(deleteLogReview.text).toStrictEqual('OK')
+       })
     })
   })
 
@@ -253,12 +287,6 @@ describe('App Tests', () => {
 
     })
 
-  })
-
-  describe('Log Review routes', () => {
-    describe('Employer routes', () => {
-
-    })
   })
 
   describe('Analytical routes', () => {

@@ -10,7 +10,8 @@ const logReviewSchema = mongoose.Schema({
     ref: 'Log'
   },
   date: {
-    type: Date
+    type: Date,
+    default: new Date()
   }
 })
 
