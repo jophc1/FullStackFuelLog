@@ -11,12 +11,25 @@ import employerUserRouter from './routes/user_routes.js'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 
+// Cors options and whitelisting
+const whitelist = ['http://localhost:5173', 'http://localhost:4001']
+const corsOptions = {
+  credentials: true,
+  // origin: function(origin, callback) {
+  //   if (whitelist.indexOf(origin) !== -1){
+  //      callback(null, true)
+  //   } else {
+  //     callback(new Error('Blocked by CORS'))
+  //   }
+  // }
+}
+
 dotenv.config()
 dbConnect()
 const app = express()
 
 app.use(cookieParser())
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(helmet({
   contentSecurityPolicy: {
