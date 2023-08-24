@@ -23,11 +23,11 @@ const EmployeeReport = () => {
         </tr>
         <tr>
           <td>Vehicles Used:</td>
-          <td>{employeeReport.totalFuelLogs}</td>
+          <td>{employeeReport.vehicleCount}</td>
         </tr>
         <tr>
           <td>Log Entries:</td>
-          <td>{employeeReport.vehicleCount}</td>
+          <td>{employeeReport.totalFuelLogs}</td>
         </tr>
       </table>
     </div>
