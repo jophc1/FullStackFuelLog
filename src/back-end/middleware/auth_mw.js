@@ -51,6 +51,8 @@ const verifyAuth = async (req, res, next) => {
     } else {
       const jwtUser = { username_id: req.userAuthKey.username_id, isAdmin: user.isAdmin, name: user.name, id: user._id }
       req.isAdmin = user.isAdmin
+      req.name = user.name
+      req.usernameID = req.userAuthKey.username_id
       // res.setHeader('Set-Cookie', [`accessToken=${jwtGenerate(jwtUser)}; HttpOnly; Max-Age=${24*3600}; SameSite=Secure`])
       res.cookie('accessToken', jwtGenerate(jwtUser), { httpOnly: true, maxAge: 24 * 3600000, sameSite: 'strict' }) // maxAge is time in milliseconds
     }
