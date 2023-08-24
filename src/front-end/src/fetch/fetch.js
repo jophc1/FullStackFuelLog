@@ -4,13 +4,13 @@ const fetchMod = async (method, route, data) => {
   try {
     const config = {
       method: method,
-      credentials: 'include',
+      credentials: 'same-origin',
       body: JSON.stringify(data)
     }
     // use the config object if there is data to be passed in the body
     const res = data 
     ? await fetch(`${API_URL}/${route}`, config)
-    : await fetch(`${API_URL}/${route}`, { method, credentials: 'include' })
+    : await fetch(`${API_URL}/${route}`, { method, credentials: 'same-origin' })
     // check for content type in response headers
     // if json, parse the data, if plain text assign to returnedData
     console.log(res)

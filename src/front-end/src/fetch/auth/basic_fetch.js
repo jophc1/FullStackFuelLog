@@ -5,7 +5,7 @@ const basicAuthFetch = async (username, password) => {
     const res = await fetch(`${API_URL}/auth/login`, {
       headers: {
         'Authorization': `Basic ${btoa(`${username}:${password}`)}`,
-        credentials: 'include'
+        credentials: 'same-origin'
       }
     })
     const returnedData = await res.json()
