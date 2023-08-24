@@ -12,7 +12,8 @@ import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 
 // Cors options and whitelisting
-const whitelist = ['http://localhost:5173', 'http://localhost:4001']
+// TODO: NEED TO ADD WHITELIST FOR DEPLOYED REACT APP SERVER IP ADDRESS
+const whitelist = ['http://localhost:5173', '127.0.0.1:5173'] 
 const corsOptions = {
   credentials: true,
   origin: function(origin, callback) {
