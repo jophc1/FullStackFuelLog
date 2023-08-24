@@ -16,7 +16,7 @@ const whitelist = ['http://localhost:5173', 'http://localhost:4001']
 const corsOptions = {
   credentials: true,
   origin: function(origin, callback) {
-    if (whitelist.indexOf(origin) !== -1){
+    if (!origin || whitelist.indexOf(origin) !== -1){
        callback(null, true)
     } else {
       callback(new Error('Blocked by CORS'))
