@@ -1,6 +1,21 @@
+/* All */
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
 /* EMPLOYEE */
 #logo {
   width: 30%;
+}
+
+.vehicleImg img {
+  width: 100%
+}
+
+.vehicleImg {
+  margin-left: 5rem;
 }
 
 /* EMPLOYER */
