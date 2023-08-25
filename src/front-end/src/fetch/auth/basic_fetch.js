@@ -13,7 +13,6 @@ const basicAuthFetch = async (username, password) => {
       returnedData: returnedData,
       status: res.status
     }
-    console.log(resObject)
     return resObject
   } catch (err) {
     console.error(err)

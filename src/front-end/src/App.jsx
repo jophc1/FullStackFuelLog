@@ -23,9 +23,9 @@ function App() {
     if (res.status === 200) {
       dispatch({
         type: 'userAccess',
-        isAdmin: res.isAdmin,
+        isAdmin: res.returnedData.isAdmin,
         authorised: true,
-        userName: res.name
+        userName: res.returnedData.name
       })
       // TODO: set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login 
       res.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home') // TODO chnage route back to /employee/dashboard/home
