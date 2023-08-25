@@ -12,7 +12,6 @@ const VehicleDetails = ( {} ) => {
   if (currentVehicle) {
     const vehicleImage = new Image()
     vehicleImage.src = currentVehicle.vehicleImage_URL
-    console.log(vehicleImage.src)
     vehicleImage.onload = async () => isVehicleImageReady = true
   }
 

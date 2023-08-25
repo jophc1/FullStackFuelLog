@@ -5,9 +5,12 @@ const SquareButton = styled.div`
   border: 1px solid #d05f66;
   border-radius: 10px;
   width: min-content;
-  padding: 0.3rem 1rem;
+  padding: 0.5rem 1rem;
   color: #ffffff;
   text-align: center;
+  margin: 1rem 0;
+  height: 5em;
+  cursor: pointer
 `
 
 export default SquareButton
