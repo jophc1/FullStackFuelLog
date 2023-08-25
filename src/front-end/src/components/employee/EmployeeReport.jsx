@@ -14,10 +14,13 @@ const EmployeeReport = () => {
   return (
     <div>
       <table>
-        <tr>
-          <th><h3>Current monthly report</h3></th>
-        </tr>
-        <tr>
+        <thead>
+          <tr>
+            <th><h3>Current monthly report</h3></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
           <td>Fuel Total:</td>
           <td>{employeeReport.fuelTotal} L</td>
         </tr>
@@ -29,6 +32,7 @@ const EmployeeReport = () => {
           <td>Log Entries:</td>
           <td>{employeeReport.totalFuelLogs}</td>
         </tr>
+        </tbody>
       </table>
     </div>
   )

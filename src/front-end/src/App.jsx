@@ -12,10 +12,11 @@ import fetchMod from './fetch/fetch.js'
 import './App.css'
 import { FuelLogContext, EmployeeContext } from './context.js'
 import EmployeeProfile from './components/employee/EmployeeProfile'
+import VehicleDetails from './components/employee/VehicleDetails.jsx'
 
 function App() {
   const [store, dispatch] = useReducer(reducer, initialState)
-  const { userAccess, authorised, userName, allVehicles } = store
+  const { userAccess, authorised, userName, allVehicles, currentVehicle } = store
   const navigate = useNavigate()
 
   async function loginAccess (username, password) {
@@ -47,6 +48,13 @@ function App() {
     })
   }
 
+  function currentVehicleDetails (vehicleData) {
+    dispatch({
+      type: 'selectVehicle',
+      currentVehicle: vehicleData
+    })
+  }
+
   async function postLogEntry (data) {
     const res = await fetchMod('POST', 'logs', data)
     if (res.status === 201) {
@@ -57,13 +65,13 @@ function App() {
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle}}>
       <EmployeeContext.Provider value={{postLogEntry}} >
       <Routes>
         <Route path='/' element={<Login />} />
           <Route path='/employee'>
             <Route path='dashboard/home' element={<EmployeeHome><EmployeeProfile /></EmployeeHome>} />
-            <Route path='dashboard/new/log' element={<LogEntry />}/>
+            <Route path='dashboard/new/log' element={<LogEntry ><VehicleDetails /></LogEntry>}/>
             <Route path='dashboard/log/successful' element={<EmployeeHome><RequestDelete /></EmployeeHome>} />
           </Route>
         <Route path='/employer'>

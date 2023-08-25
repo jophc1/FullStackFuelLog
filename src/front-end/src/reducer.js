@@ -11,6 +11,10 @@ function reducer (currentState, action) {
       return {
         allVehicles: action.allVehicles
       }
+    case 'selectVehicle':
+      return {
+        currentVehicle: action.currentVehicle
+      }
     default:
         return currentState
   }
@@ -20,7 +24,8 @@ const initialState = {
   userAccess: "",
   authorised: false,
   userName: "",
-  allVehicles: []
+  allVehicles: [],
+  currentVehicle: {}
 }
 
 export {

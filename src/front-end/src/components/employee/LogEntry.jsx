@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FuelLogContext, EmployeeContext } from '../../context.js'
-import fetchMod from '../../fetch/fetch.js'
+
 import CompanyButton from '../styled/CompanyButton.jsx'
 
-const LogEntry = () => {
+const LogEntry = ({ children }) => {
 
-  const [vehicleID, setVehicleID] = useState({})
+  // const [vehicleID, setVehicleID] = useState({})
+  let vehicleID
   const [fuel, setFuel] = useState(0)
   const [odometer, setOdometer] = useState(0)
 
-  const { getAllVehicles, allVehicles } = useContext(FuelLogContext)
+  const { getAllVehicles, allVehicles, currentVehicleDetails, currentVehicle } = useContext(FuelLogContext)
   const { postLogEntry } = useContext(EmployeeContext)
 
   useEffect(() => {
@@ -19,9 +20,10 @@ const LogEntry = () => {
   },[])
 
   function selectVehicle(event) {
-    setVehicleID(event.target.value)
-    // get data from form
-    
+    vehicleID = event.target.value
+    currentVehicleDetails(allVehicles.find(vehicle => vehicle._id === vehicleID))
+    console.log(allVehicles.find(vehicle => vehicle._id === vehicleID))
+    console.log(allVehicles)
   }
   // calling post method for log
   async function handleSubmit(event) {
@@ -40,6 +42,7 @@ const LogEntry = () => {
         <option value={vehicleID}>No car selected</option>
         {allVehicles && allVehicles.map(vehicle => <option key={vehicle.asset_id} value={vehicle._id}>{vehicle.asset_id}</option>)}
       </select>
+      {children}
       {vehicleID && 
       <form onSubmit={handleSubmit}>
         <label>Current ODO:</label>
