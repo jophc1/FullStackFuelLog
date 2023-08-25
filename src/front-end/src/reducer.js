@@ -7,6 +7,10 @@ function reducer (currentState, action) {
         authorised: action.authorised,
         userName: action.userName
       }
+    case 'allVehicles':
+      return {
+        allVehicles: action.allVehicles
+      }
     default:
         return currentState
   }
@@ -15,7 +19,8 @@ function reducer (currentState, action) {
 const initialState = {
   userAccess: "",
   authorised: false,
-  userName: ""
+  userName: "",
+  allVehicles: []
 }
 
 export {

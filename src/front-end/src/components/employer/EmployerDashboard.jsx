@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import FuelLogContext from '../../context.js'
+import {FuelLogContext} from '../../context.js'
 
 const EmployerDashboard = () => {
   const { userAccess, authorised } = useContext(FuelLogContext)

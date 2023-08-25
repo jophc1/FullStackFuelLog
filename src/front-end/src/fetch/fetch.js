@@ -4,6 +4,7 @@ const fetchMod = async (method, route, data) => {
   try {
     const config = {
       method: method,
+      headers: { "Content-Type": "application/json" },
       credentials: 'include',
       body: JSON.stringify(data)
     }
