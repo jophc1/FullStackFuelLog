@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import FuelLogContext from '../context.js'
+import { FuelLogContext } from '../context.js'
 
 const Login = () => {
   const [username, setUsername] = useState("")

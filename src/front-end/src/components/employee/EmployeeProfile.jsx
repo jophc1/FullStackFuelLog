@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import FuelLogContext from '../../context.js'
+import { FuelLogContext } from '../../context.js'
 import Card from '../styled/ProfileCard'
 import EmployeeReport from './EmployeeReport'
 
