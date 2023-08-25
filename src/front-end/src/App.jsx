@@ -10,9 +10,9 @@ import basicAuthFetch from './fetch/auth/basic_fetch.js'
 import fetchMod from './fetch/fetch.js'
 
 import './App.css'
-import { FuelLogContext, EmployeeContext } from './context.js'
+import { FuelLogContext, EmployeeContext, EmployerContext } from './context.js'
 import EmployeeProfile from './components/employee/EmployeeProfile'
-import VehicleDetails from './components/employee/VehicleDetails.jsx'
+
 
 function App() {
   const [store, dispatch] = useReducer(reducer, initialState)
@@ -37,6 +37,10 @@ function App() {
 
   async function userLogout () {
     const res = await fetchMod('GET', 'auth/logout', '')
+    dispatch({
+      type: 'userAccess',
+      authorised: false
+    })
     res === 'OK' ? navigate('/') : console.log('logout failed')
   }
 
@@ -67,21 +71,27 @@ function App() {
 
   }
 
+  async function postVehicle (data) {
+    
+  }
+
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle}}>
-      <EmployeeContext.Provider value={{postLogEntry}} >
-      <Routes>
-        <Route path='/' element={<Login />} />
-          <Route path='/employee'>
-            <Route path='dashboard/home' element={<EmployeeHome><EmployeeProfile /></EmployeeHome>} />
-            <Route path='dashboard/new/log' element={<LogEntry ></LogEntry>}/>
-            <Route path='dashboard/log/successful' element={<EmployeeHome><RequestDelete /></EmployeeHome>} />
+      <EmployeeContext.Provider value={{postLogEntry}}>
+      <EmployerContext.Provider value={postVehicle}>
+        <Routes>
+          <Route path='/' element={<Login />} />
+            <Route path='/employee'>
+              <Route path='dashboard/home' element={<EmployeeHome><EmployeeProfile /></EmployeeHome>} />
+              <Route path='dashboard/new/log' element={<LogEntry ></LogEntry>}/>
+              <Route path='dashboard/log/successful' element={<EmployeeHome><RequestDelete /></EmployeeHome>} />
+            </Route>
+          <Route path='/employer'>
+            <Route path='dashboard/home' element={<EmployerDashboard />} />
+            <Route path='dashboard/all/vehicles' element={<EmployerDashboard />} />
           </Route>
-        <Route path='/employer'>
-          <Route path='dashboard/home' element={<EmployerDashboard />} />
-          <Route path='dashboard/all/vehicles' element={<EmployerDashboard />} />
-        </Route>
-      </Routes>
+        </Routes>
+      </EmployerContext.Provider>
       </EmployeeContext.Provider>
     </FuelLogContext.Provider>
   </>
