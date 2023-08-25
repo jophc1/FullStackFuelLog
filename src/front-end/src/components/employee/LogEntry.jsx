@@ -20,7 +20,8 @@ const LogEntry = ({ children }) => {
 
   function selectVehicle(event) {
     setVehicleID(event.target.value)
-    currentVehicleDetails(allVehicles.find(vehicle => vehicle._id === vehicleID))
+    const vehicleData = allVehicles.find(vehicle => vehicle._id === vehicleID)
+    currentVehicleDetails(vehicle)
   }
   // calling post method for log
   async function handleSubmit(event) {

@@ -39,7 +39,7 @@ const VehicleDetails = () => {
           </tbody>
         </table>
       </div>
-      <div>{isVehicleImageReady && currentVehicle ? <><p>Work bitch</p></>  : <img src={currentVehicle.vehicleImage_URL} />}</div>
+      <div>{isVehicleImageReady && currentVehicle ? <></>  : <img src={currentVehicle.vehicleImage_URL} />}</div>
     </Card>
   )
 }

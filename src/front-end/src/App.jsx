@@ -49,6 +49,7 @@ function App() {
   }
 
   function currentVehicleDetails (vehicleData) {
+    console.log(vehicleData)
     dispatch({
       type: 'selectVehicle',
       allVehicles: [...allVehicles],
