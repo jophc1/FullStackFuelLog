@@ -39,7 +39,7 @@ const LogEntry = ({ children }) => {
   return <>
       <div>LogEntry</div>
       <select onChange={selectVehicle} defaultValue={'default'}>
-        <option value='default'>No car selected</option>
+        <option value='default' disabled>No car selected</option>
         {allVehicles && allVehicles.map(vehicle => <option key={vehicle.asset_id} value={vehicle.asset_id}>{vehicle.asset_id}</option>)}
       </select>
       <VehicleDetails />
