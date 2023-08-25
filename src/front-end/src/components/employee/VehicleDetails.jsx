@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import Card from '../styled/ProfileCard'
 import { FuelLogContext } from '../../context.js'
-import placeHolderImage from '../../assets/place-holder.png'
+import placeHolderImage from '../../assets/no-image.png'
 
 const VehicleDetails = ( {} ) => {
 
@@ -12,7 +12,6 @@ const VehicleDetails = ( {} ) => {
   if (currentVehicle) {
     const vehicleImage = new Image()
     vehicleImage.src = currentVehicle.vehicleImage_URL
-    console.log(vehicleImage.src)
     vehicleImage.onload = async () => isVehicleImageReady = true
   }
 
@@ -20,23 +19,26 @@ const VehicleDetails = ( {} ) => {
     <Card>
       <div>
         <table>
-          <thead>
-            <tr>
-              <th><h3>Current monthly report</h3></th>
-            </tr>
-          </thead>
           <tbody>
-            <tr>
-            <td>Fuel Total:</td>
-            <td></td>
+          <tr>
+            <td>Asset ID:</td>
+            <td>{currentVehicle && currentVehicle.asset_id}</td>
           </tr>
           <tr>
-            <td>Vehicles Used:</td>
-            <td></td>
+            <td>Reg No:</td>
+            <td>{currentVehicle && currentVehicle.registration}</td>
           </tr>
           <tr>
-            <td>Log Entries:</td>
-            <td></td>
+            <td>Make:</td>
+            <td>{currentVehicle && currentVehicle.make}</td>
+          </tr>
+          <tr>
+            <td>Model:</td>
+            <td>{currentVehicle && currentVehicle.model}</td>
+          </tr>
+          <tr>
+            <td>Year:</td>
+            <td>{currentVehicle && currentVehicle.year}</td>
           </tr>
           </tbody>
         </table>
