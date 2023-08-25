@@ -16,7 +16,11 @@ const fetchMod = async (method, route, data) => {
     // if json, parse the data, if plain text assign to returnedData
     let returnedData
     if (res.headers.get("content-type") === 'application/json; charset=utf-8') {
-      returnedData = await res.json()
+      const bodyData = await res.json()
+      returnedData = {
+        status: res.status,
+        body: bodyData
+      }
     } else {
       const plainTextResponse = await res
       returnedData = plainTextResponse.statusText

@@ -7,7 +7,7 @@ const EmployeeReport = () => {
   useEffect(() =>{
     (async () => {
       const res = await fetchMod('GET', 'reports/employee/current/month', '')
-      setEmployeeReport(res)
+      setEmployeeReport(res.body)
     })()
   }, [])
 

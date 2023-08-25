@@ -39,7 +39,7 @@ function App() {
     const res = await fetchMod('GET', 'vehicles', '')
     dispatch({
       type: 'allVehicles',
-      allVehicles: res
+      allVehicles: res.body
     })
   }
 
