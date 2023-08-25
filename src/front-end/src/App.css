@@ -15,7 +15,16 @@ form {
 }
 
 .vehicleImg {
-  margin-left: 5rem;
+  padding: 0.5rem;
+}
+
+.employeeButton {
+  width: 40%;
+  margin-bottom: 0.5rem;
 }
 
 /* EMPLOYER */
+
+#navLogo {
+  width: 50%;
+}

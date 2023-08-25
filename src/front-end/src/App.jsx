@@ -28,8 +28,8 @@ function App() {
         authorised: true,
         userName: res.returnedData.name
       })
-      // TODO: set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login 
-      res.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home') // TODO chnage route back to /employee/dashboard/home
+      // TODO: set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login
+      res.returnedData.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home') // TODO chnage route back to /employee/dashboard/home
     } else {
       navigate('/')
     }
@@ -79,6 +79,7 @@ function App() {
           </Route>
         <Route path='/employer'>
           <Route path='dashboard/home' element={<EmployerDashboard />} />
+          <Route path='dashboard/all/vehicles' element={<EmployerDashboard />} />
         </Route>
       </Routes>
       </EmployeeContext.Provider>

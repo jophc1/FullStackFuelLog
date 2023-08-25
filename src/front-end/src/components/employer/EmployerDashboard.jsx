@@ -1,11 +1,13 @@
 import React, { useContext } from 'react'
 import { FuelLogContext } from '../../context.js'
+import NavBar from './NavBar'
 
 const EmployerDashboard = () => {
   const { userAccess, authorised } = useContext(FuelLogContext)
-  
+
   return userAccess && authorised ? 
   <>
+    <NavBar />
     <div>EmployerDashboard</div>
   </>
   :
