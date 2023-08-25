@@ -20,14 +20,18 @@ function App() {
 
   async function loginAccess (username, password) {
     const res = await basicAuthFetch(username, password)
-    dispatch({
-      type: 'userAccess',
-      isAdmin: res.isAdmin,
-      authorised: true,
-      userName: res.name
-    })
-    // TODO: set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login 
-    res.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home')
+    if (res.status === 200) {
+      dispatch({
+        type: 'userAccess',
+        isAdmin: res.isAdmin,
+        authorised: true,
+        userName: res.name
+      })
+      // TODO: set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login 
+      res.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home') // TODO chnage route back to /employee/dashboard/home
+    } else {
+      navigate('/')
+    }
   }
 
   async function userLogout () {
