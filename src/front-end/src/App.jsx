@@ -48,12 +48,13 @@ function App() {
     })
   }
 
-  function currentVehicleDetails (vehicleData) {
-    console.log(vehicleData)
+  async function currentVehicleDetails (vehicleID) {
+    const res = await fetchMod('GET', 'vehicles/' + vehicleID, '')
+    
     dispatch({
       type: 'selectVehicle',
       allVehicles: [...allVehicles],
-      currentVehicle: vehicleData
+      currentVehicle: res.body
     })
   }
 
@@ -73,7 +74,7 @@ function App() {
         <Route path='/' element={<Login />} />
           <Route path='/employee'>
             <Route path='dashboard/home' element={<EmployeeHome><EmployeeProfile /></EmployeeHome>} />
-            <Route path='dashboard/new/log' element={<LogEntry ><VehicleDetails /></LogEntry>}/>
+            <Route path='dashboard/new/log' element={<LogEntry ></LogEntry>}/>
             <Route path='dashboard/log/successful' element={<EmployeeHome><RequestDelete /></EmployeeHome>} />
           </Route>
         <Route path='/employer'>

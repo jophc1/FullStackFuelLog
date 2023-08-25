@@ -1,8 +1,9 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Card from '../styled/ProfileCard'
-import { FuelLogContext } from '../../context'
+import { FuelLogContext } from '../../context.js'
+import placeHolderImage from '../../assets/place-holder.png'
 
-const VehicleDetails = () => {
+const VehicleDetails = ( {} ) => {
 
   const { currentVehicle } = useContext(FuelLogContext)
 
@@ -11,9 +12,10 @@ const VehicleDetails = () => {
   if (currentVehicle) {
     const vehicleImage = new Image()
     vehicleImage.src = currentVehicle.vehicleImage_URL
-    vehicleImage.onload = () => isVehicleImageReady = true
+    console.log(vehicleImage.src)
+    vehicleImage.onload = async () => isVehicleImageReady = true
   }
-  
+
   return (
     <Card>
       <div>
@@ -39,7 +41,7 @@ const VehicleDetails = () => {
           </tbody>
         </table>
       </div>
-      <div>{isVehicleImageReady && currentVehicle ? <></>  : <img src={currentVehicle.vehicleImage_URL} />}</div>
+      <div>{!isVehicleImageReady && !currentVehicle ? <img src={placeHolderImage} />  : <img src={currentVehicle.vehicleImage_URL} />}</div>
     </Card>
   )
 }

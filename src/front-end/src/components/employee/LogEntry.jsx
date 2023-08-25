@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { FuelLogContext, EmployeeContext } from '../../context.js'
 
 import CompanyButton from '../styled/CompanyButton.jsx'
+import VehicleDetails from './VehicleDetails.jsx'
 
 const LogEntry = ({ children }) => {
 
@@ -18,10 +19,11 @@ const LogEntry = ({ children }) => {
     })()
   },[])
 
-  function selectVehicle(event) {
-    setVehicleID(event.target.value)
-    const vehicleData = allVehicles.find(vehicle => vehicle._id === vehicleID)
-    currentVehicleDetails(vehicle)
+  async function selectVehicle(event) {
+    // setVehicleID(event.target.value)
+    // const vehicleData = allVehicles.find(vehicle => vehicle._id === vehicleID)
+    console.log(event)
+    await currentVehicleDetails(event.target.value)
   }
   // calling post method for log
   async function handleSubmit(event) {
@@ -36,11 +38,11 @@ const LogEntry = ({ children }) => {
 
   return <>
       <div>LogEntry</div>
-      <select onChange={selectVehicle}>
-        <option value={vehicleID}>No car selected</option>
-        {allVehicles && allVehicles.map(vehicle => <option key={vehicle.asset_id} value={vehicle._id}>{vehicle.asset_id}</option>)}
+      <select onChange={selectVehicle} defaultValue={'default'}>
+        <option value='default'>No car selected</option>
+        {allVehicles && allVehicles.map(vehicle => <option key={vehicle.asset_id} value={vehicle.asset_id}>{vehicle.asset_id}</option>)}
       </select>
-      {children}
+      <VehicleDetails />
       {vehicleID && 
       <form onSubmit={handleSubmit}>
         <label>Current ODO:</label>
