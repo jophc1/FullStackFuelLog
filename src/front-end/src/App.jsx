@@ -51,6 +51,7 @@ function App() {
   function currentVehicleDetails (vehicleData) {
     dispatch({
       type: 'selectVehicle',
+      allVehicles: [...allVehicles],
       currentVehicle: vehicleData
     })
   }

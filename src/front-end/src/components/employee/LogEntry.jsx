@@ -5,8 +5,7 @@ import CompanyButton from '../styled/CompanyButton.jsx'
 
 const LogEntry = ({ children }) => {
 
-  // const [vehicleID, setVehicleID] = useState({})
-  let vehicleID
+  const [vehicleID, setVehicleID] = useState({})
   const [fuel, setFuel] = useState(0)
   const [odometer, setOdometer] = useState(0)
 
@@ -20,10 +19,8 @@ const LogEntry = ({ children }) => {
   },[])
 
   function selectVehicle(event) {
-    vehicleID = event.target.value
+    setVehicleID(event.target.value)
     currentVehicleDetails(allVehicles.find(vehicle => vehicle._id === vehicleID))
-    console.log(allVehicles.find(vehicle => vehicle._id === vehicleID))
-    console.log(allVehicles)
   }
   // calling post method for log
   async function handleSubmit(event) {

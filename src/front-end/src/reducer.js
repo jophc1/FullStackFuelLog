@@ -13,7 +13,8 @@ function reducer (currentState, action) {
       }
     case 'selectVehicle':
       return {
-        currentVehicle: action.currentVehicle
+        currentVehicle: action.currentVehicle,
+        allVehicles: action.allVehicles
       }
     default:
         return currentState
