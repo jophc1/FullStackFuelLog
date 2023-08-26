@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import fetchMod from '../../fetch/fetch'
-import moment from 'moment'
-
 
 const DashboardTable = () => {
   
