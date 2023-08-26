@@ -9,6 +9,7 @@ import passwordIcon from '../../assets/password-lock.png'
 import logIcon from '../../assets/log-entry.png'
 import EmployeeProfile from './EmployeeProfile.jsx'
 import RequestDelete from './RequestDelete.jsx'
+import { Navigate } from 'react-router-dom'
 
 const EmployeeHome = ({ children }) => {
   const { authorised, userLogout, userAccess } = useContext(FuelLogContext)
@@ -57,7 +58,7 @@ const EmployeeHome = ({ children }) => {
    }
   </>
   :
-  <div>No access</div>
+  <Navigate to='/' />
 }
 
 export default EmployeeHome

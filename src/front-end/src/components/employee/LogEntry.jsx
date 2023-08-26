@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FuelLogContext, EmployeeContext } from '../../context.js'
 import companyIcon from '../../assets/fuel-log-logo.png'
-
+import { Navigate } from 'react-router-dom'
 import CompanyButton from '../styled/CompanyButton.jsx'
 import VehicleDetails from './VehicleDetails.jsx'
 
@@ -63,7 +63,7 @@ const LogEntry = () => {
       </form>
       
 
-    </> : <div>No access</div>
+    </> : <Navigate to='/' />
     
   
 }
