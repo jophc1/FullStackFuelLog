@@ -14,7 +14,7 @@ const LogEntry = () => {
   const [odometer, setOdometer] = useState(0)
 
   const { getAllVehicles, allVehicles, currentVehicleDetails, currentVehicle, authorised } = useContext(FuelLogContext)
-  const { postLogEntry, handleLogEntryBackButton } = useContext(EmployeeContext)
+  const { postLogEntry, logEntryBackButton } = useContext(EmployeeContext)
 
   useEffect(() => {
     (async () => {
@@ -35,6 +35,11 @@ const LogEntry = () => {
       current_odo: parseInt(odometer)
     }
     postLogEntry(postLog)
+  }
+
+  function handleLogEntryBackButton (event) {
+    event.preventDefault()
+    logEntryBackButton()
   }
 
   return authorised ? <>

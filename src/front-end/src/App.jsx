@@ -32,7 +32,7 @@ function App() {
         userName: res.returnedData.name
       })
       // TODO: set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login
-      res.returnedData.isAdmin ? navigate('/employer/dashboard/all/vehicles') : navigate('/employee/dashboard/home') // TODO chnage route back to /employee/dashboard/home
+      res.returnedData.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home') // TODO chnage route back to /employee/dashboard/home
     } else {
       navigate('/')
     }
@@ -71,7 +71,7 @@ function App() {
     })
   }
 
-  function handleLogEntryBackButton() {
+  function logEntryBackButton() {
     dispatch({
       type: 'userAccess',
       userAccess: userAccess,
@@ -98,7 +98,7 @@ function App() {
   }
 
  
-  async function handleNewLogRequest(event) {
+  async function newLogRequest(event) {
     let res
     if (event.target.value === 'submit'){
       res = await fetchMod('POST', 'logs/reviews', {log_id: logId}) 
@@ -135,7 +135,7 @@ function App() {
 
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle}}>
-      <EmployeeContext.Provider value={{postLogEntry, newLogCreated, handleNewLogRequest, handleLogEntryBackButton}}>
+      <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest, logEntryBackButton}}>
       <EmployerContext.Provider value={{postVehicle, deleteVehicle}}>
         <Routes>
           <Route path='/' element={<Login />} />

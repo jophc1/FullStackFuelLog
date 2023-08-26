@@ -4,7 +4,12 @@ import CompanyButton from '../styled/CompanyButton'
 import { EmployeeContext } from '../../context'
 
 const RequestDelete = () => {
-  const { handleNewLogRequest } = useContext(EmployeeContext)
+  const { newLogRequest } = useContext(EmployeeContext)
+
+  function handleNewLogRequest (event) {
+    event.preventDefault()
+    newLogRequest(event)
+  }
 
   return <>
     <Card>
