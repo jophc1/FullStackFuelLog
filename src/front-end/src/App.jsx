@@ -9,6 +9,7 @@ import EmployerDashboard from './components/employer/EmployerDashboard'
 import basicAuthFetch from './fetch/auth/basic_fetch.js'
 import fetchMod from './fetch/fetch.js'
 import fetchFiles from './fetch/fetch_files.js'
+import DashboardTable from './components/employer/DashboardTable.jsx'
 
 import './App.css'
 import { FuelLogContext, EmployeeContext, EmployerContext } from './context.js'
@@ -142,11 +143,11 @@ function App() {
               {/* <Route path='dashboard/home' element={<EmployeeHome><EmployeeProfile /></EmployeeHome>} /> */}
               <Route path='dashboard/home' element={<EmployeeHome />} />
               <Route path='dashboard/new/log' element={<LogEntry />} />
-              <Route path='dashboard/log/successful' element={<EmployeeHome><RequestDelete /></EmployeeHome>} />
+              {/* <Route path='dashboard/log/successful' element={<EmployeeHome><RequestDelete /></EmployeeHome>} /> */}
             </Route>
           <Route path='/employer'>
-            <Route path='dashboard/home' element={<EmployerDashboard />} />
-            <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
+            <Route path='dashboard/home' element={<EmployerDashboard><DashboardTable /></EmployerDashboard>} />
+            <Route path='dashboard/all/vehicles' element={<EmployerDashboard />} />
           </Route>
         </Routes>
       </EmployerContext.Provider>

@@ -8,7 +8,7 @@ const EmployerDashboard = ({ children }) => {
   return userAccess && authorised ? 
   <>
     <NavBar />
-    <div>EmployerDashboard</div>
+    <h3>Employer Dashboard Home</h3>
     {children}
   </>
   :
