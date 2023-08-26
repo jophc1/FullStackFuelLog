@@ -147,7 +147,7 @@ function App() {
             </Route>
           <Route path='/employer'>
             <Route path='dashboard/home' element={<EmployerDashboard><DashboardTable /></EmployerDashboard>} />
-            <Route path='dashboard/all/vehicles' element={<EmployerDashboard />} />
+            <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
           </Route>
         </Routes>
       </EmployerContext.Provider>
