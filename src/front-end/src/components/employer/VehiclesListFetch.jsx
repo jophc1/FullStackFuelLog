@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react'
 import CompanyButton from '../styled/CompanyButton.jsx'
 import { EmployerContext, FuelLogContext } from '../../context.js'
-import SearchButton from './SearchButton.jsx'
+import FetchHeader from './FetchHeader.jsx'
 
 const VehiclesListFetch = () => {
   const { allVehicles, getAllVehicles } = useContext(FuelLogContext)
@@ -25,7 +25,7 @@ const VehiclesListFetch = () => {
   }, [])
 
   return allVehicles && <>
-    <SearchButton buttonText={'Add Vehicle'} />
+    <FetchHeader buttonText={'Add Vehicle'} />
     <div id='allVehicles'>
       <table>
         <tbody>

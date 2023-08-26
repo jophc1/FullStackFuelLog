@@ -157,6 +157,7 @@ function App() {
   function HomeReportWrapper() {
     return(
       <EmployerDashboard>
+        <h3>Employer Dashboard Home</h3>
         <DashboardTable />
         <DonutGraphVehicleUsage />
       </EmployerDashboard>
