@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import fetchMod from '../../fetch/fetch'
-import moment from 'moment'
 
 
 const DashboardTable = () => {
   
   // const [employerTableDate, setEmployerTableData] = useState({})
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const res = await fetchMod('GET', 'reports/2023/08/01/to/2023/08/20', '') // TODO: input dates from input fields into here
-  //     setEmployerTableData(res.body)
-  //     console.log(employerTableDate)
-  //   })()
-  // }, [])
+  
 
   // on change, parse dates and compare against each other to see if the 'from' is further ahead of the 'to'
   const [fromDate, setFromDate] = useState('')
   const [toDate, setToDate] = useState('')
+
+  useEffect(() => {
+      // (async () => {
+      //   const res = await fetchMod('GET', 'reports/2023/08/01/to/2023/08/20', '') // TODO: input dates from input fields into here
+      //   setEmployerTableData(res.body)
+      //   console.log(employerTableDate)
+      // })()
+    }, [fromDate, toDate])
 
   function handleEmployerTableDate(event) {
     if (event.target.name === 'to-date'){
