@@ -142,6 +142,14 @@ function App() {
     // TODO: if fetch fails, return an error message
   }
 
+  function HomeReportWrapper() {
+    return(
+      <EmployerDashboard>
+        <DashboardTable />
+      </EmployerDashboard>
+    )
+  }
+
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, backButton}}>
       <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}}>
@@ -155,7 +163,7 @@ function App() {
               {/* <Route path='dashboard/log/successful' element={<EmployeeHome><RequestDelete /></EmployeeHome>} /> */}
             </Route>
           <Route path='/employer'>
-            <Route path='dashboard/home' element={<EmployerDashboard><DashboardTable /></EmployerDashboard>} />
+            <Route path='dashboard/home' element={<HomeReportWrapper />} />
             <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
             <Route path='dashboard/vehicle/new' element={<EmployerDashboard><VehicleForm /></EmployerDashboard>} />
             <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
