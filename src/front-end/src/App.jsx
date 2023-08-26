@@ -96,7 +96,8 @@ function App() {
   }
 
   async function handleNewLogRequest() {
-    await fetchMod('POST', '', {log_id: logId})
+    await fetchMod('POST', 'logs/reviews', {log_id: logId})
+      
   }
 
 
