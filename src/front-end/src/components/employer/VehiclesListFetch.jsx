@@ -18,7 +18,10 @@ const VehiclesListFetch = () => {
   }
 
   useEffect(() => {
-    (async () => await getAllVehicles())()
+    (async () => setTimeout(() => {
+      // timeout to wait for icons to load
+      getAllVehicles()
+    }, 500))()
   }, [])
 
   return allVehicles && <>
