@@ -4,6 +4,8 @@ import companyIcon from '../../assets/fuel-log-logo.png'
 
 import CompanyButton from '../styled/CompanyButton.jsx'
 import VehicleDetails from './VehicleDetails.jsx'
+import { Link } from 'react-router-dom'
+import Card from '../styled/ProfileCard.jsx'
 
 const LogEntry = () => {
 
@@ -11,7 +13,7 @@ const LogEntry = () => {
   const [fuel, setFuel] = useState(0)
   const [odometer, setOdometer] = useState(0)
 
-  const { getAllVehicles, allVehicles, currentVehicleDetails, currentVehicle } = useContext(FuelLogContext)
+  const { getAllVehicles, allVehicles, currentVehicleDetails, currentVehicle, authorised } = useContext(FuelLogContext)
   const { postLogEntry } = useContext(EmployeeContext)
 
   useEffect(() => {
@@ -35,7 +37,7 @@ const LogEntry = () => {
     postLogEntry(postLog)
   }
 
-  return <>
+  return authorised ? <>
       <img src={companyIcon} />
       <div><h3>New Log Entry</h3></div>
       <label>Select Vehicle:</label>
@@ -44,17 +46,42 @@ const LogEntry = () => {
         {allVehicles && allVehicles.map(vehicle => <option key={vehicle.asset_id} value={vehicle.asset_id}>{vehicle.asset_id}</option>)}
       </select>
       <VehicleDetails />
-      {vehicleID && 
+      
       <form onSubmit={handleSubmit}>
         <label>Current ODO:</label>
           <input onChange={evt => setOdometer(evt.target.value)}></input>
         <label>Added Fuel:</label>
           <input onChange={evt => setFuel(evt.target.value)}></input>
-        <CompanyButton >Submit log</CompanyButton>
+        {/* <Card>
+        <table>
+            <thead>
+              <tr>
+                <th><h4>Log Entry Preview</h4></th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>Asset ID:</td>
+              <td>{}</td>
+            </tr>
+            <tr>
+              <td>Reg No:</td>
+              <td>{}</td>
+            </tr>
+            </tbody>
+          </table>
+        </Card> */}
+        <div className='logEntryButtons'>
+          <Link to='/employee/dashboard/home'>
+            <CompanyButton>Back</CompanyButton>
+          </Link>
+          <CompanyButton>Submit log</CompanyButton>
+        </div>
+        
       </form>
-      }
+      
 
-    </>
+    </> : <div>No access</div>
     
   
 }
