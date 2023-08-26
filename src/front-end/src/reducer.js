@@ -22,6 +22,13 @@ function reducer (currentState, action) {
         authorised: action.authorised,
         userName: action.userName
       }
+    case 'newLog':
+      return {
+        newLogCreated: action.newLogCreated,
+        userAccess: action.userAccess,
+        authorised: action.authorised,
+        userName: action.userName
+      }
     default:
         return currentState
   }
@@ -32,7 +39,8 @@ const initialState = {
   authorised: false,
   userName: "",
   allVehicles: [],
-  currentVehicle: {}
+  currentVehicle: {},
+  newLogCreated: false
 }
 
 export {
