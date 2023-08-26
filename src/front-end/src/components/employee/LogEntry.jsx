@@ -14,7 +14,7 @@ const LogEntry = () => {
   const [odometer, setOdometer] = useState(0)
 
   const { getAllVehicles, allVehicles, currentVehicleDetails, currentVehicle, authorised } = useContext(FuelLogContext)
-  const { postLogEntry } = useContext(EmployeeContext)
+  const { postLogEntry, handleLogEntryBackButton } = useContext(EmployeeContext)
 
   useEffect(() => {
     (async () => {
@@ -52,29 +52,8 @@ const LogEntry = () => {
           <input onChange={evt => setOdometer(evt.target.value)}></input>
         <label>Added Fuel:</label>
           <input onChange={evt => setFuel(evt.target.value)}></input>
-        {/* <Card>
-        <table>
-            <thead>
-              <tr>
-                <th><h4>Log Entry Preview</h4></th>
-              </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>Asset ID:</td>
-              <td>{}</td>
-            </tr>
-            <tr>
-              <td>Reg No:</td>
-              <td>{}</td>
-            </tr>
-            </tbody>
-          </table>
-        </Card> */}
         <div className='logEntryButtons'>
-          <Link to='/employee/dashboard/home'>
-            <CompanyButton>Back</CompanyButton>
-          </Link>
+          <CompanyButton onClick={handleLogEntryBackButton}>Back</CompanyButton>
           <CompanyButton>Submit log</CompanyButton>
         </div>
         

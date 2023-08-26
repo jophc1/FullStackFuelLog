@@ -68,6 +68,16 @@ function App() {
     })
   }
 
+  function handleLogEntryBackButton() {
+    dispatch({
+      type: 'userAccess',
+      userAccess: userAccess,
+      authorised: authorised,
+      userName: userName
+    })
+    navigate('/employee/dashboard/home')
+  }
+
   async function postLogEntry (data) {
     const res = await fetchMod('POST', 'logs', data)
     if (res.status === 200) {
@@ -84,22 +94,25 @@ function App() {
     // TODO: if post failed, return a error popup condition
   }
 
-  function handleLogReqestCancel() {
-    // console.log('cancel button')
-    dispatch({
+ 
+  async function handleNewLogRequest(event) {
+      let res
+    if (event.target.value === 'submit'){
+      res = await fetchMod('POST', 'logs/reviews', {log_id: logId}) 
+    }
+    if (res.status === 201 || event.target.value === 'cancel') {
+      dispatch({
       type: 'newLog',
       newLogCreated: false,
       userAccess: userAccess,
       authorised: authorised,
       userName: userName
     })
+    } else {
+      console.log('new log request post failed', res.status, res.body.error) // TODO: if post of log review is unsuccessful, display error on screen
+    }
+    
   }
-
-  async function handleNewLogRequest() {
-    await fetchMod('POST', 'logs/reviews', {log_id: logId})
-      
-  }
-
 
   async function postVehicle (data) {
     
@@ -107,7 +120,7 @@ function App() {
 
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle}}>
-      <EmployeeContext.Provider value={{postLogEntry, newLogCreated, handleLogReqestCancel, handleNewLogRequest}}>
+      <EmployeeContext.Provider value={{postLogEntry, newLogCreated, handleNewLogRequest, handleLogEntryBackButton}}>
       <EmployerContext.Provider value={postVehicle}>
         <Routes>
           <Route path='/' element={<Login />} />
