@@ -16,6 +16,7 @@ import { FuelLogContext, EmployeeContext, EmployerContext } from './context.js'
 import EmployeeProfile from './components/employee/EmployeeProfile'
 import VehiclesListFetch from './components/employer/VehiclesListFetch.jsx'
 import VehicleForm from './components/employer/VehicleForm.jsx'
+import DonutGraphVehicleUsage from './components/employer/DonutGraphVehicleUsage.jsx'
 
 
 function App() {
@@ -157,6 +158,7 @@ function App() {
     return(
       <EmployerDashboard>
         <DashboardTable />
+        <DonutGraphVehicleUsage />
       </EmployerDashboard>
     )
   }
