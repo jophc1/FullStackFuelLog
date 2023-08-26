@@ -93,6 +93,10 @@ form, form div {
   padding: 0.5rem 0;
 }
 
+#allVehicles table tbody tr:nth-child(even) {
+  background-color: #e7e9eb80;
+}
+
 #allVehicles table tbody tr td:nth-child(2), #allVehicles table tbody tr td:nth-child(1) {
   border: 1px solid #000000;
 }
