@@ -6,6 +6,17 @@ import { authAccess, verifyAdmin, errorAuth } from '../middleware/auth_mw.js'
 const router = express.Router()
 
 router.use(authAccess)
+
+// Update an employee route
+router.put('/:username_id', async (req, res) => {
+  try {
+    const targetEmployee = await UserModel.updateOne({ username_id: req.params.username_id }, req.body, { new: true, runValidators: true })
+    targetEmployee.acknowledged && targetEmployee.matchedCount ? res.status(201).send(targetEmployee) : res.status(202).send({ message: 'no updates made' })
+  } catch (err) {
+    res.status(500).send({ error: err.message })
+  }
+})
+
 router.use(verifyAdmin)
 
 // Get all employees route
@@ -46,16 +57,6 @@ router.get('/:username_id', async (req, res) => {
 router.delete('/:username_id', async (req, res) => {
   const targetEmployee = await UserModel.deleteOne({ username_id: req.params.username_id })
   targetEmployee.acknowledged && targetEmployee.deletedCount ? res.status(201).send(targetEmployee) : res.status(202).send({ message: 'No employee deleted' })
-})
-
-// Update an employee route
-router.put('/:username_id', async (req, res) => {
-  try {
-    const targetEmployee = await UserModel.updateOne({ username_id: req.params.username_id }, req.body, { new: true, runValidators: true })
-    targetEmployee.acknowledged && targetEmployee.matchedCount ? res.status(201).send(targetEmployee) : res.status(202).send({ message: 'no updates made' })
-  } catch (err) {
-    res.status(500).send({ error: err.message })
-  }
 })
 
 router.use(errorAuth)
