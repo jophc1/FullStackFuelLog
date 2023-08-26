@@ -11,7 +11,8 @@
     "fix": "npx eslint '**/*js' --fix",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --watchAll --detectOpenHandles --verbose",
     "seed": "node ./db/seed.js",
-    "salt": "node bcrypt_salt.js"
+    "salt": "node bcrypt_salt.js",
+    "test-cc": "NODE_OPTIONS=--experimental-vm-modules jest --watchAll --detectOpenHandles --forceExit --verbose --coverage"
   },
   "repository": {
     "type": "git",

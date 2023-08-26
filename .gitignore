@@ -6,3 +6,4 @@ src/back-end/.env
 **/.vscode
 **/.env.development
 **/.env.production
+**/coverage

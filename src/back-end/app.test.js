@@ -5,6 +5,8 @@ import mongoose from 'mongoose'
 import LogModel from './models/Log.js'
 import VehicleModel from './models/Vehicle.js'
 import LogReviewModel from './models/LogReview.js'
+import { dbConnect, dbClose } from './db/db.js'
+import { jest } from '@jest/globals'
 
 // If returnCookie is set to true, return a cookie instead of returning a response
 async function loginUser(userID, password, returnCookie) {
@@ -292,6 +294,60 @@ describe('App Tests', () => {
   describe('Analytical routes', () => {
     describe('Employer routes', () => {
 
+    })
+  })
+
+  describe('DB Connect', () => {
+    beforeAll(async () => {
+      await dbClose()
+    })
+    test('should connect to DB and console log connection success', async () => {
+      const logSpy = jest.spyOn(global.console, 'log')
+
+      await dbConnect()
+
+      expect(logSpy).toHaveBeenCalled()
+      expect(logSpy).toHaveBeenCalledWith('Mongoose connected')
+      expect(logSpy.mock.calls).toContainEqual(['Mongoose connected'])
+    })
+  })
+
+  describe('DB Connect production', () => {
+    const OLD_ENV = process.env.ENV
+
+    beforeAll(async () => {
+      await dbClose()
+      // clear the cache
+      jest.resetModules()
+      // make a copy
+      process.env.ENV = OLD_ENV
+    })
+
+    afterAll(() => {
+      process.env.ENV = OLD_ENV
+    })
+
+    test('should connect to production DB based on env', async () => {
+      process.env.ENV = 'prod'
+      const logSpy = jest.spyOn(global.console, 'log')
+
+      await dbConnect()
+
+      expect(logSpy).toHaveBeenCalled()
+      expect(logSpy).toHaveBeenCalledWith('PRODUCTION: Mongoose connected')
+    })
+    
+  })
+
+  describe('DB Disconnect', () => {
+    test('should close the connection to the DB', async () => { 
+      const logSpy = jest.spyOn(global.console, 'log')
+
+      await dbClose()
+
+      expect(logSpy).toHaveBeenCalled()
+      expect(logSpy).toHaveBeenCalledWith('Mongoose disconnected')
+      expect(logSpy.mock.calls).toContainEqual(['Mongoose disconnected'])
     })
   })
 })
