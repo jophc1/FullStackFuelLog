@@ -7,10 +7,6 @@ const VehiclesListFetch = () => {
   const { allVehicles, getAllVehicles } = useContext(FuelLogContext)
   const { deleteVehicle } = useContext(EmployerContext)
 
-  useEffect(() => {
-    (async () => await getAllVehicles())()
-  }, [])
-
   const handleEditClick = event => {
     event.preventDefault()
   }
@@ -19,6 +15,10 @@ const VehiclesListFetch = () => {
     event.preventDefault()
     deleteVehicle(event.target.attributes.value.value)
   }
+
+  useEffect(() => {
+    (async () => await getAllVehicles())()
+  }, [])
 
   return allVehicles && <>
     <SearchButton buttonText={'Add Vehicle'} />

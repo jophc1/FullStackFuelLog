@@ -15,6 +15,7 @@ import './App.css'
 import { FuelLogContext, EmployeeContext, EmployerContext } from './context.js'
 import EmployeeProfile from './components/employee/EmployeeProfile'
 import VehiclesListFetch from './components/employer/VehiclesListFetch.jsx'
+import VehicleForm from './components/employer/VehicleForm.jsx'
 
 
 function App() {
@@ -71,14 +72,14 @@ function App() {
     })
   }
 
-  function logEntryBackButton() {
+  function backButton(path) {
     dispatch({
-      type: 'userAccess',
+      type: 'retainUserInfo',
       userAccess: userAccess,
       authorised: authorised,
       userName: userName
     })
-    navigate('/employee/dashboard/home')
+    navigate(path)
   }
 
   async function postLogEntry (data) {
@@ -130,12 +131,12 @@ function App() {
 
   async function deleteVehicle (assetID) {
     const res = fetchMod('DELETE', `vehicles/${assetID}`, '')
-    await getAllVehicles()
+    
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle}}>
-      <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest, logEntryBackButton}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, backButton}}>
+      <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}}>
       <EmployerContext.Provider value={{postVehicle, deleteVehicle}}>
         <Routes>
           <Route path='/' element={<Login />} />
@@ -147,6 +148,9 @@ function App() {
             </Route>
           <Route path='/employer'>
             <Route path='dashboard/home' element={<EmployerDashboard><DashboardTable /></EmployerDashboard>} />
+            <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
+            <Route path='dashboard/vehicle/new' element={<EmployerDashboard><VehicleForm /></EmployerDashboard>} />
+            <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
             <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
           </Route>
         </Routes>
