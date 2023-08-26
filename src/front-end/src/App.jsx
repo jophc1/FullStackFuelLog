@@ -130,7 +130,7 @@ function App() {
   }
 
   async function editVehicle (assetID) {
-    
+
   }
 
   async function deleteVehicle (assetID) {
@@ -145,10 +145,26 @@ function App() {
     })
   }
 
+  async function getEmployerTableReports(fromDateArray, toDateArray) {
+    const res = await fetchMod('GET', `reports/${fromDateArray[0]}/${fromDateArray[1]}/${fromDateArray[2]}/to/${toDateArray[0]}/${toDateArray[1]}/${toDateArray[2]}`, '')
+    if (res.status === 200) {
+      return res.body
+    }
+    // TODO: if fetch fails, return an error message
+  }
+
+  function HomeReportWrapper() {
+    return(
+      <EmployerDashboard>
+        <DashboardTable />
+      </EmployerDashboard>
+    )
+  }
+
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, backButton}}>
       <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}}>
-      <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle}}>
+      <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle, getEmployerTableReports}}>
         <Routes>
           <Route path='/' element={<Login />} />
             <Route path='/employee'>
@@ -158,7 +174,7 @@ function App() {
               {/* <Route path='dashboard/log/successful' element={<EmployeeHome><RequestDelete /></EmployeeHome>} /> */}
             </Route>
           <Route path='/employer'>
-            <Route path='dashboard/home' element={<EmployerDashboard><DashboardTable /></EmployerDashboard>} />
+            <Route path='dashboard/home' element={<HomeReportWrapper />} />
             <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
             <Route path='dashboard/vehicle/new' element={<EmployerDashboard><VehicleForm /></EmployerDashboard>} />
             <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
