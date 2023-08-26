@@ -32,3 +32,5 @@
 **/.env.production
 
 **/.vite
+
+**/coverage
