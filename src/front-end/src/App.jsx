@@ -16,7 +16,7 @@ import EmployeeProfile from './components/employee/EmployeeProfile'
 
 function App() {
   const [store, dispatch] = useReducer(reducer, initialState)
-  const { userAccess, authorised, userName, allVehicles, currentVehicle } = store
+  const { userAccess, authorised, userName, allVehicles, currentVehicle, newLogCreated } = store
   const navigate = useNavigate()
 
   async function loginAccess (username, password) {
@@ -83,13 +83,14 @@ function App() {
 
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle}}>
-      <EmployeeContext.Provider value={{postLogEntry}}>
+      <EmployeeContext.Provider value={{postLogEntry, newLogCreated}}>
       <EmployerContext.Provider value={postVehicle}>
         <Routes>
           <Route path='/' element={<Login />} />
             <Route path='/employee'>
-              <Route path='dashboard/home' element={<EmployeeHome><EmployeeProfile /></EmployeeHome>} />
-              <Route path='dashboard/new/log' element={<LogEntry ></LogEntry>}/>
+              {/* <Route path='dashboard/home' element={<EmployeeHome><EmployeeProfile /></EmployeeHome>} /> */}
+              <Route path='dashboard/home' element={<EmployeeHome />} />
+              <Route path='dashboard/new/log' element={<LogEntry />} />
               <Route path='dashboard/log/successful' element={<EmployeeHome><RequestDelete /></EmployeeHome>} />
             </Route>
           <Route path='/employer'>
