@@ -8,6 +8,7 @@ import LogEntry from './components/employee/LogEntry'
 import EmployerDashboard from './components/employer/EmployerDashboard'
 import basicAuthFetch from './fetch/auth/basic_fetch.js'
 import fetchMod from './fetch/fetch.js'
+import fetchFiles from './fetch/fetch_files.js'
 
 import './App.css'
 import { FuelLogContext, EmployeeContext, EmployerContext } from './context.js'
@@ -77,14 +78,22 @@ function App() {
 
   }
 
-  async function postVehicle (data) {
-    
+  async function postVehicle ({ make, model, year, asset_id, registration, image }) {
+    let formData = new FormData()
+    formData.append('make', make)
+    formData.append('model', model)
+    formData.append('year', year)
+    formData.append('asset_id', asset_id)
+    formData.append('registration', registration)
+    formData.append('image', image)
+    const res = await fetchFiles('POST', 'vehicles', formData)
+    console.log(formData) // TODO: gather response data and render a succeful component display
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle}}>
-      <EmployeeContext.Provider value={{postLogEntry, newLogCreated}}>
-      <EmployerContext.Provider value={postVehicle}>
+    <FuelLogContext.Provider value={{ loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle }}>
+      <EmployeeContext.Provider value={{ postLogEntry, newLogCreated }}>
+      <EmployerContext.Provider value={{ postVehicle }}>
         <Routes>
           <Route path='/' element={<Login />} />
             <Route path='/employee'>
