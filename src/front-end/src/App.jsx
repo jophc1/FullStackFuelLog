@@ -45,8 +45,7 @@ function App() {
   async function userLogout () {
     const res = await fetchMod('GET', 'auth/logout', '')
     dispatch({
-      type: 'userAccess',
-      authorised: false
+      type: 'logout',
     })
     res === 'OK' ? navigate('/') : console.log('logout failed')
   }
@@ -55,10 +54,7 @@ function App() {
 
   function backButton(path) {
     dispatch({
-      type: 'retainUserInfo',
-      userAccess: userAccess,
-      authorised: authorised,
-      userName: userName
+      type: 'retainUserInfo'
     })
     navigate(path)
   }
@@ -71,10 +67,7 @@ function App() {
       dispatch({
         type: 'newLog',
         newLogCreated: true,
-        logId: res._id,
-        userAccess: userAccess,
-        authorised: authorised,
-        userName: userName
+        logId: res._id
       })
       navigate('/employee/dashboard/home')
     }
@@ -91,9 +84,6 @@ function App() {
       dispatch({
         type: 'newLog',
         newLogCreated: false,
-        userAccess: userAccess,
-        authorised: authorised,
-        userName: userName
       })
     } else {
       console.log('new log request post failed', res.status, res.body.error) // TODO: if post of log review is unsuccessful, display error on screen
@@ -107,9 +97,6 @@ function App() {
     dispatch({
       type: 'allVehicles',
       allVehicles: res.body,
-      userAccess: userAccess,
-      authorised: authorised,
-      userName: userName
     })
   }
 
@@ -118,11 +105,7 @@ function App() {
     
     dispatch({
       type: 'selectVehicle',
-      allVehicles: [...allVehicles],
       currentVehicle: res.body,
-      userAccess: userAccess,
-      authorised: authorised,
-      userName: userName
     })
   }
 
@@ -163,6 +146,17 @@ function App() {
   }
 
   // MODALS
+  // toggle modals
+  function modalTextOperation (toggle) {
+    dispatch({
+      type: 'popUpText',
+      userAccess: userAccess,
+      authorised: authorised,
+      userName: userName,
+      toggleModal: toggle,
+      allVehicles: [...allVehicles]
+    })
+  }
 
   // WRAPPERS
 
@@ -177,7 +171,7 @@ function App() {
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, backButton, showModalText}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, backButton, showModalText, modalTextOperation}}>
       <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}}>
       <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle, getEmployerTableReports}}>
         <Routes>

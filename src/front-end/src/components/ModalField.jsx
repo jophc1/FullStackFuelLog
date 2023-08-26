@@ -1,9 +1,9 @@
 import React from 'react'
 
-const PopUpModalFields = () => {
+const ModalFields = () => {
   return (
     <div>PopUpModalFields</div>
   )
 }
 
-export default PopUpModalFields
+export default ModalFields

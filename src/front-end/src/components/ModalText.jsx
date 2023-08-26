@@ -1,16 +1,14 @@
 import React, { useContext } from 'react'
-import { FuelLogContext } from '../../context.js'
+import { FuelLogContext } from '../context.js'
 
-const PopUpModalText = ({ text, children }) => {
+const ModalText = ({ text, children }) => {
 
-  // SEE: children of this component is a button Component
-
-  const { showModalText } = useContext(FuelLogContext)
-  const changeModalClass = showModalText ? "modal display-block" : "modal display-none"
+  const { showModalText, modalTextOperation } = useContext(FuelLogContext)
+  const changeModalClass = showModalText ? "modal show" : "modal hide"
 
   const handleCloseModalClick = event => {
     event.preventDefault()
-
+    modalTextOperation(false)
   }
 
   return <>
@@ -24,4 +22,4 @@ const PopUpModalText = ({ text, children }) => {
   </>
 }
 
-export default PopUpModalText
+export default ModalText

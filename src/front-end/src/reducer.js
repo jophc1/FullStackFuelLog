@@ -1,47 +1,42 @@
 
 function reducer (currentState, action) {
   switch (action.type) {
+    case 'logout':
+      return {
+        ...initialState
+      }
     case 'userAccess':
       return {
+        ...currentState,
         userAccess: action.isAdmin,
         authorised: action.authorised,
         userName: action.userName
       }
     case 'retainUserInfo':
       return {
-        userAccess: action.userAccess,
-        authorised: action.authorised,
-        userName: action.userName
+        ...currentState
       }
     case 'allVehicles':
       return {
+        ...currentState,
         allVehicles: action.allVehicles,
-        userAccess: action.userAccess,
-        authorised: action.authorised,
-        userName: action.userName
       }
     case 'selectVehicle':
       return {
+        ...currentState,
         currentVehicle: action.currentVehicle,
         allVehicles: action.allVehicles,
-        userAccess: action.userAccess,
-        authorised: action.authorised,
-        userName: action.userName
       }
     case 'newLog':
       return {
+        ...currentState,
         newLogCreated: action.newLogCreated,
         logId: action.logId,
-        userAccess: action.userAccess,
-        authorised: action.authorised,
-        userName: action.userName
       }
     case 'popUpText':
       return {
-        userAccess: action.userAccess,
-        authorised: action.authorised,
-        userName: action.userName,
-        showModalText: ''
+        ...currentState,
+        showModalText: action.toggleModal
       }
     default:
         return currentState
