@@ -5,10 +5,11 @@ import SearchButton from './SearchButton.jsx'
 
 const VehiclesListFetch = () => {
   const { allVehicles, getAllVehicles } = useContext(FuelLogContext)
-  const { deleteVehicle } = useContext(EmployerContext)
+  const { deleteVehicle, editVehicle } = useContext(EmployerContext)
 
   const handleEditClick = event => {
     event.preventDefault()
+    editVehicle(event.target.value)
   }
 
   const handleDeleteClick = event => {

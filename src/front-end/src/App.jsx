@@ -129,15 +129,26 @@ function App() {
     console.log(formData) // TODO: gather response data and render a succeful component display
   }
 
+  async function editVehicle (assetID) {
+    
+  }
+
   async function deleteVehicle (assetID) {
     const res = fetchMod('DELETE', `vehicles/${assetID}`, '')
-    
+    const newAllVehicles = allVehicles.filter(vehicle => {return vehicle.asset_id != assetID})
+    dispatch({
+      type: 'allVehicles',
+      allVehicles: newAllVehicles,
+      userAccess: userAccess,
+      authorised: authorised,
+      userName: userName
+    })
   }
 
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, backButton}}>
       <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}}>
-      <EmployerContext.Provider value={{postVehicle, deleteVehicle}}>
+      <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle}}>
         <Routes>
           <Route path='/' element={<Login />} />
             <Route path='/employee'>
