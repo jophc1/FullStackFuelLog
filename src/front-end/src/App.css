@@ -1,8 +1,10 @@
 /* All */
 
-form {
+form, form div {
   display: flex;
   flex-direction: column;
+  width: 90%;
+  margin: 0 auto;
 }
 
 /* EMPLOYEE */
@@ -15,7 +17,16 @@ form {
 }
 
 .vehicleImg {
-  margin-left: 5rem;
+  padding: 0.5rem;
+}
+
+.employeeButton {
+  width: 40%;
+  margin-bottom: 0.5rem;
 }
 
 /* EMPLOYER */
+
+#navLogo {
+  width: 50%;
+}

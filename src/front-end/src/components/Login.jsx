@@ -25,7 +25,7 @@ const Login = () => {
         value={password}
         onChange={event => setPassword(event.target.value)}
       />
-      <input type="submit" />
+      <input type="submit" value='Sumbit' />
     </form>
   </>
 }

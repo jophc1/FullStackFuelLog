@@ -4,7 +4,7 @@ const SquareButton = styled.div`
   background-color: #d05f66;
   border: 1px solid #d05f66;
   border-radius: 10px;
-  width: min-content;
+  width: 7em;
   padding: 0.5rem 1rem;
   color: #ffffff;
   text-align: center;

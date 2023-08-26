@@ -1,12 +1,12 @@
 import API_URL from '../env.js'
 
-const fetchMod = async (method, route, data) => {
+const fetchMod = async (method, route, data, type = { headers: { "Content-Type": "application/json" } } ) => {
   try {
     const config = {
       method: method,
-      headers: { "Content-Type": "application/json" },
       credentials: 'include',
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      ...type
     }
     // use the config object if there is data to be passed in the body
     const res = data 
