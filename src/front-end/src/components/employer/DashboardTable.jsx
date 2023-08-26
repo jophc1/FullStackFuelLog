@@ -1,31 +1,41 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import fetchMod from '../../fetch/fetch'
 
 const DashboardTable = () => {
   
   // const [employerTableDate, setEmployerTableData] = useState({})
-
+  const { getEmployerTableReports } = useContext()
+  const toDate = useRef('')
+  const fromDate = useRef('')
   
-
   // on change, parse dates and compare against each other to see if the 'from' is further ahead of the 'to'
-  const [fromDate, setFromDate] = useState('')
-  const [toDate, setToDate] = useState('')
 
-  useEffect(() => {
-      // (async () => {
-      //   const res = await fetchMod('GET', 'reports/2023/08/01/to/2023/08/20', '') // TODO: input dates from input fields into here
-      //   setEmployerTableData(res.body)
-      //   console.log(employerTableDate)
-      // })()
-    }, [fromDate, toDate])
+  // useEffect(() => {
+  //     // (async () => {
+  //     //   const res = await fetchMod('GET', 'reports/2023/08/01/to/2023/08/20', '') // TODO: input dates from input fields into here
+  //     //   setEmployerTableData(res.body)
+  //     //   console.log(employerTableDate)
+  //     // })()
+      
+  //   }, [])
 
   function handleEmployerTableDate(event) {
     if (event.target.name === 'to-date'){
-      setToDate(event.target.value)
+      toDate.current = event.target.value
     } else {
-      setFromDate(event.target.value)
+      fromDate.current = event.target.value
     }
-      console.log(toDate, fromDate)
+    // check that both dates are defined
+    if (toDate.current && fromDate.current) {
+      const formatToDateString = toDate.current.split('-')
+      const formatFromDateString = fromDate.current.split('-')
+  
+      if (new Date(fromDate.current) <= new Date(toDate.current)){
+        getEmployerTableReports(formatFromDateString, formatToDateString)
+      }
+
+    }
+
   }
 
 
