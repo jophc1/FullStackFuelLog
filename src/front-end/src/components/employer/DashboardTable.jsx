@@ -1,13 +1,20 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import fetchMod from '../../fetch/fetch'
+import { EmployerContext } from '../../context'
 
 const DashboardTable = () => {
   
   // const [employerTableDate, setEmployerTableData] = useState({})
-  const { getEmployerTableReports } = useContext()
+  const { getEmployerTableReports } = useContext(EmployerContext)
+  const [reportArray, setReportArray] = useState([])
+  const [renderReset, setRenderReset] = useState(true)
+  const [tableData, setTableData] = useState({})
   const toDate = useRef('')
   const fromDate = useRef('')
   
+  useEffect(() => {
+    setRenderReset(true)
+  }, [reportArray])
+
   // on change, parse dates and compare against each other to see if the 'from' is further ahead of the 'to'
 
   // useEffect(() => {
@@ -19,7 +26,8 @@ const DashboardTable = () => {
       
   //   }, [])
 
-  function handleEmployerTableDate(event) {
+  async function handleEmployerTableDate(event) {
+
     if (event.target.name === 'to-date'){
       toDate.current = event.target.value
     } else {
@@ -31,11 +39,21 @@ const DashboardTable = () => {
       const formatFromDateString = fromDate.current.split('-')
   
       if (new Date(fromDate.current) <= new Date(toDate.current)){
-        getEmployerTableReports(formatFromDateString, formatToDateString)
+        const reports = await getEmployerTableReports(formatFromDateString, formatToDateString)
+        setReportArray(reports)
+       
+      } else {
+        setReportArray([])
+        setTableData({ totalLogsRecorded: 0, totalFuel: 0, totalDistance: 0})
       }
-
+      
+      setRenderReset(false)
     }
+  }
 
+  function selectedVehicle(event) {
+    const tableData = reportArray.find(report => report._id.vehicle === event.target.value)
+    setTableData(tableData)
   }
 
 
@@ -52,15 +70,15 @@ const DashboardTable = () => {
         <tbody>
           <tr>
           <td>New trips recorded:</td>
-          <td>!!trip record logs here!!</td>
+          <td>{tableData && tableData.totalLogsRecorded}</td>
         </tr>
         <tr>
           <td>Total fuel usage:</td>
-          <td>!!fuel details here!! L</td>
+          <td>{tableData && tableData.totalFuel} L</td>
         </tr>
         <tr>
           <td>Total distance travelled:</td>
-          <td>!!total distance here!!</td>
+          <td>{tableData && tableData.totalDistance} km</td>
         </tr>
         </tbody>
       </table>
@@ -75,10 +93,14 @@ const DashboardTable = () => {
           <input type="date" name='to-date' onChange={handleEmployerTableDate} />
         </div>
       </div>
-      
-     
-      
 
+      <label>Select Vehicle:</label>
+      {renderReset && <select onChange={selectedVehicle} defaultValue={'default'}>
+        <option value='default' disabled>No car selected</option>
+        {reportArray.map(report => (report.vehicle.length > 0 && <option key={report._id.vehicle} value={report._id.vehicle}>{report.vehicle[0].asset_id}</option>))}
+      </select>}
+      
+  
   </div>
     
   </>

@@ -134,10 +134,18 @@ function App() {
     
   }
 
+  async function getEmployerTableReports(fromDateArray, toDateArray) {
+    const res = await fetchMod('GET', `reports/${fromDateArray[0]}/${fromDateArray[1]}/${fromDateArray[2]}/to/${toDateArray[0]}/${toDateArray[1]}/${toDateArray[2]}`, '')
+    if (res.status === 200) {
+      return res.body
+    }
+    // TODO: if fetch fails, return an error message
+  }
+
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, backButton}}>
       <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}}>
-      <EmployerContext.Provider value={{postVehicle, deleteVehicle}}>
+      <EmployerContext.Provider value={{postVehicle, deleteVehicle, getEmployerTableReports}}>
         <Routes>
           <Route path='/' element={<Login />} />
             <Route path='/employee'>
