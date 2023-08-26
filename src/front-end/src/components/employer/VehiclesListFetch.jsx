@@ -14,7 +14,8 @@ const VehiclesListFetch = () => {
 
   const handleDeleteClick = event => {
     event.preventDefault()
-    deleteVehicle(event.target.attributes.value.value)
+    // modal text
+    //deleteVehicle(event.target.attributes.value.value)
   }
 
   useEffect(() => {

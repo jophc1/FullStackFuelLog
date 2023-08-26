@@ -21,8 +21,10 @@ import DonutGraphVehicleUsage from './components/employer/DonutGraphVehicleUsage
 
 function App() {
   const [store, dispatch] = useReducer(reducer, initialState)
-  const { userAccess, authorised, userName, allVehicles, currentVehicle, newLogCreated, logId } = store
+  const { userAccess, authorised, userName, allVehicles, currentVehicle, newLogCreated, logId, showModalText } = store
   const navigate = useNavigate()
+
+  // USER ACCESS
 
   async function loginAccess (username, password) {
     const res = await basicAuthFetch(username, password)
@@ -49,29 +51,7 @@ function App() {
     res === 'OK' ? navigate('/') : console.log('logout failed')
   }
 
-  async function getAllVehicles () {
-    const res = await fetchMod('GET', 'vehicles', '')
-    dispatch({
-      type: 'allVehicles',
-      allVehicles: res.body,
-      userAccess: userAccess,
-      authorised: authorised,
-      userName: userName
-    })
-  }
-
-  async function currentVehicleDetails (vehicleID) {
-    const res = await fetchMod('GET', 'vehicles/' + vehicleID, '')
-    
-    dispatch({
-      type: 'selectVehicle',
-      allVehicles: [...allVehicles],
-      currentVehicle: res.body,
-      userAccess: userAccess,
-      authorised: authorised,
-      userName: userName
-    })
-  }
+  // NAV
 
   function backButton(path) {
     dispatch({
@@ -82,6 +62,8 @@ function App() {
     })
     navigate(path)
   }
+
+  // LOGS
 
   async function postLogEntry (data) {
     const res = await fetchMod('POST', 'logs', data)
@@ -116,6 +98,32 @@ function App() {
     } else {
       console.log('new log request post failed', res.status, res.body.error) // TODO: if post of log review is unsuccessful, display error on screen
     }
+  }
+
+  // VEHICLES
+
+  async function getAllVehicles () {
+    const res = await fetchMod('GET', 'vehicles', '')
+    dispatch({
+      type: 'allVehicles',
+      allVehicles: res.body,
+      userAccess: userAccess,
+      authorised: authorised,
+      userName: userName
+    })
+  }
+
+  async function currentVehicleDetails (vehicleID) {
+    const res = await fetchMod('GET', 'vehicles/' + vehicleID, '')
+    
+    dispatch({
+      type: 'selectVehicle',
+      allVehicles: [...allVehicles],
+      currentVehicle: res.body,
+      userAccess: userAccess,
+      authorised: authorised,
+      userName: userName
+    })
   }
 
   async function postVehicle ({ make, model, year, asset_id, registration, image }) {
@@ -154,6 +162,10 @@ function App() {
     // TODO: if fetch fails, return an error message
   }
 
+  // MODALS
+
+  // WRAPPERS
+
   function HomeReportWrapper() {
     return(
       <EmployerDashboard>
@@ -165,7 +177,7 @@ function App() {
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, backButton}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, backButton, showModalText}}>
       <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}}>
       <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle, getEmployerTableReports}}>
         <Routes>

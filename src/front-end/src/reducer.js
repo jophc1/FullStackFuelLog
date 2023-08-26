@@ -36,6 +36,13 @@ function reducer (currentState, action) {
         authorised: action.authorised,
         userName: action.userName
       }
+    case 'popUpText':
+      return {
+        userAccess: action.userAccess,
+        authorised: action.authorised,
+        userName: action.userName,
+        showModalText: ''
+      }
     default:
         return currentState
   }
@@ -48,7 +55,8 @@ const initialState = {
   allVehicles: [],
   currentVehicle: {},
   newLogCreated: false,
-  logId: {}
+  logId: {},
+  showModalText: false
 }
 
 export {
