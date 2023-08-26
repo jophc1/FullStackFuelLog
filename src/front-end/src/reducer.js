@@ -25,6 +25,7 @@ function reducer (currentState, action) {
     case 'newLog':
       return {
         newLogCreated: action.newLogCreated,
+        logId: action.logId,
         userAccess: action.userAccess,
         authorised: action.authorised,
         userName: action.userName
@@ -40,7 +41,8 @@ const initialState = {
   userName: "",
   allVehicles: [],
   currentVehicle: {},
-  newLogCreated: false
+  newLogCreated: false,
+  logId: {}
 }
 
 export {

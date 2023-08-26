@@ -16,7 +16,7 @@ import EmployeeProfile from './components/employee/EmployeeProfile'
 
 function App() {
   const [store, dispatch] = useReducer(reducer, initialState)
-  const { userAccess, authorised, userName, allVehicles, currentVehicle, newLogCreated } = store
+  const { userAccess, authorised, userName, allVehicles, currentVehicle, newLogCreated, logId } = store
   const navigate = useNavigate()
 
   async function loginAccess (username, password) {
@@ -74,6 +74,7 @@ function App() {
       dispatch({
         type: 'newLog',
         newLogCreated: true,
+        logId: res._id,
         userAccess: userAccess,
         authorised: authorised,
         userName: userName
@@ -95,7 +96,7 @@ function App() {
   }
 
   async function handleNewLogRequest() {
-    await fetchMod('POST', '')
+    await fetchMod('POST', '', {log_id: logId})
   }
 
 
