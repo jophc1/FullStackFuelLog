@@ -21,17 +21,17 @@ const EmployeeReport = () => {
         </thead>
         <tbody>
           <tr>
-          <td>Fuel Total:</td>
-          <td>{employeeReport.fuelTotal} L</td>
-        </tr>
-        <tr>
-          <td>Vehicles Used:</td>
-          <td>{employeeReport.vehicleCount}</td>
-        </tr>
-        <tr>
-          <td>Log Entries:</td>
-          <td>{employeeReport.totalFuelLogs}</td>
-        </tr>
+            <td>Fuel Total:</td>
+            <td>{employeeReport.fuelTotal} L</td>
+          </tr>
+          <tr>
+            <td>Vehicles Used:</td>
+            <td>{employeeReport.vehicleCount}</td>
+          </tr>
+          <tr>
+            <td>Log Entries:</td>
+            <td>{employeeReport.totalFuelLogs}</td>
+          </tr>
         </tbody>
       </table>
     </div>

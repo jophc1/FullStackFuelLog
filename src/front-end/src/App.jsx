@@ -14,6 +14,7 @@ import DashboardTable from './components/employer/DashboardTable.jsx'
 import './App.css'
 import { FuelLogContext, EmployeeContext, EmployerContext } from './context.js'
 import EmployeeProfile from './components/employee/EmployeeProfile'
+import VehiclesListFetch from './components/employer/VehiclesListFetch.jsx'
 
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
         userName: res.returnedData.name
       })
       // TODO: set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login
-      res.returnedData.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home') // TODO chnage route back to /employee/dashboard/home
+      res.returnedData.isAdmin ? navigate('/employer/dashboard/all/vehicles') : navigate('/employee/dashboard/home') // TODO chnage route back to /employee/dashboard/home
     } else {
       navigate('/')
     }
@@ -98,22 +99,21 @@ function App() {
 
  
   async function handleNewLogRequest(event) {
-      let res
+    let res
     if (event.target.value === 'submit'){
       res = await fetchMod('POST', 'logs/reviews', {log_id: logId}) 
     }
     if (res.status === 201 || event.target.value === 'cancel') {
       dispatch({
-      type: 'newLog',
-      newLogCreated: false,
-      userAccess: userAccess,
-      authorised: authorised,
-      userName: userName
-    })
+        type: 'newLog',
+        newLogCreated: false,
+        userAccess: userAccess,
+        authorised: authorised,
+        userName: userName
+      })
     } else {
       console.log('new log request post failed', res.status, res.body.error) // TODO: if post of log review is unsuccessful, display error on screen
     }
-    
   }
 
   async function postVehicle ({ make, model, year, asset_id, registration, image }) {
@@ -128,10 +128,15 @@ function App() {
     console.log(formData) // TODO: gather response data and render a succeful component display
   }
 
+  async function deleteVehicle (assetID) {
+    const res = fetchMod('DELETE', `vehicles/${assetID}`, '')
+    await getAllVehicles()
+  }
+
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle}}>
       <EmployeeContext.Provider value={{postLogEntry, newLogCreated, handleNewLogRequest, handleLogEntryBackButton}}>
-      <EmployerContext.Provider value={{postVehicle}}>
+      <EmployerContext.Provider value={{postVehicle, deleteVehicle}}>
         <Routes>
           <Route path='/' element={<Login />} />
             <Route path='/employee'>
@@ -142,7 +147,7 @@ function App() {
             </Route>
           <Route path='/employer'>
             <Route path='dashboard/home' element={<EmployerDashboard><DashboardTable /></EmployerDashboard>} />
-            <Route path='dashboard/all/vehicles' element={<EmployerDashboard />} />
+            <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
           </Route>
         </Routes>
       </EmployerContext.Provider>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import fetchMod from '../../fetch/fetch'
 
-
 const DashboardTable = () => {
   
   // const [employerTableDate, setEmployerTableData] = useState({})
