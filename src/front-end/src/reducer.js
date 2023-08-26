@@ -7,6 +7,12 @@ function reducer (currentState, action) {
         authorised: action.authorised,
         userName: action.userName
       }
+    case 'retainUserInfo':
+      return {
+        userAccess: action.userAccess,
+        authorised: action.authorised,
+        userName: action.userName
+      }
     case 'allVehicles':
       return {
         allVehicles: action.allVehicles,

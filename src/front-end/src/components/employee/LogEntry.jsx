@@ -4,8 +4,6 @@ import companyIcon from '../../assets/fuel-log-logo.png'
 
 import CompanyButton from '../styled/CompanyButton.jsx'
 import VehicleDetails from './VehicleDetails.jsx'
-import { Link } from 'react-router-dom'
-import Card from '../styled/ProfileCard.jsx'
 
 const LogEntry = () => {
 
@@ -13,8 +11,8 @@ const LogEntry = () => {
   const [fuel, setFuel] = useState(0)
   const [odometer, setOdometer] = useState(0)
 
-  const { getAllVehicles, allVehicles, currentVehicleDetails, currentVehicle, authorised } = useContext(FuelLogContext)
-  const { postLogEntry, logEntryBackButton } = useContext(EmployeeContext)
+  const { getAllVehicles, allVehicles, currentVehicleDetails, currentVehicle, authorised, backButton } = useContext(FuelLogContext)
+  const { postLogEntry } = useContext(EmployeeContext)
 
   useEffect(() => {
     (async () => {
@@ -39,7 +37,7 @@ const LogEntry = () => {
 
   function handleLogEntryBackButton (event) {
     event.preventDefault()
-    logEntryBackButton()
+    backButton('/employee/dashboard/home')
   }
 
   return authorised ? <>
