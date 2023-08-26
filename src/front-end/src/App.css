@@ -30,3 +30,18 @@ form, form div {
 #navLogo {
   width: 50%;
 }
+
+/* Employee log entry page */
+
+form input{
+  width: 50%;
+}
+
+.logEntryButtons {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  margin: 0;
+  justify-content: space-around;
+}
+

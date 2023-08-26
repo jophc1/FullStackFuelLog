@@ -48,7 +48,10 @@ function App() {
     const res = await fetchMod('GET', 'vehicles', '')
     dispatch({
       type: 'allVehicles',
-      allVehicles: res.body
+      allVehicles: res.body,
+      userAccess: userAccess,
+      authorised: authorised,
+      userName: userName
     })
   }
 
@@ -58,7 +61,10 @@ function App() {
     dispatch({
       type: 'selectVehicle',
       allVehicles: [...allVehicles],
-      currentVehicle: res.body
+      currentVehicle: res.body,
+      userAccess: userAccess,
+      authorised: authorised,
+      userName: userName
     })
   }
 

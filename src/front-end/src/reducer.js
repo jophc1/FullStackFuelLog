@@ -9,12 +9,18 @@ function reducer (currentState, action) {
       }
     case 'allVehicles':
       return {
-        allVehicles: action.allVehicles
+        allVehicles: action.allVehicles,
+        userAccess: action.userAccess,
+        authorised: action.authorised,
+        userName: action.userName
       }
     case 'selectVehicle':
       return {
         currentVehicle: action.currentVehicle,
-        allVehicles: action.allVehicles
+        allVehicles: action.allVehicles,
+        userAccess: action.userAccess,
+        authorised: action.authorised,
+        userName: action.userName
       }
     default:
         return currentState
