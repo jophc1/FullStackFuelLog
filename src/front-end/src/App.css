@@ -1,4 +1,12 @@
+@import url('https://use.fontawesome.com/releases/v5.8.2/css/all.css');
+
 /* All */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 form, form div {
   display: flex;

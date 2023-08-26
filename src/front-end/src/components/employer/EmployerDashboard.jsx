@@ -10,7 +10,6 @@ const EmployerDashboard = () => {
   <>
     <NavBar />
     <div>EmployerDashboard</div>
-    <VehicleForm />
   </>
   :
   <div>No access</div>
