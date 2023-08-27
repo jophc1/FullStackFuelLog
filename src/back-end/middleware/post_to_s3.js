@@ -6,7 +6,11 @@ async function postToS3 (req, res, next) {
       req.testRoute = true
     }
 
-    if (!req.testRoute && req.files.image) { // testRoute is for test routes so a image isnt created with a post vehicle, sorry jordan if this breaks your images
+    let checkImage
+
+    req.files ? checkImage = req.files.image : checkImage = ''
+
+    if (!req.testRoute && checkImage) { // testRoute is for test routes so a image isnt created with a post vehicle, sorry jordan if this breaks your images
       let KEY
       req.method === 'POST' ? KEY = `${req.body.asset_id}.png` : KEY = `${req.params.asset_id}.png`
 
@@ -14,7 +18,7 @@ async function postToS3 (req, res, next) {
         region: process.env.AWS_REGION
       })
       // binary data base64
-      const uploadedImg = Buffer.from(req.files.image.data, 'binary')
+      const uploadedImg = Buffer.from(checkImage.data, 'binary')
       // create a new put object command
       const command = new PutObjectCommand({
         Bucket: process.env.AWS_S3_BUCKET,
