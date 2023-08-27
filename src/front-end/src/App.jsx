@@ -238,10 +238,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Login />} />
             <Route path='/employee'>
-              {/* <Route path='dashboard/home' element={<EmployeeHome><EmployeeProfile /></EmployeeHome>} /> */}
               <Route path='dashboard/home' element={<EmployeeHome />} />
               <Route path='dashboard/new/log' element={<LogEntry />} />
-              {/* <Route path='dashboard/log/successful' element={<EmployeeHome><RequestDelete /></EmployeeHome>} /> */}
             </Route>
           <Route path='/employer'>
             <Route path='dashboard/home' element={<HomeReportWrapper />} />
@@ -249,6 +247,8 @@ function App() {
             <Route path='dashboard/vehicle/new' element={<EmployerDashboard><VehicleForm /></EmployerDashboard>} />
             <Route path='dashboard/all/vehicles/edit/:assetID' element={<EmployerDashboard><VehicleForm {...propsObject} /></EmployerDashboard>} />
             <Route path='dashboard/all/employees' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
+            <Route path='dashboard/all/logs' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
+            <Route path='dashboard/all/logs/review' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
           </Route>
         </Routes>
       </EmployerContext.Provider>

@@ -30,10 +30,10 @@ const NavBar = () => {
               <Link className="nav-link" to='/employer/dashboard/all/employees' >EMPLOYEES</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" href="#" >LOGS</Link>
+              <Link className="nav-link" to='/employer/dashboard/all/logs' >LOGS</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" href="#" >REVIEWS</Link>
+              <Link className="nav-link" to='/employer/dashboard/all/logs/reviews' >REVIEWS</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" onClick={handleLogoutClick} >LOGOUT</Link>
