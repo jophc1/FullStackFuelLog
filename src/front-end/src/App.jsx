@@ -17,6 +17,7 @@ import EmployeeProfile from './components/employee/EmployeeProfile'
 import VehiclesListFetch from './components/employer/VehiclesListFetch.jsx'
 import VehicleForm from './components/employer/VehicleForm.jsx'
 import DonutGraphVehicleUsage from './components/employer/DonutGraphVehicleUsage.jsx'
+import EmployeeListFetch from './components/employer/EmployeeListFetch.jsx'
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           newLogCreated,
           logId,
           showModalText,
+          showModalField,
           displayVehicleInfo,
           displayPlaceholderVehicleInfo,
           propsObject } = store
@@ -59,6 +61,11 @@ function App() {
       type: 'logout',
     })
     res === 'OK' ? navigate('/') : console.log('logout failed')
+  }
+
+  async function getAllEmployees () {
+    const res = await fetchMod('GET', 'employed', '')
+    return res.body
   }
 
   // NAV
@@ -179,6 +186,13 @@ function App() {
     })
   }
 
+  function modalFieldOperation (toggle) {
+    dispatch({
+      type: 'popUpField',
+      toggleModal: toggle,
+    })
+  }
+
   // WRAPPERS
 
   function HomeReportWrapper() {
@@ -194,7 +208,7 @@ function App() {
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation}}>
       <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}}>
-      <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject}}>
+      <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject, getAllEmployees, showModalField, modalFieldOperation}}>
         <Routes>
           <Route path='/' element={<Login />} />
             <Route path='/employee'>
@@ -208,7 +222,7 @@ function App() {
             <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
             <Route path='dashboard/vehicle/new' element={<EmployerDashboard><VehicleForm /></EmployerDashboard>} />
             <Route path='dashboard/all/vehicles/edit/:assetID' element={<EmployerDashboard><VehicleForm {...propsObject} /></EmployerDashboard>} />
-            <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
+            <Route path='dashboard/all/employees' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
           </Route>
         </Routes>
       </EmployerContext.Provider>

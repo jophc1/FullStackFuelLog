@@ -82,33 +82,33 @@ form, form div {
 
 /* ****************** */
 /* All Vehicles */
-#allVehicles {
+.allVehiclesEmployesLogs {
   margin: 0.5rem 0;
 }
 
-#allVehicles table {
+.allVehiclesEmployesLogs table {
   margin: 0 auto;
 }
 
-#allVehicles table tbody tr td {
+.allVehiclesEmployesLogs table tbody tr td {
   font-size: 0.7rem;
   padding: 0.25rem 0.6rem;
 }
 
-#allVehicles table tbody tr td:nth-child(4) {
+.allVehiclesEmployesLogs table tbody tr td:nth-child(4) {
   padding: 0.25rem 1.5rem 0.25rem 0rem;
   border-right: 1px solid #000000;
 }
 
-#allVehicles table tbody tr td:nth-child(6) {
+.allVehiclesEmployesLogs table tbody tr td:nth-child(6) {
   padding: 0.25rem 0.2rem 0.25rem 0rem;
   border-right: 1px solid #000000;
 }
 
-#allVehicles table tbody tr td:nth-child(3),
-#allVehicles table tbody tr td:nth-child(5),
-#allVehicles table tbody tr td:nth-child(4),
-#allVehicles table tbody tr td:nth-child(6) {
+.allVehiclesEmployesLogs table tbody tr td:nth-child(3),
+.allVehiclesEmployesLogs table tbody tr td:nth-child(5),
+.allVehiclesEmployesLogs table tbody tr td:nth-child(4),
+.allVehiclesEmployesLogs table tbody tr td:nth-child(6) {
   border-top: 1px solid #000000;
   border-bottom: 1px solid #000000;
 }
@@ -116,23 +116,23 @@ form, form div {
 
 
 
-#allVehicles table tbody tr td:nth-child(3), #allVehicles table tbody tr td:nth-child(5) {
+.allVehiclesEmployesLogs table tbody tr td:nth-child(3), .allVehiclesEmployesLogs table tbody tr td:nth-child(5) {
   font-weight: bold;
 }
 
-#allVehicles table tbody tr {
+.allVehiclesEmployesLogs table tbody tr {
   padding: 0.5rem 0;
 }
 
-#allVehicles table tbody tr:nth-child(even) {
+.allVehiclesEmployesLogs table tbody tr:nth-child(even) {
   background-color: #e7e9eb80;
 }
 
-#allVehicles table tbody tr td:nth-child(2), #allVehicles table tbody tr td:nth-child(1) {
+.allVehiclesEmployesLogs table tbody tr td:nth-child(2), .allVehiclesEmployesLogs table tbody tr td:nth-child(1) {
   border: 1px solid #000000;
 }
 
-#allVehicles table tbody tr td:nth-child(2) {
+.allVehiclesEmployesLogs table tbody tr td:nth-child(2) {
   font-size: 0.9rem;
 }
 

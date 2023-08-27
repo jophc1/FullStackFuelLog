@@ -39,6 +39,11 @@ function reducer (currentState, action) {
         ...currentState,
         showModalText: action.toggleModal
       }
+    case 'popUpField':
+      return {
+        ...currentState,
+        showModalField: action.toggleModal
+      }
     case 'editVehicle':
       return {
         ...currentState,
@@ -60,7 +65,8 @@ const initialState = {
   showModalText: false,
   displayVehicleInfo: false,
   displayPlaceholderVehicleInfo: true,
-  propsObject: {}
+  propsObject: {},
+  showModalField: false
 }
 
 export {

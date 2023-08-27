@@ -27,7 +27,7 @@ const NavBar = () => {
               <Link className="nav-link" to='/employer/dashboard/all/vehicles' >VEHICLES</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" href="#" >EMPLOYEES</Link>
+              <Link className="nav-link" to='/employer/dashboard/all/employees' >EMPLOYEES</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" href="#" >LOGS</Link>
