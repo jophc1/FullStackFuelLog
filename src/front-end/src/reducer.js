@@ -39,6 +39,12 @@ function reducer (currentState, action) {
         ...currentState,
         showModalText: action.toggleModal
       }
+    case 'backButton':
+      return {
+        ...currentState,
+        displayVehicleInfo: action.displayVehicleInfo,
+        displayPlaceholderVehicleInfo: action.displayPlaceholderVehicleInfo
+      }
     default:
         return currentState
   }

@@ -64,7 +64,9 @@ function App() {
 
   function backButton(path) {
     dispatch({ 
-      type: 'default'
+      type: 'backButton',
+      displayVehicleInfo: false,
+      displayPlaceholderVehicleInfo: true
     })
     navigate(path)
   }
@@ -93,6 +95,7 @@ function App() {
       dispatch({
         type: 'newLog',
         newLogCreated: false,
+        logID: {}
       })
     } else {
       console.log('new log request post failed', res.status, res.body.error) // TODO: if post of log review is unsuccessful, display error on screen

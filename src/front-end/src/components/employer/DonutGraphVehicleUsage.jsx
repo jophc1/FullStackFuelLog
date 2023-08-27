@@ -9,7 +9,7 @@ const DonutGraphVehicleUsage = () => {
   //   { name: "Group C", value: 300 },
   //   { name: "Group D", value: 200 },
   // ];
-  const data02 = [
+  const data01 = [
     { name: "A1", value: 100 },
     { name: "A2", value: 300 },
     { name: "B1", value: 100 },
@@ -26,16 +26,8 @@ const DonutGraphVehicleUsage = () => {
     <div>
       <div width="100%" height="100%">
         <PieChart width={400} height={400}>
-          {/* <Pie
-            data={data01}
-            dataKey="value"
-            cx="50%"
-            cy="50%"
-            outerRadius={60}
-            fill="#8884d8"
-          /> */}
           <Pie
-            data={data02}
+            data={data01}
             dataKey="value"
             cx="50%"
             cy="50%"
