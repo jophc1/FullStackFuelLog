@@ -4,6 +4,7 @@ import companyIcon from '../../assets/fuel-log-logo.png'
 import { Navigate } from 'react-router-dom'
 import CompanyButton from '../styled/CompanyButton.jsx'
 import VehicleDetails from './VehicleDetails.jsx'
+import placeHolderImage from '../../assets/no-image.png'
 
 const LogEntry = () => {
 
@@ -11,8 +12,18 @@ const LogEntry = () => {
   const [fuel, setFuel] = useState(0)
   const [odometer, setOdometer] = useState(0)
 
-  const { getAllVehicles, allVehicles, currentVehicleDetails, currentVehicle, authorised, backButton } = useContext(FuelLogContext)
+  const emptyVehicleProfile = { make: '', model: '', year: '', asset_id: '', registration: '', vehicleImage_URL: placeHolderImage }
+
+  const { getAllVehicles, allVehicles, currentVehicleDetails, currentVehicle, authorised, backButton, displayVehicleInfo, displayPlaceholderVehicleInfo } = useContext(FuelLogContext)
   const { postLogEntry } = useContext(EmployeeContext)
+
+  let isVehicleImageReady = false
+
+  if (currentVehicle) {
+    const vehicleImage = new Image()
+    vehicleImage.src = currentVehicle.vehicleImage_URL
+    vehicleImage.onload = async () => isVehicleImageReady = true
+  }
 
   useEffect(() => {
     (async () => {
@@ -20,10 +31,12 @@ const LogEntry = () => {
     })()
   },[])
 
-  async function selectVehicle(event) {
-    await currentVehicleDetails(event.target.value)
+
+  function selectVehicle(event) {
+    currentVehicleDetails(event.target.value)
     // setVehicleID(event.target.value)
   }
+
   // calling post method for log
   async function handleSubmit(event) {
     event.preventDefault()
@@ -48,7 +61,9 @@ const LogEntry = () => {
         <option value='default' disabled>No car selected</option>
         {allVehicles && allVehicles.map(vehicle => <option key={vehicle.asset_id} value={vehicle.asset_id}>{vehicle.asset_id}</option>)}
       </select>
-      <VehicleDetails />
+
+      {displayPlaceholderVehicleInfo && <VehicleDetails displayDetails={displayPlaceholderVehicleInfo} data={emptyVehicleProfile} />}
+      {displayVehicleInfo && isVehicleImageReady ? <VehicleDetails displayDetails={displayPlaceholderVehicleInfo} data={emptyVehicleProfile} /> : <VehicleDetails displayDetails={displayVehicleInfo} data={currentVehicle} />}
       
       <form onSubmit={handleSubmit}>
         <label>Current ODO:</label>

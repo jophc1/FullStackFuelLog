@@ -25,7 +25,8 @@ function reducer (currentState, action) {
       return {
         ...currentState,
         currentVehicle: action.currentVehicle,
-        allVehicles: action.allVehicles,
+        displayVehicleInfo: action.displayVehicleInfo,
+        displayPlaceholderVehicleInfo: action.displayPlaceholderVehicleInfo
       }
     case 'newLog':
       return {
@@ -51,7 +52,9 @@ const initialState = {
   currentVehicle: {},
   newLogCreated: false,
   logId: {},
-  showModalText: false
+  showModalText: false,
+  displayVehicleInfo: false,
+  displayPlaceholderVehicleInfo: true
 }
 
 export {

@@ -21,7 +21,17 @@ import DonutGraphVehicleUsage from './components/employer/DonutGraphVehicleUsage
 
 function App() {
   const [store, dispatch] = useReducer(reducer, initialState)
-  const { userAccess, authorised, userName, allVehicles, currentVehicle, newLogCreated, logId, showModalText } = store
+  const { userAccess,
+          authorised,
+          userName,
+          allVehicles,
+          currentVehicle,
+          newLogCreated,
+          logId,
+          showModalText,
+          displayVehicleInfo,
+          displayPlaceholderVehicleInfo } = store
+  
   const navigate = useNavigate()
 
   // USER ACCESS
@@ -53,8 +63,8 @@ function App() {
   // NAV
 
   function backButton(path) {
-    dispatch({
-      type: 'retainUserInfo'
+    dispatch({ 
+      type: 'default'
     })
     navigate(path)
   }
@@ -74,7 +84,6 @@ function App() {
     // TODO: if post failed, return a error popup condition
   }
 
- 
   async function newLogRequest(event) {
     let res
     if (event.target.value === 'submit'){
@@ -101,11 +110,13 @@ function App() {
   }
 
   async function currentVehicleDetails (vehicleID) {
-    const res = await fetchMod('GET', 'vehicles/' + vehicleID, '')
-    
+    const currentVehicle = allVehicles.filter(vehicle => {return vehicle.asset_id === vehicleID})
+
     dispatch({
       type: 'selectVehicle',
-      currentVehicle: res.body,
+      currentVehicle: currentVehicle[0],
+      displayPlaceholderVehicleInfo: false,
+      displayVehicleInfo: true
     })
   }
 
@@ -131,9 +142,6 @@ function App() {
     dispatch({
       type: 'allVehicles',
       allVehicles: newAllVehicles,
-      userAccess: userAccess,
-      authorised: authorised,
-      userName: userName
     })
   }
 
@@ -150,9 +158,6 @@ function App() {
   function modalTextOperation (toggle) {
     dispatch({
       type: 'popUpText',
-      userAccess: userAccess,
-      authorised: authorised,
-      userName: userName,
       toggleModal: toggle,
       allVehicles: [...allVehicles]
     })
@@ -171,7 +176,7 @@ function App() {
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, backButton, showModalText, modalTextOperation}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation}}>
       <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}}>
       <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle, getEmployerTableReports}}>
         <Routes>
