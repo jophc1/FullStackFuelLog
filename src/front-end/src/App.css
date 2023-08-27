@@ -177,7 +177,7 @@ form input{
   justify-content: space-around;
 }
 
-/* Graph styling */
+/* pie Graph styling */
 .pieContainer {
   width: 70%;
   height: 250px;
@@ -186,5 +186,12 @@ form input{
 
 .pieContainer > h4 {
   text-align: center;
+}
+
+/* bar Graph styling */
+
+.barContainer {
+  width: 70%;
+  height: 250px;
 }
 

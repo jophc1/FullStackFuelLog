@@ -17,6 +17,7 @@ import EmployeeProfile from './components/employee/EmployeeProfile'
 import VehiclesListFetch from './components/employer/VehiclesListFetch.jsx'
 import VehicleForm from './components/employer/VehicleForm.jsx'
 import DonutGraphVehicleUsage from './components/employer/DonutGraphVehicleUsage.jsx'
+import BarGraphTotalVehicleUsage from './components/employer/BarGraphTotalVehicleUsage.jsx'
 
 
 function App() {
@@ -174,6 +175,7 @@ function App() {
         <h3>Employer Dashboard Home</h3>
         <DashboardTable />
         <DonutGraphVehicleUsage />
+        <BarGraphTotalVehicleUsage />
       </EmployerDashboard>
     )
   }
