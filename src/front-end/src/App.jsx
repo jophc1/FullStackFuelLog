@@ -30,7 +30,8 @@ function App() {
           logId,
           showModalText,
           displayVehicleInfo,
-          displayPlaceholderVehicleInfo } = store
+          displayPlaceholderVehicleInfo,
+          propsObject } = store
   
   const navigate = useNavigate()
 
@@ -133,7 +134,22 @@ function App() {
   }
 
   async function editVehicle (assetID) {
+    const selectedVehicle = allVehicles.find(vehicle => {return vehicle.asset_id === assetID})
+    // prepare the props object to be passed into VehicleForm
+    const propsObj = {
+      makeInit: selectedVehicle.make,
+      modelInit: selectedVehicle.model,
+      yearInit: selectedVehicle.year,
+      assetIdInit: selectedVehicle.asset_id,
+      regoInit: selectedVehicle.registration
+    }
 
+    dispatch({
+      type: 'editVehicle',
+      props: {...propsObj}
+    })
+
+    navigate(`/employer/dashboard/all/vehicles/edit/${assetID}`)
   }
 
   async function deleteVehicle (assetID) {
@@ -178,7 +194,7 @@ function App() {
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation}}>
       <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}}>
-      <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle, getEmployerTableReports}}>
+      <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject}}>
         <Routes>
           <Route path='/' element={<Login />} />
             <Route path='/employee'>
@@ -191,7 +207,7 @@ function App() {
             <Route path='dashboard/home' element={<HomeReportWrapper />} />
             <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
             <Route path='dashboard/vehicle/new' element={<EmployerDashboard><VehicleForm /></EmployerDashboard>} />
-            <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
+            <Route path='dashboard/all/vehicles/edit/:assetID' element={<EmployerDashboard><VehicleForm {...propsObject} /></EmployerDashboard>} />
             <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
           </Route>
         </Routes>

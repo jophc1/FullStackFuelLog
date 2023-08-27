@@ -52,7 +52,7 @@ const VehiclesListFetch = () => {
       </table>
     </div>
     <ModalText text={'Are you sure you want to delete this Vehicle?'}>
-      <CompanyButton onClick={handleCompanyButtonClick} value={assetID}>Confirm</CompanyButton>
+      <CompanyButton onClick={handleCompanyButtonClick} value={assetID.current}>Confirm</CompanyButton>
     </ModalText>
   </>
 }
