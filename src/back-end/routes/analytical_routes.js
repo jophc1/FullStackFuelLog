@@ -208,8 +208,6 @@ router.get('/graph/bar/vehicles/usage/past/6/months', async (req, res) => {
       }
     ])
 
-    let holder = {}
-
     const objArrOne = Array.from(vehicles.reduce(
       (m, {month, totalMonthlyUsage}) => m.set(month, (m.get(month) || 0) + totalMonthlyUsage), new Map
     ), ([month, totalMonthlyUsage]) => ({month, totalMonthlyUsage}))
