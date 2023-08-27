@@ -1,40 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import { EmployerContext } from '../../context'
 
 const BarGraphTotalVehicleUsage = () => {
 
-  // const { graphData } = useContext(EmployerContext)
+  const { graphData } = useContext(EmployerContext)
 
-  // const [barData, setBarData] = useState([])
+  const [barData, setBarData] = useState([])
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const data = await graphData('reports/graph/bar/vehicles/usage/past/6/months', 'bar')
-  //     setBarData(data.body) /// remember to put in bar data here
-  //   })()
-  // }, [])
+  useEffect(() => {
+    (async () => {
+      const data = await graphData('reports/graph/bar/vehicles/usage/past/6/months', 'bar')
+      const sortedData = data.sort((record1,record2) => record1.month - record2.month)
+      setBarData(sortedData) 
+    })()
+  }, [])
 
-  const barData = [
-    {
-      name: 'June',
-      distanceTravelledPerFill: 4000,
-      totalMonthlyUsage: 2400,
-      amt: 2400,
-    },
-    {
-      name: 'July',
-      distanceTravelledPerFill: 3000,
-      totalMonthlyUsage: 1398,
-      amt: 2210,
-    },
-    {
-      name: 'August',
-      distanceTravelledPerFill: 2000,
-      totalMonthlyUsage: 9800,
-      amt: 2290,
-    }
-  ]
-
+  
   return (
     barData && <div className='barContainer'>
       <h4>All Vehicle usage past 6 months</h4>
@@ -51,11 +33,11 @@ const BarGraphTotalVehicleUsage = () => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey="monthName" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar name="total distance (km)" dataKey="distanceTravelledPerFill" fill="#8884d8" />
+          <Bar name="total distance (km)" dataKey="totalMonthlyDistance" fill="#8884d8" />
           <Bar name="total fuel consumed (litres)" dataKey="totalMonthlyUsage" fill="#82ca9d" />
         </BarChart>
       </ResponsiveContainer>

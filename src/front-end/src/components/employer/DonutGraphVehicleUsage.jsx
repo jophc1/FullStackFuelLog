@@ -11,7 +11,8 @@ const DonutGraphVehicleUsage = () => {
   useEffect(() => {
     (async () => {
       const data = await graphData("reports/graph/pie/vehicles/usage/all/time", "pie")
-      setPieData(data.vehicles)
+      const filteredVehicles = data.vehicles.filter(vehicle => vehicle.vehicleID.length > 0)
+      setPieData(filteredVehicles)
     })()
   }, [])
 
