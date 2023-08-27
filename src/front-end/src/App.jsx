@@ -178,10 +178,22 @@ function App() {
     )
   }
 
+  // Employer Dashboard Graphs
+
+  async function pieGraphData() {
+    const res = await fetchMod('GET', 'reports/graph/pie/vehicles/usage/all/time', '')
+    if (res.status === 200) {
+      return res.body
+    }
+    else {
+      console.log("error: pie graph not retrieved") // TODO: show error if pie graph data isn't retrieved
+    }
+  }
+
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation}}>
       <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}}>
-      <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle, getEmployerTableReports}}>
+      <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle, getEmployerTableReports, pieGraphData}}>
         <Routes>
           <Route path='/' element={<Login />} />
             <Route path='/employee'>

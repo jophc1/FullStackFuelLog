@@ -177,4 +177,14 @@ form input{
   justify-content: space-around;
 }
 
+/* Graph styling */
+.pieContainer {
+  width: 70%;
+  height: 250px;
+  /* display:none; */
+}
+
+.pieContainer > h4 {
+  text-align: center;
+}
 
