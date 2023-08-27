@@ -191,7 +191,17 @@ form input{
 /* bar Graph styling */
 
 .barContainer {
-  width: 70%;
-  height: 250px;
+  margin-top: 100px;
+  width: 50%;
+  height: 300px;
+}
+
+/* line Graph styling */
+
+.scatterContainer {
+  margin-top: 100px;
+  width: 50%;
+  height: 300px;
+  text-align: center;
 }
 

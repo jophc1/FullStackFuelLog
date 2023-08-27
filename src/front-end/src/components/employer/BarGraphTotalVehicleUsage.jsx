@@ -1,60 +1,48 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 const BarGraphTotalVehicleUsage = () => {
 
-  const data = [
+  // const { graphData } = useContext(EmployerContext)
+
+  // const [barData, setBarData] = useState([])
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const data = await graphData('reports/graph/bar/vehicles/usage/past/6/months', 'bar')
+  //     setBarData(data.body) /// remember to put in bar data here
+  //   })()
+  // }, [])
+
+  const barData = [
     {
       name: 'June',
-      total_fuel: 4000,
-      pv: 2400,
+      distanceTravelledPerFill: 4000,
+      totalMonthlyUsage: 2400,
       amt: 2400,
     },
     {
       name: 'July',
-      total_fuel: 3000,
-      pv: 1398,
+      distanceTravelledPerFill: 3000,
+      totalMonthlyUsage: 1398,
       amt: 2210,
     },
     {
       name: 'August',
-      total_fuel: 2000,
-      pv: 9800,
+      distanceTravelledPerFill: 2000,
+      totalMonthlyUsage: 9800,
       amt: 2290,
-    },
-    {
-      name: 'Page D',
-      total_fuel: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: 'Page E',
-      total_fuel: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: 'Page F',
-      total_fuel: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: 'Page G',
-      total_fuel: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
+    }
   ]
 
   return (
-    <div className='barContainer'>
+    barData && <div className='barContainer'>
+      <h4>All Vehicle usage past 6 months</h4>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           width={500}
           height={300}
-          data={data}
+          data={barData}
           margin={{
             top: 5,
             right: 30,
@@ -67,8 +55,8 @@ const BarGraphTotalVehicleUsage = () => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="pv" fill="#8884d8" />
-          <Bar dataKey="total_fuel" fill="#82ca9d" />
+          <Bar name="total distance (km)" dataKey="distanceTravelledPerFill" fill="#8884d8" />
+          <Bar name="total fuel consumed (litres)" dataKey="totalMonthlyUsage" fill="#82ca9d" />
         </BarChart>
       </ResponsiveContainer>
     </div>

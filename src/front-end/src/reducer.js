@@ -10,7 +10,8 @@ function reducer (currentState, action) {
         ...currentState,
         userAccess: action.isAdmin,
         authorised: action.authorised,
-        userName: action.userName
+        userName: action.userName,
+        allVehicles: action.allVehicles
       }
     case 'retainUserInfo':
       return {

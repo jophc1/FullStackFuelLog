@@ -18,7 +18,9 @@ import VehiclesListFetch from './components/employer/VehiclesListFetch.jsx'
 import VehicleForm from './components/employer/VehicleForm.jsx'
 import DonutGraphVehicleUsage from './components/employer/DonutGraphVehicleUsage.jsx'
 import BarGraphTotalVehicleUsage from './components/employer/BarGraphTotalVehicleUsage.jsx'
+import ScatterGraphVehicleDistanceFuel from './components/employer/ScatterGraphVehicleDistanceFuel.jsx'
 import EmployeeListFetch from './components/employer/EmployeeListFetch.jsx'
+
 
 
 function App() {
@@ -43,11 +45,13 @@ function App() {
   async function loginAccess (username, password) {
     const res = await basicAuthFetch(username, password)
     if (res.status === 200) {
+    const initialVehicles = await fetchMod('GET', 'vehicles', '')
       dispatch({
         type: 'userAccess',
         isAdmin: res.returnedData.isAdmin,
         authorised: true,
-        userName: res.returnedData.name
+        userName: res.returnedData.name,
+        allVehicles: initialVehicles.body
       })
       // TODO: set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login
       res.returnedData.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home') // TODO chnage route back to /employee/dashboard/home
@@ -206,26 +210,27 @@ function App() {
         <DashboardTable />
         <DonutGraphVehicleUsage />
         <BarGraphTotalVehicleUsage />
+        <ScatterGraphVehicleDistanceFuel />
       </EmployerDashboard>
     )
   }
 
   // Employer Dashboard Graphs
-
-  async function pieGraphData() {
-    const res = await fetchMod('GET', 'reports/graph/pie/vehicles/usage/all/time', '')
+  async function graphData(path, graphType) {
+    const res = await fetchMod('GET', path, '')
     if (res.status === 200) {
       return res.body
     }
     else {
-      console.log("error: pie graph not retrieved") // TODO: show error if pie graph data isn't retrieved
+      console.log(`error: ${graphType} graph not retrieved`) // TODO: show error if pie graph data isn't retrieved
     }
   }
+
 
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation}}>
       <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}}>
-      <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject, getAllEmployees, showModalField, modalFieldOperation, pieGraphData}}>
+      <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject, getAllEmployees, showModalField, modalFieldOperation, graphData}}>
         <Routes>
           <Route path='/' element={<Login />} />
             <Route path='/employee'>

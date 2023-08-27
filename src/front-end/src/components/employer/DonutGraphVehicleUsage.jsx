@@ -4,13 +4,13 @@ import { EmployerContext } from '../../context';
 
 const DonutGraphVehicleUsage = () => {
 
-  const { pieGraphData } = useContext(EmployerContext)
+  const { graphData } = useContext(EmployerContext)
 
   const [pieData, setPieData] = useState([])
 
   useEffect(() => {
     (async () => {
-      const data = await pieGraphData()
+      const data = await graphData("reports/graph/pie/vehicles/usage/all/time", "pie")
       setPieData(data.vehicles)
     })()
   }, [])
@@ -36,7 +36,7 @@ const DonutGraphVehicleUsage = () => {
 
   return (
     pieData && <div className='pieContainer'>
-                  <h4>Vehicle total fuel usage</h4>
+                  <h4>Vehicle total fuel usage all time</h4>
                   <ResponsiveContainer width={'100%'} height="100%">
                           <PieChart width={500} height={500}>
                             <Pie
