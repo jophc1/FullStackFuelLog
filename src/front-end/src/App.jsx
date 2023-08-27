@@ -136,7 +136,7 @@ function App() {
     })
   }
 
-  async function postVehicle ({ make, model, year, asset_id, registration, image }) {
+  async function postUpdateVehicle ({ make, model, year, asset_id, registration, image, method, urlSuffix }) {
     let formData = new FormData()
     formData.append('make', make)
     formData.append('model', model)
@@ -144,8 +144,10 @@ function App() {
     formData.append('asset_id', asset_id)
     formData.append('registration', registration)
     formData.append('image', image)
-    const res = await fetchFiles('POST', 'vehicles', formData)
+    const res = await fetchFiles(method, urlSuffix, formData)
     console.log(formData) // TODO: gather response data and render a succeful component display
+
+    navigate('/employer/dashboard/all/vehicles/')
   }
 
   async function editVehicle (assetID) {
@@ -156,7 +158,9 @@ function App() {
       modelInit: selectedVehicle.model,
       yearInit: selectedVehicle.year,
       assetIdInit: selectedVehicle.asset_id,
-      regoInit: selectedVehicle.registration
+      regoInit: selectedVehicle.registration,
+      method: 'PUT',
+      urlSuffix: `vehicles/${assetID}`
     }
 
     dispatch({
@@ -230,7 +234,7 @@ function App() {
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation}}>
       <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}}>
-      <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject, getAllEmployees, showModalField, modalFieldOperation, graphData}}>
+      <EmployerContext.Provider value={{postUpdateVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject, getAllEmployees, showModalField, modalFieldOperation, graphData}}>
         <Routes>
           <Route path='/' element={<Login />} />
             <Route path='/employee'>

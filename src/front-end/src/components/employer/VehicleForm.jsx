@@ -2,9 +2,9 @@ import React, { useState, useContext } from 'react'
 import { EmployerContext } from '../../context.js'
 import CompanyButton from '../styled/CompanyButton.jsx'
 
-const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit = '', regoInit = ''  }) => {
+const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit = '', regoInit = '', method = 'POST', urlSuffix = 'vehicles'  }) => {
 
-  const { postVehicle } = useContext(EmployerContext)
+  const { postUpdateVehicle } = useContext(EmployerContext)
 
   const [make, setMake] = useState(makeInit)
   const [model, setModel] = useState(modelInit)
@@ -15,13 +15,15 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
 
   const handleSubmit = event => {
     event.preventDefault()
-    postVehicle({
+    postUpdateVehicle({
       make: make,
       model: model,
       year: year,
       asset_id: assetId,
       registration: rego,
-      image: selectedFile
+      image: selectedFile,
+      method: method,
+      urlSuffix: urlSuffix
     })
   }
 
