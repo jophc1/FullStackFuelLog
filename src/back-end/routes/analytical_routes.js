@@ -110,15 +110,15 @@ router.get('/graph/:vehicle_id/line/distance/', async (req, res) => {
     const graphAggregate = await LogModel.aggregate([
       { $match: { vehicle_id: idToSearch } }
     ])
-    const distanceTravelledPerFill = {}
+    const distanceTravelledPerFill = []
     for (let i = 0; i < graphAggregate.length; i++) {
       if (i < graphAggregate.length - 1) {
-        distanceTravelledPerFill[`point ${i + 1}`] = { distance: (graphAggregate[i + 1].current_odo - graphAggregate[i].current_odo), fuelAdded: graphAggregate[i + 1].fuel_added }
+        distanceTravelledPerFill.push({ distance: (graphAggregate[i + 1].current_odo - graphAggregate[i].current_odo), fuelAdded: graphAggregate[i + 1].fuel_added })
       }
     }
-    res.send({
+    res.send(
       distanceTravelledPerFill
-    })
+    )
   } catch (err) {
     res.status(500).send({ error: err.message })
   }
@@ -185,49 +185,50 @@ router.get('/graph/bar/vehicles/usage/past/6/months', async (req, res) => {
     const vehicles = await LogModel.aggregate([
       {
         $group: {
-          _id: { month: { $month: '$date' } },
+          _id: { vehicle: '$vehicle_id', month: { $month: '$date' } },
           totalMonthlyUsage: { $sum: '$fuel_added' },
-          usage: { $push: { vehicle: '$vehicle_id', current_odo: { $sum: '$current_odo' }, month: { $month: '$date' } } }
+          odoMin: { $min: '$current_odo' },
+          odoMax: { $max: '$current_odo' },
         }
       },
-      // Stage 2: unpack array elements
-      { $unwind: '$usage' },
-      // Stage 3: group by vehicle key from element items
       {
-        $group: {
-          _id: { vehicle: '$usage.vehicle', month: '$usage.month' },
-          vehicleID: { $first: '$usage.vehicle' },
-          current_odo: { $addToSet: '$usage.current_odo' },
-          totalMonthlyUsage: { $first: '$totalMonthlyUsage' }
+        $addFields: {
+          totalDistance: { $subtract: ['$odoMax', '$odoMin'] }
         }
       },
-      // populate object keys
       {
-        $lookup: {
-          from: VehicleModel.collection.name,
-          localField: 'vehicleID',
-          foreignField: '_id',
-          as: 'vehicleID'
+        $project: {
+          _id: { month: '$_id.month' },
+          vehicle: '$_id.vehicle',
+          month: '$_id.month',
+          totalMonthlyUsage: '$totalMonthlyUsage',
+          totalMonthlyDistance: '$totalDistance',
+          odoMax: '$odoMax'
         }
       }
     ])
-    // gather and sort data based on months, data saved in vehicles is sorted by vehicle id and months
-    // response object will have month keys and the values of each month will be an object with keys totalMonthlyUsage and distanceTravelledPerFill
-    const respObjec = {}
-    // months are identified by numbers i.e. June is 6, July is 7 etc.
-    // go through each collection add the totalMonthlyUsage field for each month
-    vehicles.forEach(vehicle => {
-      respObjec[vehicle._id.month] = { totalMonthlyUsage: vehicle.totalMonthlyUsage, distanceTravelledPerFill: 0 }
-      // sort current_odo for each vehicle
-      const sortedOdo = vehicle.current_odo.sort(function (a, b) { return a - b })
-      // calculate distance travelled between fill for each vehicle during each month and add to the total of distanceTravelledPerFill
-      for (let i = 0; i < sortedOdo.length; i++) {
-        if (i < sortedOdo.length - 1) {
-          respObjec[vehicle._id.month].distanceTravelledPerFill += sortedOdo[i + 1] - sortedOdo[i]
-        }
+
+    let holder = {}
+
+    const objArrOne = Array.from(vehicles.reduce(
+      (m, {month, totalMonthlyUsage}) => m.set(month, (m.get(month) || 0) + totalMonthlyUsage), new Map
+    ), ([month, totalMonthlyUsage]) => ({month, totalMonthlyUsage}))
+
+    const objArrTwo = Array.from(vehicles.reduce(
+      (m, {month, totalMonthlyDistance}) => m.set(month, (m.get(month) || 0) + totalMonthlyDistance), new Map
+    ), ([month, totalMonthlyDistance]) => ({month, totalMonthlyDistance}))
+
+    let respObj = []
+
+    const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+
+    objArrOne.map((report, index) => {
+      if (report.month === objArrTwo[index].month) {
+        respObj.push({...report, ...objArrTwo[index], monthName: month[report.month - 1] })
       }
     })
-    res.send(respObjec)
+
+    res.send(respObj)
   } catch (err) {
     res.status(500).send({ error: err.message })
   }
