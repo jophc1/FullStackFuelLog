@@ -3,13 +3,14 @@ import CompanyButton from '../styled/CompanyButton.jsx'
 import FetchHeader from './FetchHeader.jsx'
 import { EmployerContext, FuelLogContext } from '../../context.js'
 import ModalFields from '../ModalField.jsx'
-import ModalText from '../ModalField.jsx'
+import ModalText from '../ModalText.jsx'
 
 const EmployeeListFetch = () => {
   const [allEmployees, setAllEmployees] = useState([])
   const [showUpdateForm, setShowUpdateForm] = useState(false)
   const [showNewForm, setShowNewForm] = useState(false)
-  const { getAllEmployees, editEmployee } = useContext(EmployerContext)
+  const { getAllEmployees, editEmploye, deleteEmployee } = useContext(EmployerContext)
+  const { modalTextOperation } = useContext(FuelLogContext)
   const employeeID = useRef('')
 
   const handleEditClick = event => {
@@ -21,12 +22,13 @@ const EmployeeListFetch = () => {
     event.preventDefault()
     employeeID.current = event.target.attributes.value.value
     // turn modal on
+    console.log(event)
     modalTextOperation(true)
   }
 
   const handleCompanyButtonClick = event => {
     event.preventDefault()
-    deleteVehicle(event.target.value)
+    deleteEmployee(event.target.value)
   }
 
   useEffect(() => {

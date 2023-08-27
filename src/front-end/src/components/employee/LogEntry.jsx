@@ -25,12 +25,6 @@ const LogEntry = () => {
     vehicleImage.onload = async () => isVehicleImageReady = true
   }
 
-  useEffect(() => {
-    (async () => {
-      await getAllVehicles()
-    })()
-  },[])
-
 
   function selectVehicle(event) {
     currentVehicleDetails(event.target.value)
@@ -76,8 +70,6 @@ const LogEntry = () => {
         </div>
         
       </form>
-      
-
     </> : <Navigate to='/' />
     
   

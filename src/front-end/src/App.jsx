@@ -3,23 +3,21 @@ import { reducer, initialState } from './reducer.js'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import Login from './components/Login'
 import EmployeeHome from './components/employee/EmployeeHome'
-import RequestDelete from './components/employee/RequestDelete'
 import LogEntry from './components/employee/LogEntry'
 import EmployerDashboard from './components/employer/EmployerDashboard'
 import basicAuthFetch from './fetch/auth/basic_fetch.js'
 import fetchMod from './fetch/fetch.js'
-import fetchFiles from './fetch/fetch_files.js'
 import DashboardTable from './components/employer/DashboardTable.jsx'
 
 import './App.css'
-import { FuelLogContext, EmployeeContext, EmployerContext } from './context.js'
-import EmployeeProfile from './components/employee/EmployeeProfile'
+import { FuelLogContext } from './context.js'
 import VehiclesListFetch from './components/employer/VehiclesListFetch.jsx'
 import VehicleForm from './components/employer/VehicleForm.jsx'
 import DonutGraphVehicleUsage from './components/employer/DonutGraphVehicleUsage.jsx'
 import BarGraphTotalVehicleUsage from './components/employer/BarGraphTotalVehicleUsage.jsx'
 import ScatterGraphVehicleDistanceFuel from './components/employer/ScatterGraphVehicleDistanceFuel.jsx'
 import EmployeeListFetch from './components/employer/EmployeeListFetch.jsx'
+import EmployeeContextLayout from './components/employee/EmployeeContextLayout.jsx'
 
 
 
@@ -30,7 +28,6 @@ function App() {
           userName,
           allVehicles,
           currentVehicle,
-          newLogCreated,
           logId,
           showModalText,
           showModalField,
@@ -68,11 +65,6 @@ function App() {
     res === 'OK' ? navigate('/') : console.log('logout failed')
   }
 
-  async function getAllEmployees () {
-    const res = await fetchMod('GET', 'employed', '')
-    return res.body
-  }
-
   // NAV
 
   function backButton(path) {
@@ -82,37 +74,6 @@ function App() {
       displayPlaceholderVehicleInfo: true
     })
     navigate(path)
-  }
-
-  // LOGS
-
-  async function postLogEntry (data) {
-    const res = await fetchMod('POST', 'logs', data)
-    if (res.status === 200) {
-      dispatch({
-        type: 'newLog',
-        newLogCreated: true,
-        logId: res._id
-      })
-      navigate('/employee/dashboard/home')
-    }
-    // TODO: if post failed, return a error popup condition
-  }
-
-  async function newLogRequest(event) {
-    let res
-    if (event.target.value === 'submit'){
-      res = await fetchMod('POST', 'logs/reviews', {log_id: logId}) 
-    }
-    if (res.status === 201 || event.target.value === 'cancel') {
-      dispatch({
-        type: 'newLog',
-        newLogCreated: false,
-        logID: {}
-      })
-    } else {
-      console.log('new log request post failed', res.status, res.body.error) // TODO: if post of log review is unsuccessful, display error on screen
-    }
   }
 
   // VEHICLES
@@ -134,58 +95,6 @@ function App() {
       displayPlaceholderVehicleInfo: false,
       displayVehicleInfo: true
     })
-  }
-
-  async function postUpdateVehicle ({ make, model, year, asset_id, registration, image, method, urlSuffix }) {
-    let formData = new FormData()
-    formData.append('make', make)
-    formData.append('model', model)
-    formData.append('year', year)
-    formData.append('asset_id', asset_id)
-    formData.append('registration', registration)
-    formData.append('image', image)
-    const res = await fetchFiles(method, urlSuffix, formData)
-    console.log(formData) // TODO: gather response data and render a succeful component display
-
-    navigate('/employer/dashboard/all/vehicles/')
-  }
-
-  async function editVehicle (assetID) {
-    const selectedVehicle = allVehicles.find(vehicle => {return vehicle.asset_id === assetID})
-    // prepare the props object to be passed into VehicleForm
-    const propsObj = {
-      makeInit: selectedVehicle.make,
-      modelInit: selectedVehicle.model,
-      yearInit: selectedVehicle.year,
-      assetIdInit: selectedVehicle.asset_id,
-      regoInit: selectedVehicle.registration,
-      method: 'PUT',
-      urlSuffix: `vehicles/${assetID}`
-    }
-
-    dispatch({
-      type: 'editVehicle',
-      props: {...propsObj}
-    })
-
-    navigate(`/employer/dashboard/all/vehicles/edit/${assetID}`)
-  }
-
-  async function deleteVehicle (assetID) {
-    const res = fetchMod('DELETE', `vehicles/${assetID}`, '')
-    const newAllVehicles = allVehicles.filter(vehicle => {return vehicle.asset_id != assetID})
-    dispatch({
-      type: 'allVehicles',
-      allVehicles: newAllVehicles,
-    })
-  }
-
-  async function getEmployerTableReports(fromDateArray, toDateArray) {
-    const res = await fetchMod('GET', `reports/${fromDateArray[0]}/${fromDateArray[1]}/${fromDateArray[2]}/to/${toDateArray[0]}/${toDateArray[1]}/${toDateArray[2]}`, '')
-    if (res.status === 200) {
-      return res.body
-    }
-    // TODO: if fetch fails, return an error message
   }
 
   // MODALS
@@ -219,28 +128,15 @@ function App() {
     )
   }
 
-  // Employer Dashboard Graphs
-  async function graphData(path, graphType) {
-    const res = await fetchMod('GET', path, '')
-    if (res.status === 200) {
-      return res.body
-    }
-    else {
-      console.log(`error: ${graphType} graph not retrieved`) // TODO: show error if pie graph data isn't retrieved
-    }
-  }
-
-
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation}}>
-      <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}}>
-      <EmployerContext.Provider value={{postUpdateVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject, getAllEmployees, showModalField, modalFieldOperation, graphData}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate}}>
         <Routes>
           <Route path='/' element={<Login />} />
-            <Route path='/employee'>
+          <Route path='/employer'></Route>
+          <Route path='/employee' element={<EmployeeContextLayout />} >
               <Route path='dashboard/home' element={<EmployeeHome />} />
               <Route path='dashboard/new/log' element={<LogEntry />} />
-            </Route>
+          </Route>
           <Route path='/employer'>
             <Route path='dashboard/home' element={<HomeReportWrapper />} />
             <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
@@ -251,8 +147,6 @@ function App() {
             <Route path='dashboard/all/logs/review' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
           </Route>
         </Routes>
-      </EmployerContext.Provider>
-      </EmployeeContext.Provider>
     </FuelLogContext.Provider>
   </>
 }

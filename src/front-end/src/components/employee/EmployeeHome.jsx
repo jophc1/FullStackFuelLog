@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import Header from './Header.jsx'
 import { EmployeeContext, FuelLogContext } from '../../context.js'
-import { Link } from 'react-router-dom'
 import SquareButton from '../styled/EmployeeButton.jsx'
 import Row from '../styled/Row.jsx'
 import logoutIcon from '../../assets/logout.png'
@@ -12,14 +11,16 @@ import RequestDelete from './RequestDelete.jsx'
 import { Navigate } from 'react-router-dom'
 
 const EmployeeHome = ({ children }) => {
-  const { authorised, userLogout, userAccess } = useContext(FuelLogContext)
-  const  { newLogCreated } = useContext(EmployeeContext)
+
+const { authorised, userLogout, userAccess, navigate } = useContext(FuelLogContext)
+const { newLogCreated } = useContext(EmployeeContext)
 
   const handleLogoutClick = event => {
     event.preventDefault()
     userLogout()
   }
   
+  // IMAGES 
   const logoutImg = new Image()
   const passIcon = new Image()
   const logImg = new Image()
@@ -32,30 +33,28 @@ const EmployeeHome = ({ children }) => {
   passIcon.onload = () => isPasswordImgReady = true
   logImg.onload = () => isLogImgReady = true
 
+
+
   return authorised && !userAccess ? 
   <>
-    <Header />
-    {/* {children} */}
-    {newLogCreated ? <RequestDelete /> : <EmployeeProfile />}
-    
-    {isLogImgReady && isPasswordImgReady && isLogoutImgReady ? <></> :  
-    <Row>
-       <Link to="/employee/dashboard/new/log">
-          <SquareButton>
-            <img src={logIcon} alt="logout icon" className='employeeButton' />
-            <p>New Log Entry</p>
-          </SquareButton>
-       </Link>
-       <SquareButton>
-          <img src={passwordIcon} alt="logout icon" className='employeeButton' />
-          <p>Reset Password</p>
-       </SquareButton>
-       <SquareButton onClick={handleLogoutClick}>
+      <Header />
+      {newLogCreated ? <RequestDelete /> : <EmployeeProfile />}
+      {isLogImgReady && isPasswordImgReady && isLogoutImgReady ? <></> :  
+      <Row>
+        <SquareButton onClick={() => navigate('/employee/dashboard/new/log')}>
+          <img src={logIcon} alt="logout icon" className='employeeButton' />
+          <p>New Log Entry</p>
+        </SquareButton>
+        <SquareButton>
+            <img src={passwordIcon} alt="logout icon" className='employeeButton' />
+            <p>Reset Password</p>
+        </SquareButton>
+        <SquareButton onClick={handleLogoutClick}>
           <img src={logoutIcon} alt="logout icon" className='employeeButton' />
           <p>Logout</p>
-       </SquareButton>
-    </Row>
-   }
+        </SquareButton>
+      </Row>
+      }
   </>
   :
   <Navigate to='/' />
