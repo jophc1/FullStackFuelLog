@@ -2,15 +2,15 @@ import React, { useState, useContext } from 'react'
 import { EmployerContext } from '../../context.js'
 import CompanyButton from '../styled/CompanyButton.jsx'
 
-const VehicleForm = () => {
+const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit = '', regoInit = ''  }) => {
 
   const { postVehicle } = useContext(EmployerContext)
 
-  const [make, setMake] = useState('')
-  const [model, setModel] = useState('')
-  const [year, setYear] = useState('')
-  const [assetId, setAssetId] = useState('')
-  const [rego, setRego] = useState('')
+  const [make, setMake] = useState(makeInit)
+  const [model, setModel] = useState(modelInit)
+  const [year, setYear] = useState(yearInit)
+  const [assetId, setAssetId] = useState(assetIdInit)
+  const [rego, setRego] = useState(regoInit)
   const [selectedFile, setSelectedFile] = useState(null)
 
   const handleSubmit = event => {

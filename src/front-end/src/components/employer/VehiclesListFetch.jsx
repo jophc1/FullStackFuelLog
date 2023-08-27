@@ -35,7 +35,7 @@ const VehiclesListFetch = () => {
 
   return allVehicles && <>
     <FetchHeader buttonText={'Add Vehicle'} />
-    <div id='allVehicles'>
+    <div className='allVehiclesEmployesLogs'>
       <table>
         <tbody>
           {allVehicles.map(vehicle => (

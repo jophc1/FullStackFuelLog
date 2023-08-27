@@ -18,6 +18,7 @@ import VehiclesListFetch from './components/employer/VehiclesListFetch.jsx'
 import VehicleForm from './components/employer/VehicleForm.jsx'
 import DonutGraphVehicleUsage from './components/employer/DonutGraphVehicleUsage.jsx'
 import BarGraphTotalVehicleUsage from './components/employer/BarGraphTotalVehicleUsage.jsx'
+import EmployeeListFetch from './components/employer/EmployeeListFetch.jsx'
 
 
 function App() {
@@ -30,8 +31,10 @@ function App() {
           newLogCreated,
           logId,
           showModalText,
+          showModalField,
           displayVehicleInfo,
-          displayPlaceholderVehicleInfo } = store
+          displayPlaceholderVehicleInfo,
+          propsObject } = store
   
   const navigate = useNavigate()
 
@@ -59,6 +62,11 @@ function App() {
       type: 'logout',
     })
     res === 'OK' ? navigate('/') : console.log('logout failed')
+  }
+
+  async function getAllEmployees () {
+    const res = await fetchMod('GET', 'employed', '')
+    return res.body
   }
 
   // NAV
@@ -137,7 +145,22 @@ function App() {
   }
 
   async function editVehicle (assetID) {
+    const selectedVehicle = allVehicles.find(vehicle => {return vehicle.asset_id === assetID})
+    // prepare the props object to be passed into VehicleForm
+    const propsObj = {
+      makeInit: selectedVehicle.make,
+      modelInit: selectedVehicle.model,
+      yearInit: selectedVehicle.year,
+      assetIdInit: selectedVehicle.asset_id,
+      regoInit: selectedVehicle.registration
+    }
 
+    dispatch({
+      type: 'editVehicle',
+      props: {...propsObj}
+    })
+
+    navigate(`/employer/dashboard/all/vehicles/edit/${assetID}`)
   }
 
   async function deleteVehicle (assetID) {
@@ -164,6 +187,13 @@ function App() {
       type: 'popUpText',
       toggleModal: toggle,
       allVehicles: [...allVehicles]
+    })
+  }
+
+  function modalFieldOperation (toggle) {
+    dispatch({
+      type: 'popUpField',
+      toggleModal: toggle,
     })
   }
 
@@ -195,7 +225,7 @@ function App() {
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation}}>
       <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}}>
-      <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle, getEmployerTableReports, pieGraphData}}>
+      <EmployerContext.Provider value={{postVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject, getAllEmployees, showModalField, modalFieldOperation, pieGraphData}}>
         <Routes>
           <Route path='/' element={<Login />} />
             <Route path='/employee'>
@@ -208,8 +238,8 @@ function App() {
             <Route path='dashboard/home' element={<HomeReportWrapper />} />
             <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
             <Route path='dashboard/vehicle/new' element={<EmployerDashboard><VehicleForm /></EmployerDashboard>} />
-            <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
-            <Route path='dashboard/all/vehicles' element={<EmployerDashboard><VehiclesListFetch /></EmployerDashboard>} />
+            <Route path='dashboard/all/vehicles/edit/:assetID' element={<EmployerDashboard><VehicleForm {...propsObject} /></EmployerDashboard>} />
+            <Route path='dashboard/all/employees' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
           </Route>
         </Routes>
       </EmployerContext.Provider>
