@@ -48,7 +48,8 @@ const VehiclesListFetch = () => {
         </tbody>
       </table>
     </div>
-    <ModalText text={'Are you sure you want to delete this Vehicle?'}>
+    <ModalText>
+      <p>Are you sure you want to delete this Vehicle?</p>
       <CompanyButton onClick={handleCompanyButtonClick} value={assetID.current}>Confirm</CompanyButton>
     </ModalText>
   </>

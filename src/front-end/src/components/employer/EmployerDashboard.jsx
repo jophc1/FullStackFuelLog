@@ -124,7 +124,7 @@ const EmployerDashboard = ({ children }) => {
   return userAccess && authorised ? 
   <>
     <NavBar />
-    <EmployerContext.Provider value={{postUpdateVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs}}>
+    <EmployerContext.Provider value={{postUpdateVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, deleteLog}}>
     {children}
     </EmployerContext.Provider>   
   </>
