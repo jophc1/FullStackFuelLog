@@ -28,7 +28,6 @@ function App() {
           userName,
           allVehicles,
           currentVehicle,
-          logId,
           showModalText,
           showModalField,
           displayVehicleInfo,
@@ -144,7 +143,7 @@ function App() {
             <Route path='dashboard/all/vehicles/edit/:assetID' element={<EmployerDashboard><VehicleForm {...propsObject} /></EmployerDashboard>} />
             <Route path='dashboard/all/employees' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
             <Route path='dashboard/all/logs' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
-            <Route path='dashboard/all/logs/review' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
+            <Route path='dashboard/all/logs/reviews' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
           </Route>
         </Routes>
     </FuelLogContext.Provider>
