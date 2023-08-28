@@ -79,7 +79,7 @@ const initialState = {
   displayPlaceholderVehicleInfo: true,
   propsObject: {},
   showModalField: false,
-  allLogs: []
+  allLogs: [],
 }
 
 export {

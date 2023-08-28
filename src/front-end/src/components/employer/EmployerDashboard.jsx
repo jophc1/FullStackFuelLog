@@ -68,10 +68,10 @@ const EmployerDashboard = ({ children }) => {
 
   // LOGS
 
-  async function getAllLogs () {
-    const res = await fetchMod('GET', 'logs', '')
-    const sortedLogRecordsByDate = res.body.sort((logOne, logTwo) => new Date(logTwo.date).getTime() - new Date(logOne.date).getTime() )
-    const LogsDateFormatted = sortedLogRecordsByDate.map(log => log.date = new Date(log.date).toISOString().split('T')[0]) // TODO: what does this line even do? Warm regards, Josh
+  async function getAllLogs (page) {
+    const res = await fetchMod('GET', `logs?page=${page}&limit=20`, '')
+    const sortedLogRecordsByDate = res.body
+    // const LogsDateFormatted = sortedLogRecordsByDate.map(log => log.date = new Date(log.date).toISOString().split('T')[0])
     dispatch({
       type: 'allLogs',
       allLogs: sortedLogRecordsByDate

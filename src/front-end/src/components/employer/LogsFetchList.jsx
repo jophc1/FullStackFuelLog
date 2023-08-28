@@ -9,13 +9,16 @@ const LogsFetchList = () => {
   const { modalTextOperation } = useContext(FuelLogContext)
   const [renderModal, setRenderModal] = useState(false)
   const [modalDeleteRender, setModalDeleteRender] = useState(false)
+  const [totalDocs, setTotalDocs] = useState(0)
+  const [totalPages, setTotalPages] = useState(0)
+  const [page, setPage] = useState(1)
   const selectedLog = useRef({})
   const logID = useRef('')
 
   const handleLogClick = event => {
     event.preventDefault()
-    selectedLog.current = allLogs.find(log => log._id === event.target.attributes.value.value)
-    logID.current = allLogs.length - allLogs.map(obj => obj._id).indexOf(event.target.attributes.value.value)
+    selectedLog.current = allLogs.docs.find(log => log._id === event.target.attributes.value.value)
+    logID.current = (allLogs.totalDocs - allLogs.limit * (allLogs.page - 1)) - index 
     modalTextOperation(true)
     setRenderModal(true)
   }
@@ -37,20 +40,21 @@ const LogsFetchList = () => {
   }
 
   useEffect(() => {
-    (async () => getAllLogs())()
+    (async () => getAllLogs(page))()
+    setTotalDocs(allLogs.totalDocs)
   }, [modalDeleteRender])
 
-  return allLogs &&
+  return allLogs.docs &&
     <>
       <h3>All Log Records</h3>
       <div className='allLogs'>
         <table>
           <tbody>
-            {allLogs.map((log, index) => (
+            {allLogs.docs.map((log, index) => (
               <tr key={log._id}>
                 <td value={log._id} onClick={handleDeleteIconClick}><span value={log._id} className='fa fa-trash-alt'></span></td>
                 <td onClick={handleLogClick} value={log._id}>Log ID:</td>
-                <td onClick={handleLogClick} value={log._id}>{allLogs.length - index}</td>
+                <td onClick={handleLogClick} value={log._id}>{(allLogs.totalDocs - allLogs.limit * (allLogs.page - 1)) - index }</td>
                 <td onClick={handleLogClick} value={log._id}>Log Date:</td>
                 <td onClick={handleLogClick} value={log._id}>{log.date}</td>
               </tr>
