@@ -27,15 +27,15 @@ const EmployeeContextLayout = () => {
     // LOG REVIEWS
 
     async function newLogRequest(event) {
-      let res
+      let res = {}
       if (event.target.value === 'submit'){
-        res = await fetchMod('POST', 'logs/reviews', {log_id: logId}) 
+        res = await fetchMod('POST', 'logs/reviews', {log_id: logId})
       }
-      if (res.status === 201 || event.target.value === 'cancel') {
+      if (event.target.value === 'cancel' || res.status === 201) {
         dispatch({
           type: 'newLog',
           newLogCreated: false,
-          logID: {}
+          logId: {}
         })
       } else {
         console.log('new log request post failed', res.status, res.body.error) // TODO: if post of log review is unsuccessful, display error on screen

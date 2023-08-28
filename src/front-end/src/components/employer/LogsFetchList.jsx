@@ -31,6 +31,9 @@ const LogsFetchList = () => {
   const handleCompanyButtonClick = event => {
     event.preventDefault()
     deleteLog(event.target.value)
+
+    setModalDeleteRender(false)
+    modalTextOperation(false)
   }
 
   useEffect(() => {

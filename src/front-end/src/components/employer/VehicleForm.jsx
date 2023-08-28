@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { EmployerContext } from '../../context.js'
 import CompanyButton from '../styled/CompanyButton.jsx'
 
-const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit = '', regoInit = '', method = 'POST', urlSuffix = 'vehicles'  }) => {
+const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit = '', regoInit = '', method = 'POST', urlSuffix = 'vehicles', heading = 'Add Vehicle'  }) => {
 
   const { postUpdateVehicle } = useContext(EmployerContext)
 
@@ -28,7 +28,7 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
   }
 
   return <>
-    <h3>Add Vehicle</h3>
+    <h3>{heading}</h3>
     <form onSubmit={handleSubmit}>
       <div>
         <label>Car Make</label>
@@ -45,7 +45,7 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
       <div>
         <input type="file" onChange={event => setSelectedFile(event.target.files[0], 'image')} />
       </div>
-      <CompanyButton>Sumbit</CompanyButton>
+      <CompanyButton>Submit</CompanyButton>
     </form>
   </>
 }

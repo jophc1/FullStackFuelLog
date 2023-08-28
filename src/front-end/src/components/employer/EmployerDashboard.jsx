@@ -8,11 +8,13 @@ import fetchFiles from '../../fetch/fetch_files.js'
 
 const EmployerDashboard = ({ children }) => {
 
+  
+
   const [store, dispatch] = useReducer(reducer, initialState)
   const { propsObject, allLogs } = store
 
-
-  const { userAccess, authorised, allVehicles, navigate, editVehicle } = useContext(FuelLogContext)
+  const { userAccess, authorised, navigate, allVehicles } = useContext(FuelLogContext)
+  
 
   // EMPLOYEES
 
@@ -21,20 +23,24 @@ const EmployerDashboard = ({ children }) => {
     return res.body
   }
 
-  async function deleteEmployee () {
-
+  async function deleteEmployee (employeeID) {
+    const res = await fetchMod('DELETE', 'employed/' + employeeID, '')
+    if (res.status === 500) {
+      console.log("Error occured with delete employee - deleteEmployee function") // TODO: display error message is error occurs
+    } else {
+      return res.body
+    }
   }
 
   async function postUpdateEmployee (userObject, method, path) {
     
     if (method === 'PUT') {
       path = path + '/' + userObject.username_id
+      if (!userObject.password) { // If no password is provided in object then remove password key (Update route only)
+        delete userObject.password
+      }
     } 
-    else if (method === 'DELETE' || method === 'PATCH')
-    {
-      console.log('CANNOT PATCH OR DELETE on postUpdateEmployee')
-      return {}
-    }
+    
     const res = await fetchMod(method, path, userObject)
    
     if (res.status === 500){
@@ -58,12 +64,12 @@ const EmployerDashboard = ({ children }) => {
     }
   }
 
-  async function deleteVehicle (assetID) {
-    const res = fetchMod('DELETE', `vehicles/${assetID}`, '')
+    async function deleteVehicle (assetID) {  // TALK ABOUT THIS WITH JORDAN ABOUT VEHICLE LIST UPDATE ON DELETION AND HOW allVehicles state not updating even with dispatch
+    const res = await fetchMod('DELETE', `vehicles/${assetID}`, '')
     const newAllVehicles = allVehicles.filter(vehicle => {return vehicle.asset_id != assetID})
     dispatch({
       type: 'allVehicles',
-      allVehicles: newAllVehicles,
+      allVehicles: newAllVehicles
     })
   }
 
@@ -72,7 +78,7 @@ const EmployerDashboard = ({ children }) => {
   async function getAllLogs () {
     const res = await fetchMod('GET', 'logs', '')
     const sortedLogRecordsByDate = res.body.sort((logOne, logTwo) => new Date(logTwo.date).getTime() - new Date(logOne.date).getTime() )
-    const LogsDateFormatted = sortedLogRecordsByDate.map(log => log.date = new Date(log.date).toISOString().split('T')[0])
+    const LogsDateFormatted = sortedLogRecordsByDate.map(log => log.date = new Date(log.date).toISOString().split('T')[0]) // TODO: what does this line even do? Warm regards, Josh
     dispatch({
       type: 'allLogs',
       allLogs: sortedLogRecordsByDate
@@ -115,7 +121,7 @@ const EmployerDashboard = ({ children }) => {
   return userAccess && authorised ? 
   <>
     <NavBar />
-    <EmployerContext.Provider value={{postUpdateVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, deleteLog}}>
+    <EmployerContext.Provider value={{postUpdateVehicle, deleteVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, deleteLog}}>
     {children}
     </EmployerContext.Provider>   
   </>

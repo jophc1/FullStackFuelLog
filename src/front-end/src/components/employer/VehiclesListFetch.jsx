@@ -5,8 +5,8 @@ import FetchHeader from './FetchHeader.jsx'
 import ModalText from '../ModalText.jsx'
 
 const VehiclesListFetch = () => {
-  const { allVehicles, getAllVehicles, modalTextOperation, navigate } = useContext(FuelLogContext)
-  const { deleteVehicle, editVehicle } = useContext(EmployerContext)
+  const { allVehicles, getAllVehicles, modalTextOperation, navigate, editVehicle } = useContext(FuelLogContext)
+  const { deleteVehicle } = useContext(EmployerContext)
   const [modalRender, setModalRender] = useState(false)
   const assetID = useRef('')
 
@@ -23,9 +23,12 @@ const VehiclesListFetch = () => {
     modalTextOperation(true)
   }
 
-  const handleCompanyButtonClick = event => {
+  const handleCompanyButtonClick = async event => {
     event.preventDefault()
-    deleteVehicle(event.target.value)
+    await deleteVehicle(event.target.value)
+
+    setModalRender(false)
+    modalTextOperation(false)
   }
 
   const handleNewVehicle = event => {
@@ -33,29 +36,31 @@ const VehiclesListFetch = () => {
   }
 
   useEffect(() => {
-    (async () => getAllVehicles())()
-  }, [])
+    (async () => await getAllVehicles())()
+  }, [modalRender])
 
-  return allVehicles && <>
+  return <>
     <FetchHeader>
       <CompanyButton onClick={handleNewVehicle}><span className='fa fa-plus'></span> Add Vehicle</CompanyButton>
     </FetchHeader>
-    <div className='allVehiclesEmployesLogs'>
-      <table>
-        <tbody>
-          {allVehicles.map(vehicle => (
-            <tr key={vehicle.asset_id}>
-              <td><CompanyButton value={vehicle.asset_id} onClick={handleEditClick}>Edit</CompanyButton></td>
-              <td value={vehicle.asset_id} onClick={handleDeleteIconClick}><span value={vehicle.asset_id} className='fa fa-trash-alt'></span></td>
-              <td>Asset ID:</td>
-              <td>{vehicle.asset_id}</td>
-              <td>Registration No:</td>
-              <td>{vehicle.registration}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    {allVehicles && 
+      <div className='allVehiclesEmployesLogs'>
+            <table>
+              <tbody>
+                {allVehicles.map(vehicle => (
+                  <tr key={vehicle.asset_id}>
+                    <td><CompanyButton value={vehicle.asset_id} onClick={handleEditClick}>Edit</CompanyButton></td>
+                    <td value={vehicle.asset_id} onClick={handleDeleteIconClick}><span value={vehicle.asset_id} className='fa fa-trash-alt'></span></td>
+                    <td>Asset ID:</td>
+                    <td>{vehicle.asset_id}</td>
+                    <td>Registration No:</td>
+                    <td>{vehicle.registration}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+    }
     { modalRender &&
     <ModalText setRenderModal={setModalRender}>
       <p>Are you sure you want to delete this Vehicle?</p>

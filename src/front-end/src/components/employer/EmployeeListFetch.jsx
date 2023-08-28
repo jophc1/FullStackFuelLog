@@ -11,6 +11,7 @@ const EmployeeListFetch = () => {
   
   const [allEmployees, setAllEmployees] = useState([])
   const [modalFieldProps, setModalFieldProps] = useState({})
+  const [modalRender, setModalRender] = useState(false)
 
   const [showForm, setShowForm] = useState(false)
   const { getAllEmployees, deleteEmployee } = useContext(EmployerContext)
@@ -28,7 +29,7 @@ const EmployeeListFetch = () => {
     setModalFieldProps({
       fieldLabelOne: 'Full name',
       fieldLabelTwo: 'Employee ID',
-      fieldLabelThree: 'Password (min 8 characters)', 
+      fieldLabelThree: 'Change Password (min 8 characters, optional)', 
       heading: 'Update Employee', 
       initalEmployeeId: employeeID.current, 
       initialName: employeeName.current, 
@@ -45,20 +46,23 @@ const EmployeeListFetch = () => {
     event.preventDefault()
     employeeID.current = event.target.attributes.value.value
     // turn modal on
-    console.log(event)
+    setModalRender(true)
     modalTextOperation(true)
   }
 
-  const handleCompanyButtonClick = event => {
+  async function handleDeleteButtonClick (event) {
     event.preventDefault()
-    deleteEmployee(event.target.value)
+    const deleteEmployeeResponse = await deleteEmployee(event.target.value)
+    console.log(deleteEmployeeResponse)
+    setModalRender(false)
+    modalTextOperation(false)
   }
 
   useEffect(() => {
     (async () => {
       setAllEmployees(await getAllEmployees())
     })()
-  }, [showForm])
+  }, [showForm, modalRender])
 
   const handleAddButton = event => {
     event.preventDefault()
@@ -74,17 +78,6 @@ const EmployeeListFetch = () => {
     modalFieldOperation(true)
     setShowForm(true)
   }
-
-  // const modelFieldProps = {
-  //   fieldLabelOne: 'Full name',
-  //   fieldLabelTwo: 'Employee ID',
-  //   fieldLabelThree: 'Password (min 8 characters)', 
-  //   heading: 'Update Employee', 
-  //   initalEmployeeId: employeeID.current, 
-  //   initialName: employeeName.current, 
-  //   setShowForm: setShowForm,
-  //   method: 'PUT'
-  // } 
 
   return <>
     <FetchHeader>
@@ -108,9 +101,15 @@ const EmployeeListFetch = () => {
         </table>
       </div>
     }
-    <ModalText text={'Are you sure you want to delete this Employee?'}>
-      <CompanyButton onClick={handleCompanyButtonClick} value={employeeID.current}>Confirm</CompanyButton>
-    </ModalText>
+    {modalRender && 
+      <ModalText setRenderModal={setModalRender}>
+          <p>Are you sure you want to delete this Employee?</p>
+          <CompanyButton onClick={handleDeleteButtonClick} value={employeeID.current}>Confirm</CompanyButton>
+        </ModalText>
+    }
+      
+    
+   
     {showForm && <ModalFields {...modalFieldProps} />}
   </>
 }

@@ -11,9 +11,9 @@ const ModalText = ({setRenderModal, style = '', children }) => {
     setRenderModal(false)
     modalTextOperation(false)
   }
-
+// commented out onClick={handleCloseModalClick} on top div
   return <>
-    <div className={changeModalClass} onClick={handleCloseModalClick}>
+    <div className={changeModalClass}> 
       <div className='modal-content'>
         <span className='fa fa-times'  onClick={handleCloseModalClick}></span>
         {children}

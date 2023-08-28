@@ -33,8 +33,7 @@ function App() {
           showModalField,
           displayVehicleInfo,
           displayPlaceholderVehicleInfo,
-          propsObject,
-          employeeObject } = store
+          propsObject } = store
   
   const navigate = useNavigate()
 
@@ -113,7 +112,8 @@ function App() {
       assetIdInit: selectedVehicle.asset_id,
       regoInit: selectedVehicle.registration,
       method: 'PUT',
-      urlSuffix: `vehicles/${assetID}`
+      urlSuffix: `vehicles/${assetID}`,
+      heading: 'Update Vehicle'
     }
 
     dispatch({
@@ -130,7 +130,7 @@ function App() {
     dispatch({
       type: 'popUpText',
       toggleModal: toggle,
-      allVehicles: [...allVehicles]
+      // allVehicles: [...allVehicles]
     })
   }
 

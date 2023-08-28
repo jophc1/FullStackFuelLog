@@ -14,7 +14,15 @@ const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree, heading, i
 
   const handleNewSubmit = async event => {
     event.preventDefault()
-    await postUpdateEmployee({ name, username_id: employeeId, password: password.toString() }, method, path)
+
+    const updatedEmployeeDetails = {
+      name,
+      username_id: employeeId,
+      password: password.toString()
+    }
+
+  
+    await postUpdateEmployee(updatedEmployeeDetails, method, path)
     setShowForm(false)
     modalFieldOperation(false)
   }
