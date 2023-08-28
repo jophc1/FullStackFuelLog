@@ -22,7 +22,7 @@ const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree, heading, i
     }
 
   
-    await postUpdateEmployee(updatedEmployeeDetails, method, path)
+    await postUpdateEmployee(updatedEmployeeDetails, initalEmployeeId, method, path)
     setShowForm(false)
     modalFieldOperation(false)
   }

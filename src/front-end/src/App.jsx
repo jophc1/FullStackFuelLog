@@ -124,7 +124,7 @@ function App() {
     navigate(`/employer/dashboard/all/vehicles/edit/${assetID}`)
   }
 
-  async function deleteVehicle (assetID) {  // TALK ABOUT THIS WITH JORDAN ABOUT VEHICLE LIST UPDATE ON DELETION AND HOW allVehicles state not updating even with dispatch
+  async function deleteVehicle (assetID) {  
     const res = await fetchMod('DELETE', `vehicles/${assetID}`, '')
     const newAllVehicles = allVehicles.filter(vehicle => {return vehicle.asset_id != assetID})
     dispatch({
