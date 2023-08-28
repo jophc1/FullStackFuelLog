@@ -9,32 +9,19 @@ import fetchFiles from '../../fetch/fetch_files.js'
 const EmployerDashboard = ({ children }) => {
 
   const [store, dispatch] = useReducer(reducer, initialState)
-  const { newLogCreated,
-          logId,
-          propsObject } = store
+  const { propsObject, allLogs } = store
 
 
-  const { userAccess,
-          authorised,
-          allVehicles,
-          getAllVehicles,
-          currentVehicleDetails,
-          currentVehicle,
-          displayVehicleInfo,
-          displayPlaceholderVehicleInfo,
-          backButton,
-          showModalText,
-          modalTextOperation,
-          showModalField,
-          modalFieldOperation,
-          navigate } = useContext(FuelLogContext)
+  const { userAccess, authorised, allVehicles, navigate } = useContext(FuelLogContext)
+
+  // EMPLOYEES
 
   async function getAllEmployees () {
     const res = await fetchMod('GET', 'employed', '')
     return res.body
   }
 
-  async function deleteEmploye () {
+  async function deleteEmployee () {
 
   }
 
@@ -42,6 +29,7 @@ const EmployerDashboard = ({ children }) => {
     
   }
         
+  // VEHICLES
 
   async function postUpdateVehicle ({ make, model, year, asset_id, registration, image, method, urlSuffix }) {
     let formData = new FormData()
@@ -88,22 +76,28 @@ const EmployerDashboard = ({ children }) => {
     })
   }
 
+  // LOGS
+
+  async function getAllLogs () {
+    const res = await fetchMod('GET', 'logs', '')
+    dispatch({
+      type: 'allLogs',
+      allLogs: res.body
+    })
+  }
+
+  async function deleteLog (logID) {
+
+  }
+
+  // REPORTS
+
   async function getEmployerTableReports(fromDateArray, toDateArray) {
     const res = await fetchMod('GET', `reports/${fromDateArray[0]}/${fromDateArray[1]}/${fromDateArray[2]}/to/${toDateArray[0]}/${toDateArray[1]}/${toDateArray[2]}`, '')
     if (res.status === 200) {
       return res.body
     }
     // TODO: if fetch fails, return an error message
-  }
-  
-  function HomeReportWrapper () {
-    return <>
-        <h3>Employer Dashboard Home</h3>
-        <DashboardTable />
-        <DonutGraphVehicleUsage />
-        <BarGraphTotalVehicleUsage />
-        <ScatterGraphVehicleDistanceFuel />
-      </>
   }
 
   // Employer Dashboard Graphs
@@ -117,10 +111,11 @@ const EmployerDashboard = ({ children }) => {
     }
   }
 
+
   return userAccess && authorised ? 
   <>
     <NavBar />
-    <EmployerContext.Provider value={{postUpdateVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmploye, postUpdateEmployee}}>
+    <EmployerContext.Provider value={{postUpdateVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs}}>
     {children}
     </EmployerContext.Provider>   
   </>

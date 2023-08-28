@@ -18,6 +18,7 @@ import BarGraphTotalVehicleUsage from './components/employer/BarGraphTotalVehicl
 import ScatterGraphVehicleDistanceFuel from './components/employer/ScatterGraphVehicleDistanceFuel.jsx'
 import EmployeeListFetch from './components/employer/EmployeeListFetch.jsx'
 import EmployeeContextLayout from './components/employee/EmployeeContextLayout.jsx'
+import LogsFetchList from './components/employer/LogsFetchList.jsx'
 
 
 
@@ -142,7 +143,7 @@ function App() {
             <Route path='dashboard/vehicle/new' element={<EmployerDashboard><VehicleForm /></EmployerDashboard>} />
             <Route path='dashboard/all/vehicles/edit/:assetID' element={<EmployerDashboard><VehicleForm {...propsObject} /></EmployerDashboard>} />
             <Route path='dashboard/all/employees' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
-            <Route path='dashboard/all/logs' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
+            <Route path='dashboard/all/logs' element={<EmployerDashboard><LogsFetchList /></EmployerDashboard>} />
             <Route path='dashboard/all/logs/reviews' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
           </Route>
         </Routes>
