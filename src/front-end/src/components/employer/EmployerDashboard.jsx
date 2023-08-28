@@ -87,9 +87,11 @@ const EmployerDashboard = ({ children }) => {
 
   async function getAllLogs () {
     const res = await fetchMod('GET', 'logs', '')
+    const sortedLogRecordsByDate = res.body.sort((logOne, logTwo) => new Date(logTwo.date).getTime() - new Date(logOne.date).getTime() )
+    console.log(sortedLogRecordsByDate)
     dispatch({
       type: 'allLogs',
-      allLogs: res.body
+      allLogs: sortedLogRecordsByDate
     })
   }
 

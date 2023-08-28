@@ -25,16 +25,16 @@ const LogsFetchList = () => {
   return allLogs &&
     <>
       <h3>All Log Records</h3>
-      <div className='allVehiclesEmployesLogs'>
+      <div className='allLogs'>
         <table>
           <tbody>
-            {allLogs.map(log => (
+            {allLogs.map((log, index) => (
               <tr key={log._id} onClick={handleLogClick}>
                 <td value={log._id} onClick={handleDeleteIconClick}><span value={log._id} className='fa fa-trash-alt'></span></td>
                 <td>Log ID:</td>
-                <td>{log._id}</td>
+                <td>{index + 1}</td>
                 <td>Log Date:</td>
-                <td>{log.date}</td>
+                <td>{new Date(log.date).toISOString().split('T')[0]}</td>
               </tr>
             ))}
           </tbody>
