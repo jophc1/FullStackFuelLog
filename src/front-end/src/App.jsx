@@ -106,7 +106,6 @@ function App() {
   async function editVehicle (assetID) {
     const selectedVehicle = allVehicles.find(vehicle => {return vehicle.asset_id === assetID})
     // prepare the props object to be passed into VehicleForm
-    console.log(selectedVehicle)
     const propsObj = {
       makeInit: selectedVehicle.make,
       modelInit: selectedVehicle.model,

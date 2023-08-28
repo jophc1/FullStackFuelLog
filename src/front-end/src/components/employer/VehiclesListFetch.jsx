@@ -19,7 +19,7 @@ const VehiclesListFetch = () => {
     event.preventDefault()
     assetID.current = event.target.attributes.value.value
     // turn modal on
-    useState(true)
+    setModalRender(true)
     modalTextOperation(true)
   }
 

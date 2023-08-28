@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useRef, useState } from 'react'
 import { EmployerContext, FuelLogContext } from '../../context.js'
-import FetchHeader from './FetchHeader.jsx'
+import CompanyButton from '../styled/CompanyButton.jsx'
 import ModalText from '../ModalText.jsx'
 
 const LogsFetchList = () => {
@@ -8,6 +8,7 @@ const LogsFetchList = () => {
   const { getAllLogs, allLogs, deleteLog } = useContext(EmployerContext)
   const { modalTextOperation } = useContext(FuelLogContext)
   const [renderModal, setRenderModal] = useState(false)
+  const [modalDeleteRender, setModalDeleteRender] = useState(false)
   const selectedLog = useRef({})
   const logID = useRef('')
 
@@ -20,12 +21,21 @@ const LogsFetchList = () => {
   }
 
   const handleDeleteIconClick = event => {
+    event.preventDefault()
+    logID.current = event.target.attributes.value.value
+    // turn modal on
+    setModalDeleteRender(true)
+    modalTextOperation(true)
+  }
 
+  const handleCompanyButtonClick = event => {
+    event.preventDefault()
+    deleteLog(event.target.value)
   }
 
   useEffect(() => {
     (async () => getAllLogs())()
-  }, [])
+  }, [modalDeleteRender])
 
   return allLogs &&
     <>
@@ -39,7 +49,7 @@ const LogsFetchList = () => {
                 <td onClick={handleLogClick} value={log._id}>Log ID:</td>
                 <td onClick={handleLogClick} value={log._id}>{allLogs.length - index}</td>
                 <td onClick={handleLogClick} value={log._id}>Log Date:</td>
-                <td onClick={handleLogClick} value={log._id}>{new Date(log.date).toISOString().split('T')[0]}</td>
+                <td onClick={handleLogClick} value={log._id}>{log.date}</td>
               </tr>
             ))}
           </tbody>
@@ -69,6 +79,12 @@ const LogsFetchList = () => {
               </tbody>
             </table>
       </ModalText>
+      }
+      { modalDeleteRender &&
+          <ModalText setRenderModal={setModalDeleteRender}>
+            <p>Are you sure you want to delete this Log?</p>
+            <CompanyButton onClick={handleCompanyButtonClick} value={logID.current}>Confirm</CompanyButton>
+          </ModalText>
       }
     </>
 }
