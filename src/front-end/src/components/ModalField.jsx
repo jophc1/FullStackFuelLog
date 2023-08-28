@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import { FuelLogContext } from '../context.js'
 import CompanyButton from './styled/CompanyButton'
 
-const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree,heading, initialName = '', initalEmployeeId = '', setShowForm }) => {
+const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree,heading, initialName = '', initalEmployeeId = '', setShowForm, style='' }) => {
   
   const { showModalField, modalFieldOperation } = useContext(FuelLogContext)
-  const changeModalClass = showModalField ? "modal show" : "modal hide"
+  const changeModalClass = showModalField ? `modal show ${style}` : "modal hide"
 
   const [name, setName] = useState(initialName)
   const [employeeId, setEmployeeId] = useState(initalEmployeeId)

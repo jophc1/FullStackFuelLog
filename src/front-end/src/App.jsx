@@ -28,7 +28,6 @@ function App() {
           userName,
           allVehicles,
           currentVehicle,
-          logId,
           showModalText,
           showModalField,
           displayVehicleInfo,

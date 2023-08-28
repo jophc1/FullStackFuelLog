@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import { FuelLogContext } from '../context.js'
 
-const ModalText = ({ text, children }) => {
+const ModalText = ({ text, style = '', children }) => {
 
   const { showModalText, modalTextOperation } = useContext(FuelLogContext)
-  const changeModalClass = showModalText ? "modal show" : "modal hide"
+  const changeModalClass = showModalText ? `modal show ${style}` : "modal hide"
 
   const handleCloseModalClick = event => {
     event.preventDefault()
