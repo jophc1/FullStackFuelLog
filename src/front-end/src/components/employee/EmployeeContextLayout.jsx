@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom'
 const EmployeeContextLayout = () => {
 
   const [store, dispatch] = useReducer(reducer, initialState)
-  const { newLogCreated } = store
+  const { newLogCreated, logId } = store
   const { navigate } = useContext(FuelLogContext)
     // LOGS
 

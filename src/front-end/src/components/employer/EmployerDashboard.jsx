@@ -25,19 +25,24 @@ const EmployerDashboard = ({ children }) => {
 
   }
 
-  async function postUpdateEmployee () {
+  async function postUpdateEmployee (userObject, method, path) {
     
+    if (method === 'PUT') {
+      path = path + '/' + userObject.username_id
+    } 
+    else if (method === 'DELETE' || method === 'PATCH')
+    {
+      console.log('CANNOT PATCH OR DELETE on postUpdateEmployee')
+      return {}
+    }
+    const res = await fetchMod(method, path, userObject)
+   
+    if (res.status === 500){
+      console.log("error with post or put on postUpdateEmployee") // TODO: error message popup when error occurs
+    } 
   }
 
-  function updateGlobalEmployee (userObject) {
-    dispatch({
-      type: 'editEmployee',
-      employeeObject: userObject
-    })
-  }
-        
-  // VEHICLES
-
+  
   async function postUpdateVehicle ({ make, model, year, asset_id, registration, image, method, urlSuffix }) {
     let formData = new FormData()
     formData.append('make', make)

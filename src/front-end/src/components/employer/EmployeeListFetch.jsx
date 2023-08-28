@@ -5,12 +5,16 @@ import { EmployerContext, FuelLogContext } from '../../context.js'
 import ModalFields from '../ModalField.jsx'
 import ModalText from '../ModalText.jsx'
 
+
+
 const EmployeeListFetch = () => {
+  
   const [allEmployees, setAllEmployees] = useState([])
+  const [modalFieldProps, setModalFieldProps] = useState({})
 
   const [showForm, setShowForm] = useState(false)
   const { getAllEmployees, deleteEmployee } = useContext(EmployerContext)
-  const { modalTextOperation, editEmployee, modalFieldOperation } = useContext(FuelLogContext)
+  const { modalTextOperation, editEmployee, modalFieldOperation, backButton } = useContext(FuelLogContext)
   const employeeID = useRef('')
   const employeeName = useRef('')
 
@@ -20,6 +24,18 @@ const EmployeeListFetch = () => {
     const targetEmployee = allEmployees.find(employee => event.target.value == employee.username_id)
     employeeID.current = targetEmployee.username_id
     employeeName.current = targetEmployee.name
+
+    setModalFieldProps({
+      fieldLabelOne: 'Full name',
+      fieldLabelTwo: 'Employee ID',
+      fieldLabelThree: 'Password (min 8 characters)', 
+      heading: 'Update Employee', 
+      initalEmployeeId: employeeID.current, 
+      initialName: employeeName.current, 
+      setShowForm: setShowForm,
+      method: 'PUT'
+    })
+
     setShowForm(true)
     modalFieldOperation(true)
     
@@ -42,20 +58,38 @@ const EmployeeListFetch = () => {
     (async () => {
       setAllEmployees(await getAllEmployees())
     })()
-  }, [])
+  }, [showForm])
 
-  const modelFieldProps = {
-    fieldLabelOne: 'Full name',
-    fieldLabelTwo: 'Employee ID',
-    fieldLabelThree: 'Password (min 8 characters)', 
-    heading: 'Update Employee', 
-    initalEmployeeId: employeeID.current, 
-    initialName: employeeName.current, 
-    setShowForm: setShowForm
-  } 
+  const handleAddButton = event => {
+    event.preventDefault()
+    
+    setModalFieldProps({
+      fieldLabelOne: 'Full name',
+      fieldLabelTwo: 'Employee ID',
+      fieldLabelThree: 'Password (min 8 characters)', 
+      heading: 'Add Employee', 
+      setShowForm: setShowForm
+    })
+
+    modalFieldOperation(true)
+    setShowForm(true)
+  }
+
+  // const modelFieldProps = {
+  //   fieldLabelOne: 'Full name',
+  //   fieldLabelTwo: 'Employee ID',
+  //   fieldLabelThree: 'Password (min 8 characters)', 
+  //   heading: 'Update Employee', 
+  //   initalEmployeeId: employeeID.current, 
+  //   initialName: employeeName.current, 
+  //   setShowForm: setShowForm,
+  //   method: 'PUT'
+  // } 
 
   return <>
-    <FetchHeader buttonText={'Add Employee'} setShowForm={setShowForm} />
+    <FetchHeader>
+      <CompanyButton onClick={handleAddButton} ><span className='fa fa-plus'></span> Add Employee </CompanyButton>
+    </FetchHeader>
     {allEmployees &&
       <div className='allVehiclesEmployesLogs'>
         <table>
@@ -77,7 +111,7 @@ const EmployeeListFetch = () => {
     <ModalText text={'Are you sure you want to delete this Employee?'}>
       <CompanyButton onClick={handleCompanyButtonClick} value={employeeID.current}>Confirm</CompanyButton>
     </ModalText>
-    {showForm && <ModalFields {...modelFieldProps} />}
+    {showForm && <ModalFields {...modalFieldProps} />}
   </>
 }
 
