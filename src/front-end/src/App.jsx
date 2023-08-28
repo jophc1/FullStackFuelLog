@@ -33,7 +33,8 @@ function App() {
           showModalField,
           displayVehicleInfo,
           displayPlaceholderVehicleInfo,
-          propsObject } = store
+          propsObject,
+          employeeObject } = store
   
   const navigate = useNavigate()
 
@@ -63,6 +64,11 @@ function App() {
       type: 'logout',
     })
     res === 'OK' ? navigate('/') : console.log('logout failed')
+  }
+
+  // Employee
+  async function editEmployee(employeeData) {
+    
   }
 
   // NAV
@@ -129,7 +135,7 @@ function App() {
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate, editEmployee}}>
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/employer'></Route>

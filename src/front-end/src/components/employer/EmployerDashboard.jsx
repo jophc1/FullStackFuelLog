@@ -28,6 +28,13 @@ const EmployerDashboard = ({ children }) => {
   async function postUpdateEmployee () {
     
   }
+
+  function updateGlobalEmployee (userObject) {
+    dispatch({
+      type: 'editEmployee',
+      employeeObject: userObject
+    })
+  }
         
   // VEHICLES
 

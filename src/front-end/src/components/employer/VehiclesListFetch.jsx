@@ -31,7 +31,7 @@ const VehiclesListFetch = () => {
   }, [])
 
   return allVehicles && <>
-    <FetchHeader buttonText={'Add Vehicle'} />
+    <FetchHeader buttonText={'Add Vehicle'} navPath='/employer/dashboard/vehicle/new' />
     <div className='allVehiclesEmployesLogs'>
       <table>
         <tbody>

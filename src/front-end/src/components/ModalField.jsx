@@ -1,47 +1,29 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FuelLogContext } from '../context.js'
 import CompanyButton from './styled/CompanyButton'
 
-const ModalFields = ({ numberOfInputFields = 2, fieldLabelOne, fieldLabelTwo, fieldLabelThree, heading, style }) => {
+const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree,heading, initialName = '', initalEmployeeId = '', setShowForm, style='' }) => {
   
   const { showModalField, modalFieldOperation } = useContext(FuelLogContext)
   const changeModalClass = showModalField ? `modal show ${style}` : "modal hide"
-  const [name, setName] = useState('')
-  const [employeeId, setEmployeeId] = useState('')
+
+  const [name, setName] = useState(initialName)
+  const [employeeId, setEmployeeId] = useState(initalEmployeeId)
   const [password, setPassword] = useState('')
-
-  const handleCloseModalClick = event => {
-    event.preventDefault()
-    modalFieldOperation(false)
-  }
-
-  const handleUpdateSubmit = event => {
-    event.preventDefault()
-  }
 
   const handleNewSubmit = event => {
     event.preventDefault()
 
   }
+
+  const handleCloseModalClick = event => {
+    event.preventDefault()
+    setShowForm(false)
+    modalFieldOperation(false)
+  }
   
-  return numberOfInputFields == 2 ? <>
-      <div className={changeModalClass} onClick={handleCloseModalClick}>
-        <div className='modal-content'>
-          <span className='fa fa-times'  onClick={handleCloseModalClick}></span>
-          {heading}
-          <form onSubmit={handleUpdateSubmit}>
-            <label>{fieldLabelOne}</label>
-            <input type="text" value={name} onChange={event => setName(event.target.value)} />
-            <label>{fieldLabelTwo}</label>
-            <input type="text" value={employeeId} onChange={event => setEmployeeId(event.target.value)} />
-            <CompanyButton>Update</CompanyButton>
-          </form>
-        </div>
-      </div>
-    </>
-    :
-    <>
-      <div className={changeModalClass} onClick={handleCloseModalClick}>
+  return  <>
+      <div className={changeModalClass} >
         <div className='modal-content'>
           <span className='fa fa-times'  onClick={handleCloseModalClick}></span>
           {heading}
