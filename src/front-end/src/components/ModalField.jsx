@@ -1,19 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { FuelLogContext } from '../context.js'
+import { EmployerContext, FuelLogContext } from '../context.js'
 import CompanyButton from './styled/CompanyButton'
 
-const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree,heading, initialName = '', initalEmployeeId = '', setShowForm, style='' }) => {
+const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree, heading, initialName = '', initalEmployeeId = '', setShowForm, style='', method='POST', path='employed'}) => {
   
-  const { showModalField, modalFieldOperation } = useContext(FuelLogContext)
+  const { showModalField, modalFieldOperation, navigate } = useContext(FuelLogContext)
+  const { postUpdateEmployee } = useContext(EmployerContext)
   const changeModalClass = showModalField ? `modal show ${style}` : "modal hide"
 
   const [name, setName] = useState(initialName)
   const [employeeId, setEmployeeId] = useState(initalEmployeeId)
   const [password, setPassword] = useState('')
 
-  const handleNewSubmit = event => {
+  const handleNewSubmit = async event => {
     event.preventDefault()
-
+    await postUpdateEmployee({ name, username_id: employeeId, password: password.toString() }, method, path)
+    setShowForm(false)
+    modalFieldOperation(false)
   }
 
   const handleCloseModalClick = event => {

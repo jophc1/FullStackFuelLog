@@ -5,7 +5,7 @@ import FetchHeader from './FetchHeader.jsx'
 import ModalText from '../ModalText.jsx'
 
 const VehiclesListFetch = () => {
-  const { allVehicles, getAllVehicles, modalTextOperation } = useContext(FuelLogContext)
+  const { allVehicles, getAllVehicles, modalTextOperation, navigate } = useContext(FuelLogContext)
   const { deleteVehicle, editVehicle } = useContext(EmployerContext)
   const assetID = useRef('')
 
@@ -26,6 +26,10 @@ const VehiclesListFetch = () => {
     deleteVehicle(event.target.value)
   }
 
+  const handleNewVehicle = event => {
+    navigate('/employer/dashboard/vehicle/new')
+  }
+
   useEffect(() => {
     (async () => setTimeout(() => {
       // timeout to wait for icons to load
@@ -34,7 +38,9 @@ const VehiclesListFetch = () => {
   }, [])
 
   return allVehicles && <>
-    <FetchHeader buttonText={'Add Vehicle'} navPath='/employer/dashboard/vehicle/new' />
+    <FetchHeader>
+      <CompanyButton onClick={handleNewVehicle}><span className='fa fa-plus'></span> Add Vehicle</CompanyButton>
+    </FetchHeader>
     <div className='allVehiclesEmployesLogs'>
       <table>
         <tbody>
