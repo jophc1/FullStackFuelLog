@@ -8,7 +8,20 @@ const router = Router()
 router.use(authAccess)
 
 router.get('/', verifyAdmin, async (req, res) => {
-  res.send(await LogModel.find())
+  // access the query params
+  const pageOptions = {
+    page: parseInt(req.query.page, 10) || 0,
+    limit: parseInt(req.query.limit, 10) || 10
+  }
+  /* querying for `all` {} items in `LogModel`, paginating by pageOptions.page, pageOptions.limit items per page */
+  let logPagination = await LogModel.paginate({}, pageOptions, function(error, result) {
+    if (error) {
+      throw error
+    } else {
+      return result
+    }
+  })
+  logPagination ? res.send(logPagination) : res.status(404).send({ error: 'Logs not found' })
 })
 // the log id will be the mongoDB generated _id
 router.get('/:id', verifyAdmin, async (req, res) => {

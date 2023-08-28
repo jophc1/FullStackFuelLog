@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import mongoosePaginate from 'mongoose-paginate-v2'
 
 const LogSchema = new mongoose.Schema({
   date: { type: Date, cast: false, default: new Date() },
@@ -7,6 +8,8 @@ const LogSchema = new mongoose.Schema({
   vehicle_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Vehicle' },
   user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 })
+
+LogSchema.plugin(mongoosePaginate)
 
 const LogModel = mongoose.model('Log', LogSchema)
 
