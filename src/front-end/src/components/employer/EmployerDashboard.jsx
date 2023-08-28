@@ -72,6 +72,7 @@ const EmployerDashboard = ({ children }) => {
   async function getAllLogs () {
     const res = await fetchMod('GET', 'logs', '')
     const sortedLogRecordsByDate = res.body.sort((logOne, logTwo) => new Date(logTwo.date).getTime() - new Date(logOne.date).getTime() )
+    const LogsDateFormatted = sortedLogRecordsByDate.map(log => log.date = new Date(log.date).toISOString().split('T')[0])
     dispatch({
       type: 'allLogs',
       allLogs: sortedLogRecordsByDate
@@ -79,7 +80,14 @@ const EmployerDashboard = ({ children }) => {
   }
 
   async function deleteLog (logID) {
-
+    const res = await fetchMod('DELETE', `logs/${logID}`, '')
+    const newAllLogs = allLogs.filter(log => {return log._id != logID})
+    // const sortedLogRecordsByDate = newAllLogs.sort((logOne, logTwo) => new Date(logTwo.date).getTime() - new Date(logOne.date).getTime() )
+    dispatch({
+      type: 'allLogs',
+      allLogs: newAllLogs
+    })
+    // TODO: return response and render
   }
 
   // REPORTS
