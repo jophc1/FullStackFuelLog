@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useRef } from 'react'
+import React, { useEffect, useContext, useRef, useState } from 'react'
 import CompanyButton from '../styled/CompanyButton.jsx'
 import { EmployerContext, FuelLogContext } from '../../context.js'
 import FetchHeader from './FetchHeader.jsx'
@@ -7,6 +7,7 @@ import ModalText from '../ModalText.jsx'
 const VehiclesListFetch = () => {
   const { allVehicles, getAllVehicles, modalTextOperation } = useContext(FuelLogContext)
   const { deleteVehicle, editVehicle } = useContext(EmployerContext)
+  const [modalRender, setModalRender] = useState(false)
   const assetID = useRef('')
 
   const handleEditClick = event => {
@@ -18,6 +19,7 @@ const VehiclesListFetch = () => {
     event.preventDefault()
     assetID.current = event.target.attributes.value.value
     // turn modal on
+    useState(true)
     modalTextOperation(true)
   }
 
@@ -48,10 +50,11 @@ const VehiclesListFetch = () => {
         </tbody>
       </table>
     </div>
-    <ModalText>
+    { modalRender &&
+    <ModalText setRenderModal={setModalRender}>
       <p>Are you sure you want to delete this Vehicle?</p>
       <CompanyButton onClick={handleCompanyButtonClick} value={assetID.current}>Confirm</CompanyButton>
-    </ModalText>
+    </ModalText>}
   </>
 }
 

@@ -12,7 +12,7 @@ const EmployerDashboard = ({ children }) => {
   const { propsObject, allLogs } = store
 
 
-  const { userAccess, authorised, allVehicles, navigate } = useContext(FuelLogContext)
+  const { userAccess, authorised, allVehicles, navigate, editVehicle } = useContext(FuelLogContext)
 
   // EMPLOYEES
 
@@ -51,27 +51,6 @@ const EmployerDashboard = ({ children }) => {
     if (res.status == 201) {
       navigate('/employer/dashboard/all/vehicles/') // TODO: show new vehicle details
     }
-  }
-
-  async function editVehicle (assetID) {
-    const selectedVehicle = allVehicles.find(vehicle => {return vehicle.asset_id === assetID})
-    // prepare the props object to be passed into VehicleForm
-    const propsObj = {
-      makeInit: selectedVehicle.make,
-      modelInit: selectedVehicle.model,
-      yearInit: selectedVehicle.year,
-      assetIdInit: selectedVehicle.asset_id,
-      regoInit: selectedVehicle.registration,
-      method: 'PUT',
-      urlSuffix: `vehicles/${assetID}`
-    }
-
-    dispatch({
-      type: 'editVehicle',
-      props: {...propsObj}
-    })
-
-    navigate(`/employer/dashboard/all/vehicles/edit/${assetID}`)
   }
 
   async function deleteVehicle (assetID) {
