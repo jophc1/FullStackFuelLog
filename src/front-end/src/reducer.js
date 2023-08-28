@@ -22,6 +22,11 @@ function reducer (currentState, action) {
         ...currentState,
         allVehicles: action.allVehicles,
       }
+    case 'allLogs':
+      return {
+        ...currentState,
+        allLogs: action.allLogs
+      }
     case 'selectVehicle':
       return {
         ...currentState,
@@ -73,7 +78,8 @@ const initialState = {
   displayVehicleInfo: false,
   displayPlaceholderVehicleInfo: true,
   propsObject: {},
-  showModalField: false
+  showModalField: false,
+  allLogs: []
 }
 
 export {

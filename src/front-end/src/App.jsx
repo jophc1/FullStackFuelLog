@@ -18,6 +18,7 @@ import BarGraphTotalVehicleUsage from './components/employer/BarGraphTotalVehicl
 import ScatterGraphVehicleDistanceFuel from './components/employer/ScatterGraphVehicleDistanceFuel.jsx'
 import EmployeeListFetch from './components/employer/EmployeeListFetch.jsx'
 import EmployeeContextLayout from './components/employee/EmployeeContextLayout.jsx'
+import LogsFetchList from './components/employer/LogsFetchList.jsx'
 
 
 
@@ -102,6 +103,27 @@ function App() {
     })
   }
 
+  async function editVehicle (assetID) {
+    const selectedVehicle = allVehicles.find(vehicle => {return vehicle.asset_id === assetID})
+    // prepare the props object to be passed into VehicleForm
+    const propsObj = {
+      makeInit: selectedVehicle.make,
+      modelInit: selectedVehicle.model,
+      yearInit: selectedVehicle.year,
+      assetIdInit: selectedVehicle.asset_id,
+      regoInit: selectedVehicle.registration,
+      method: 'PUT',
+      urlSuffix: `vehicles/${assetID}`
+    }
+
+    dispatch({
+      type: 'editVehicle',
+      props: {...propsObj}
+    })
+
+    navigate(`/employer/dashboard/all/vehicles/edit/${assetID}`)
+  }
+
   // MODALS
   // toggle modals
   function modalTextOperation (toggle) {
@@ -134,7 +156,7 @@ function App() {
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate, editEmployee}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate, editEmployee, editVehicle}}>
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/employer'></Route>
@@ -148,7 +170,7 @@ function App() {
             <Route path='dashboard/vehicle/new' element={<EmployerDashboard><VehicleForm /></EmployerDashboard>} />
             <Route path='dashboard/all/vehicles/edit/:assetID' element={<EmployerDashboard><VehicleForm {...propsObject} /></EmployerDashboard>} />
             <Route path='dashboard/all/employees' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
-            <Route path='dashboard/all/logs' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
+            <Route path='dashboard/all/logs' element={<EmployerDashboard><LogsFetchList /></EmployerDashboard>} />
             <Route path='dashboard/all/logs/reviews' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
           </Route>
         </Routes>

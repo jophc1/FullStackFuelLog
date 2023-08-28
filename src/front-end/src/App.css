@@ -80,6 +80,20 @@ form, form div {
   margin-left: 0.5rem;
 }
 
+/* Logs */
+
+.allLogs {
+  text-decoration: underline;
+}
+
+.allLogs tr {
+  cursor: pointer;
+}
+
+.allLogs tr:hover {
+  background-color: #e7e9eb80
+}
+
 /* ****************** */
 /* All Vehicles */
 .allVehiclesEmployesLogs {
