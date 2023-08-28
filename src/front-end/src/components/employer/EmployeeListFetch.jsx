@@ -7,15 +7,22 @@ import ModalText from '../ModalText.jsx'
 
 const EmployeeListFetch = () => {
   const [allEmployees, setAllEmployees] = useState([])
-  const [showUpdateForm, setShowUpdateForm] = useState(false)
-  const [showNewForm, setShowNewForm] = useState(false)
-  const { getAllEmployees, editEmploye, deleteEmployee } = useContext(EmployerContext)
-  const { modalTextOperation } = useContext(FuelLogContext)
+
+  const [showForm, setShowForm] = useState(false)
+  const { getAllEmployees, deleteEmployee } = useContext(EmployerContext)
+  const { modalTextOperation, editEmployee, modalFieldOperation } = useContext(FuelLogContext)
   const employeeID = useRef('')
+  const employeeName = useRef('')
+
 
   const handleEditClick = event => {
     event.preventDefault()
-    editEmployee(event.target.value)
+    const targetEmployee = allEmployees.find(employee => event.target.value == employee.username_id)
+    employeeID.current = targetEmployee.username_id
+    employeeName.current = targetEmployee.name
+    setShowForm(true)
+    modalFieldOperation(true)
+    
   }
 
   const handleDeleteIconClick = event => {
@@ -37,8 +44,18 @@ const EmployeeListFetch = () => {
     })()
   }, [])
 
+  const modelFieldProps = {
+    fieldLabelOne: 'Full name',
+    fieldLabelTwo: 'Employee ID',
+    fieldLabelThree: 'Password (min 8 characters)', 
+    heading: 'Update Employee', 
+    initalEmployeeId: employeeID.current, 
+    initialName: employeeName.current, 
+    setShowForm: setShowForm
+  } 
+
   return <>
-    <FetchHeader buttonText={'Add Employee'} />
+    <FetchHeader buttonText={'Add Employee'} setShowForm={setShowForm} />
     {allEmployees &&
       <div className='allVehiclesEmployesLogs'>
         <table>
@@ -60,9 +77,9 @@ const EmployeeListFetch = () => {
     <ModalText text={'Are you sure you want to delete this Employee?'}>
       <CompanyButton onClick={handleCompanyButtonClick} value={employeeID.current}>Confirm</CompanyButton>
     </ModalText>
-    {showUpdateForm && <ModalFields fieldLabelOne={'Full name'} fieldLabelTwo={'Employee ID'} heading={'Update Employee'} />}
-    {showNewForm && <ModalFields numberOfInputFields={3} fieldLabelOne={'Full name'} fieldLabelTwo={'Employee ID'} fieldLabelThree={'Password (min 8 characters)'} heading={'New Employee'}  />}
+    {showForm && <ModalFields {...modelFieldProps} />}
   </>
 }
+
 
 export default EmployeeListFetch

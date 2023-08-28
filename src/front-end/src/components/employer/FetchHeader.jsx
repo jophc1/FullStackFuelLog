@@ -2,12 +2,18 @@ import React, { useContext } from 'react'
 import { FuelLogContext } from '../../context.js'
 import CompanyButton from '../styled/CompanyButton.jsx'
 
-const FetchHeader = ({ buttonText, headerTitle }) => {
-  const { backButton } = useContext(FuelLogContext)
+const FetchHeader = ({ buttonText, headerTitle, navPath = '', setShowForm }) => {
+  const { backButton, modalFieldOperation } = useContext(FuelLogContext)
 
   const handleAddButton = event => {
     event.preventDefault()
-    backButton('/employer/dashboard/vehicle/new')
+    navPath ? backButton(navPath) : modalFieldOperation(true)
+    if (navPath) {
+      backButton(navPath)
+    } else {
+      modalFieldOperation(true)
+      setShowForm(true)
+    }
   }
 
   return <>

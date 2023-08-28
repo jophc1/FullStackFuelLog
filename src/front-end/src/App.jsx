@@ -33,7 +33,8 @@ function App() {
           showModalField,
           displayVehicleInfo,
           displayPlaceholderVehicleInfo,
-          propsObject } = store
+          propsObject,
+          employeeObject } = store
   
   const navigate = useNavigate()
 
@@ -63,6 +64,11 @@ function App() {
       type: 'logout',
     })
     res === 'OK' ? navigate('/') : console.log('logout failed')
+  }
+
+  // Employee
+  async function editEmployee(employeeData) {
+    
   }
 
   // NAV
@@ -129,7 +135,7 @@ function App() {
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate, editEmployee}}>
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/employer'></Route>
@@ -144,7 +150,7 @@ function App() {
             <Route path='dashboard/all/vehicles/edit/:assetID' element={<EmployerDashboard><VehicleForm {...propsObject} /></EmployerDashboard>} />
             <Route path='dashboard/all/employees' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
             <Route path='dashboard/all/logs' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
-            <Route path='dashboard/all/logs/review' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
+            <Route path='dashboard/all/logs/reviews' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
           </Route>
         </Routes>
     </FuelLogContext.Provider>

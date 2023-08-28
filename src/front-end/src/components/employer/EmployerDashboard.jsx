@@ -17,29 +17,27 @@ const EmployerDashboard = ({ children }) => {
   const { userAccess,
           authorised,
           allVehicles,
-          getAllVehicles,
-          currentVehicleDetails,
-          currentVehicle,
-          displayVehicleInfo,
-          displayPlaceholderVehicleInfo,
-          backButton,
-          showModalText,
-          modalTextOperation,
-          showModalField,
-          modalFieldOperation,
-          navigate } = useContext(FuelLogContext)
+          navigate,
+          } = useContext(FuelLogContext)
 
   async function getAllEmployees () {
     const res = await fetchMod('GET', 'employed', '')
     return res.body
   }
 
-  async function deleteEmploye () {
+  async function deleteEmployee () {
 
   }
 
   async function postUpdateEmployee () {
     
+  }
+
+  function updateGlobalEmployee (userObject) {
+    dispatch({
+      type: 'editEmployee',
+      employeeObject: userObject
+    })
   }
         
 
@@ -120,7 +118,7 @@ const EmployerDashboard = ({ children }) => {
   return userAccess && authorised ? 
   <>
     <NavBar />
-    <EmployerContext.Provider value={{postUpdateVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmploye, postUpdateEmployee}}>
+    <EmployerContext.Provider value={{postUpdateVehicle, deleteVehicle, editVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee}}>
     {children}
     </EmployerContext.Provider>   
   </>
