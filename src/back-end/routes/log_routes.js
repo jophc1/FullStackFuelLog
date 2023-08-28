@@ -11,7 +11,8 @@ router.get('/', verifyAdmin, async (req, res) => {
   // access the query params
   const pageOptions = {
     page: parseInt(req.query.page, 10) || 0,
-    limit: parseInt(req.query.limit, 10) || 10
+    limit: parseInt(req.query.limit, 10) || 10,
+    sort: { date: -1 }
   }
   /* querying for `all` {} items in `LogModel`, paginating by pageOptions.page, pageOptions.limit items per page */
   let logPagination = await LogModel.paginate({}, pageOptions, function(error, result) {
