@@ -5,8 +5,8 @@ import FetchHeader from './FetchHeader.jsx'
 import ModalText from '../ModalText.jsx'
 
 const VehiclesListFetch = () => {
-  const { allVehicles, getAllVehicles, modalTextOperation, navigate, editVehicle } = useContext(FuelLogContext)
-  const { deleteVehicle } = useContext(EmployerContext)
+  const { allVehicles, getAllVehicles, modalTextOperation, navigate, editVehicle, deleteVehicle } = useContext(FuelLogContext)
+  // const { deleteVehicle } = useContext(EmployerContext)
   const [modalRender, setModalRender] = useState(false)
   const assetID = useRef('')
 
@@ -37,7 +37,7 @@ const VehiclesListFetch = () => {
 
   useEffect(() => {
     (async () => await getAllVehicles())()
-  }, [modalRender])
+  }, [])
 
   return <>
     <FetchHeader>

@@ -124,6 +124,15 @@ function App() {
     navigate(`/employer/dashboard/all/vehicles/edit/${assetID}`)
   }
 
+  async function deleteVehicle (assetID) {  // TALK ABOUT THIS WITH JORDAN ABOUT VEHICLE LIST UPDATE ON DELETION AND HOW allVehicles state not updating even with dispatch
+    const res = await fetchMod('DELETE', `vehicles/${assetID}`, '')
+    const newAllVehicles = allVehicles.filter(vehicle => {return vehicle.asset_id != assetID})
+    dispatch({
+      type: 'allVehicles',
+      allVehicles: newAllVehicles
+    })
+  }
+
   // MODALS
   // toggle modals
   function modalTextOperation (toggle) {
@@ -156,7 +165,7 @@ function App() {
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate, editEmployee, editVehicle}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate, editEmployee, editVehicle, deleteVehicle}}>
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/employer'></Route>

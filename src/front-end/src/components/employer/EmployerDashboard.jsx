@@ -13,7 +13,7 @@ const EmployerDashboard = ({ children }) => {
   const [store, dispatch] = useReducer(reducer, initialState)
   const { propsObject, allLogs } = store
 
-  const { userAccess, authorised, navigate, allVehicles } = useContext(FuelLogContext)
+  const { userAccess, authorised, navigate } = useContext(FuelLogContext)
   
 
   // EMPLOYEES
@@ -64,14 +64,7 @@ const EmployerDashboard = ({ children }) => {
     }
   }
 
-    async function deleteVehicle (assetID) {  // TALK ABOUT THIS WITH JORDAN ABOUT VEHICLE LIST UPDATE ON DELETION AND HOW allVehicles state not updating even with dispatch
-    const res = await fetchMod('DELETE', `vehicles/${assetID}`, '')
-    const newAllVehicles = allVehicles.filter(vehicle => {return vehicle.asset_id != assetID})
-    dispatch({
-      type: 'allVehicles',
-      allVehicles: newAllVehicles
-    })
-  }
+    
 
   // LOGS
 
@@ -121,7 +114,7 @@ const EmployerDashboard = ({ children }) => {
   return userAccess && authorised ? 
   <>
     <NavBar />
-    <EmployerContext.Provider value={{postUpdateVehicle, deleteVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, deleteLog}}>
+    <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, deleteLog}}>
     {children}
     </EmployerContext.Provider>   
   </>
