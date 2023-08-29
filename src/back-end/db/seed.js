@@ -4,6 +4,7 @@ import VehicleModel from '../models/Vehicle.js'
 import dotenv from 'dotenv'
 import { dbClose, dbConnect } from './db.js'
 import bcrypt from 'bcrypt'
+import LogReviewModel from '../models/LogReview.js'
 
 dotenv.config()
 
@@ -11,6 +12,8 @@ dbConnect()
 
 await UserModel.deleteMany().then(() => console.log('Seed: users deleted'))
 await LogModel.deleteMany().then(() => console.log('Seed: logs deleted'))
+await LogReviewModel.deleteMany()
+console.log('Seed: Reviews deleted')
 
 const salt = process.env.SALT_ADD
 
