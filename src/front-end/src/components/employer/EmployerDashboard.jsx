@@ -79,6 +79,7 @@ const EmployerDashboard = ({ children }) => {
   }
 
   async function deleteLog (logID) {
+    console.log(logID)
     const res = await fetchMod('DELETE', `logs/${logID}`, '')
     const newAllLogs = allLogs.filter(log => {return log._id != logID})
     // const sortedLogRecordsByDate = newAllLogs.sort((logOne, logTwo) => new Date(logTwo.date).getTime() - new Date(logOne.date).getTime() )
@@ -118,7 +119,7 @@ const EmployerDashboard = ({ children }) => {
   }
 
   async function deleteReview(reviewID) {
-    const res = await fetchMod('DELETE', 'logs/reviews/${reviewID}')
+    const res = await fetchMod('DELETE', `logs/reviews/${reviewID}`, '')
     return res
   }
 

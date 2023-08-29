@@ -16,6 +16,7 @@ const ReviewsFetchList = () => {
   const [reviews, setReviews] = useState([])
   const selectedLog = useRef({})
   const selectedReview = useRef({})
+  const [ reRender, setReRender ] = useState(false)
 
   const handleReviewClick = event => {
     event.preventDefault()
@@ -29,23 +30,26 @@ const ReviewsFetchList = () => {
 
   async function handleDeleteButtonClick (event) {
     event.preventDefault()
-    const deletionLogResponse = await deleteLog(selectedReview.current.log_id._id)
+    if (selectedReview.current.log_id && event.target.name === 'delete') {
+      const deletionLogResponse = await deleteLog(selectedReview.current.log_id._id)
 
-    if (deletionLogResponse.status === 500) {
-      console.log('error: didnt delete log, review cannot be deleted') // TODO: error message if log didn't delete
-      return {}
+      if (deletionLogResponse.status === 500) {
+        console.log('error: didnt delete log, review cannot be deleted') // TODO: error message if log didn't delete
+        return {}
+      }
     }
-
+    
     const deletionReviewResponse = await deleteReview(selectedReview.current._id) 
 
     if (deletionReviewResponse.status === 500){
       console.log('error: Log was deleted but didnt delete Review') // TODO: error message if review didn't delete
       return {} // TODO maybe return an error message object if error occurs
     }
-    
-
-
+    setReRender(reRender ? false : true)
+    modalTextOperation(false)
+    setRenderModal(false)
   }
+
 
   useEffect(() => {
     (async () => {
@@ -53,29 +57,28 @@ const ReviewsFetchList = () => {
       console.log(allReviews)
       setReviews(allReviews)
     })()
-    
-  }, [])
+  }, [reRender])
 
-  return (
-    reviews &&
+  return (reviews && 
     <>
-      <h3>Log delete requests</h3>
+        <h3>Log delete requests</h3>
       <div className='allVehiclesEmployesLogs'>
         <table>
           <tbody>
             {reviews.map( review => (
               <tr key={review._id} onClick={handleReviewClick} value={review._id}>
                 <td>Vehicle ID:</td>
-                <td>{review.log_id.vehicle_id.asset_id}</td>
+                <td>{review.log_id && review.log_id.vehicle_id.asset_id}</td>
                 <td>Employee ID:</td>
-                <td>{review.employee_id.username_id}</td>
+                <td>{review.employee_id && review.employee_id.username_id}</td>
                 <td>Date:</td>
                 <td>{review.date}</td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
+      </div> 
+
       {renderModal &&
       <ModalText setRenderModal={setRenderModal}>
             <h5>Log Deletion Request Details</h5>
@@ -83,7 +86,7 @@ const ReviewsFetchList = () => {
               <tbody>
                 <tr>
                   <td>Employee ID:</td>
-                  <td>{selectedReview.current.employee_id.username_id}</td>
+                  <td>{selectedReview.current.employee_id && selectedReview.current.employee_id.username_id}</td>
                 </tr>
                 <tr>
                   <td>Date Added:</td>
@@ -91,23 +94,24 @@ const ReviewsFetchList = () => {
                 </tr>
                 <tr>
                   <td>Vehicle ID:</td>
-                  <td>{selectedReview.current.log_id.vehicle_id.asset_id}</td>
+                  <td>{selectedReview.current.log_id && selectedReview.current.log_id.vehicle_id.asset_id}</td>
                 </tr>
                 <tr>
                   <td>Current ODO:</td>
-                  <td>{selectedReview.current.log_id.current_odo}</td>
+                  <td>{selectedReview.current.log_id && selectedReview.current.log_id.current_odo}</td>
                 </tr>
                 <tr>
                   <td>Fuel Added:</td>
-                  <td>{selectedReview.current.log_id.fuel_added}</td>
+                  <td>{selectedReview.current.log_id && selectedReview.current.log_id.fuel_added}</td>
                 </tr>
               </tbody>
             </table>
-            <CompanyButton onClick={handleDeleteButtonClick} >Delete Log</CompanyButton>
+            <CompanyButton onClick={handleDeleteButtonClick} name='delete' >Delete Log</CompanyButton>
+            <CompanyButton onClick={handleDeleteButtonClick} name='keep' >Keep Log</CompanyButton>
       </ModalText>
       }
     </>
-  )
+    )
 }
 
 export default ReviewsFetchList
