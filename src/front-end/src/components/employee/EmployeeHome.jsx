@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Header from './Header.jsx'
 import { EmployeeContext, FuelLogContext } from '../../context.js'
 import SquareButton from '../styled/EmployeeButton.jsx'
@@ -9,15 +9,31 @@ import logIcon from '../../assets/log-entry.png'
 import EmployeeProfile from './EmployeeProfile.jsx'
 import RequestDelete from './RequestDelete.jsx'
 import { Navigate } from 'react-router-dom'
+import ModalFields from '../ModalField.jsx'
 
 const EmployeeHome = ({ children }) => {
 
-const { authorised, userLogout, userAccess, navigate, newLogCreated } = useContext(FuelLogContext)
-// const { newLogCreated } = useContext(EmployeeContext)
+const { authorised, userLogout, userAccess, navigate, newLogCreated, userId, postUpdateEmployer, modalFieldOperation, userName } = useContext(FuelLogContext)
+const [modalFieldProps, setModalFieldProps] = useState({})
+const [showForm, setShowForm] = useState(false)
 
   const handleLogoutClick = event => {
     event.preventDefault()
     userLogout()
+  }
+
+  const handlePasswordReset = event => {
+    event.preventDefault()
+    setModalFieldProps({
+      fieldLabelThree: 'Change Password (min 8 characters, optional)', 
+      heading: 'Reset Password', 
+      setShowForm: setShowForm,
+      initalEmployeeId: userId,
+      initialName: userName,
+      method: 'PUT'
+    })
+    setShowForm(true)
+    modalFieldOperation(true)
   }
   
   // IMAGES 
@@ -45,7 +61,7 @@ const { authorised, userLogout, userAccess, navigate, newLogCreated } = useConte
           <img src={logIcon} alt="logout icon" className='employeeButton' />
           <p>New Log Entry</p>
         </SquareButton>
-        <SquareButton>
+        <SquareButton onClick={handlePasswordReset}>
             <img src={passwordIcon} alt="logout icon" className='employeeButton' />
             <p>Reset Password</p>
         </SquareButton>
@@ -55,6 +71,7 @@ const { authorised, userLogout, userAccess, navigate, newLogCreated } = useConte
         </SquareButton>
       </Row>
       }
+      {showForm && <ModalFields {...modalFieldProps} />}
   </>
   :
   <Navigate to='/' />

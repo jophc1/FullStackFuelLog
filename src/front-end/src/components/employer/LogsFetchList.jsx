@@ -2,15 +2,15 @@ import React, { useEffect, useContext, useRef, useState } from 'react'
 import { EmployerContext, FuelLogContext } from '../../context.js'
 import CompanyButton from '../styled/CompanyButton.jsx'
 import ModalText from '../ModalText.jsx'
+import Pagination from '../Pagination.jsx'
 
 const LogsFetchList = () => {
 
-  const { getAllLogs, allLogs, deleteLog } = useContext(EmployerContext)
+  const { getAllLogs, allLogs, deleteLog, paginationInfo } = useContext(EmployerContext)
   const { modalTextOperation } = useContext(FuelLogContext)
   const [renderModal, setRenderModal] = useState(false)
   const [modalDeleteRender, setModalDeleteRender] = useState(false)
   const [totalDocs, setTotalDocs] = useState(0)
-  const [totalPages, setTotalPages] = useState(0)
   const [page, setPage] = useState(1)
   const selectedLog = useRef({})
   const logID = useRef('')
@@ -18,7 +18,7 @@ const LogsFetchList = () => {
   const handleLogClick = event => {
     event.preventDefault()
     selectedLog.current = allLogs.docs.find(log => log._id === event.target.attributes.value.value)
-    logID.current = (allLogs.totalDocs - allLogs.limit * (allLogs.page - 1)) - index 
+    logID.current = (allLogs.totalDocs - allLogs.limit * (allLogs.page - 1)) - allLogs.docs.map(log => log._id).indexOf(event.target.attributes.value.value)
     modalTextOperation(true)
     setRenderModal(true)
   }
@@ -42,9 +42,9 @@ const LogsFetchList = () => {
   useEffect(() => {
     (async () => getAllLogs(page))()
     setTotalDocs(allLogs.totalDocs)
-  }, [modalDeleteRender])
+  }, [modalDeleteRender, page])
 
-  return allLogs.docs &&
+  return paginationInfo && allLogs.docs &&
     <>
       <h3>All Log Records</h3>
       <div className='allLogs'>
@@ -62,6 +62,7 @@ const LogsFetchList = () => {
           </tbody>
         </table>
       </div>
+      {paginationInfo &&  <Pagination {...paginationInfo} setPage={setPage} /> }
       {renderModal &&
       <ModalText setRenderModal={setRenderModal}>
             <h5>Log Details</h5>
@@ -82,6 +83,18 @@ const LogsFetchList = () => {
                 <tr>
                   <td>Fuel Added:</td>
                   <td>{selectedLog.current.fuel_added}</td>
+                </tr>
+                <tr>
+                  <td>Asset ID:</td>
+                  <td>{selectedLog.current.vehicle_id.asset_id}</td>
+                </tr>
+                <tr>
+                  <td>Employee:</td>
+                  <td>{selectedLog.current.user_id.name}</td>
+                </tr>
+                <tr>
+                  <td>Employee ID:</td>
+                  <td>{selectedLog.current.user_id.username_id}</td>
                 </tr>
               </tbody>
             </table>

@@ -11,7 +11,8 @@ function reducer (currentState, action) {
         userAccess: action.isAdmin,
         authorised: action.authorised,
         userName: action.userName,
-        allVehicles: action.allVehicles
+        allVehicles: action.allVehicles,
+        userId: action.userId
       }
     case 'retainUserInfo':
       return {
@@ -25,6 +26,7 @@ function reducer (currentState, action) {
     case 'allLogs':
       return {
         ...currentState,
+        paginationInfo: action.paginationInfo,
         allLogs: action.allLogs
       }
     case 'selectVehicle':
@@ -70,6 +72,7 @@ const initialState = {
   userAccess: "",
   authorised: false,
   userName: "",
+  userId: null,
   allVehicles: [],
   currentVehicle: {},
   newLogCreated: false,
@@ -79,7 +82,8 @@ const initialState = {
   displayPlaceholderVehicleInfo: true,
   propsObject: {},
   showModalField: false,
-  allLogs: [],
+  paginationInfo: {},
+  allLogs: []
 }
 
 export {

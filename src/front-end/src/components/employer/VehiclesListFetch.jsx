@@ -6,7 +6,6 @@ import ModalText from '../ModalText.jsx'
 
 const VehiclesListFetch = () => {
   const { allVehicles, getAllVehicles, modalTextOperation, navigate, editVehicle, deleteVehicle } = useContext(FuelLogContext)
-  // const { deleteVehicle } = useContext(EmployerContext)
   const [modalRender, setModalRender] = useState(false)
   const assetID = useRef('')
 

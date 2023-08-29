@@ -11,7 +11,7 @@ const EmployerDashboard = ({ children }) => {
   
 
   const [store, dispatch] = useReducer(reducer, initialState)
-  const { propsObject, allLogs } = store
+  const { propsObject, allLogs, paginationInfo } = store
 
   const { userAccess, authorised, navigate } = useContext(FuelLogContext)
   
@@ -30,22 +30,6 @@ const EmployerDashboard = ({ children }) => {
     } else {
       return res.body
     }
-  }
-
-  async function postUpdateEmployee (userObject, initialEmployeeId, method, path) {
-    
-    if (method === 'PUT') {
-      path = path + '/' + initialEmployeeId
-      if (!userObject.password) { // If no password is provided in object then remove password key (Update route only)
-        delete userObject.password
-      }
-    } 
-    
-    const res = await fetchMod(method, path, userObject)
-   
-    if (res.status === 500){
-      console.log("error with post or put on postUpdateEmployee") // TODO: error message popup when error occurs
-    } 
   }
 
   
@@ -70,11 +54,19 @@ const EmployerDashboard = ({ children }) => {
 
   async function getAllLogs (page) {
     const res = await fetchMod('GET', `logs?page=${page}&limit=20`, '')
-    const sortedLogRecordsByDate = res.body
+    const paginationLogs = res.body
     // const LogsDateFormatted = sortedLogRecordsByDate.map(log => log.date = new Date(log.date).toISOString().split('T')[0])
     dispatch({
       type: 'allLogs',
-      allLogs: sortedLogRecordsByDate
+      allLogs: paginationLogs,
+      paginationInfo : {
+        currentPage: paginationLogs.page,
+        totalPages: paginationLogs.totalPages,
+        hasPrevPage: paginationLogs.hasPrevPage,
+        hasNextPage: paginationLogs.hasNextPage,
+        nextPage: paginationLogs.nextPage,
+        prevPage: paginationLogs.prevPage
+      }
     })
   }
 
@@ -127,7 +119,7 @@ const EmployerDashboard = ({ children }) => {
   return userAccess && authorised ? 
   <>
     <NavBar />
-    <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, deleteLog, getAllReviews, deleteReview}}>
+    <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, deleteLog, getAllReviews, deleteReview, paginationInfo}}>
     {children}
     </EmployerContext.Provider>   
   </>
