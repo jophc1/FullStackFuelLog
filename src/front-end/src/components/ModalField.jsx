@@ -4,8 +4,8 @@ import CompanyButton from './styled/CompanyButton'
 
 const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree, heading, initialName = '', initalEmployeeId = '', setShowForm, style='', method='POST', path='employed', employeeForm = false}) => {
   
-  const { showModalField, modalFieldOperation, navigate } = useContext(FuelLogContext)
-  const { postUpdateEmployee } = useContext(EmployerContext)
+  const { showModalField, modalFieldOperation, navigate, postUpdateEmployee } = useContext(FuelLogContext)
+  // const { postUpdateEmployee } = useContext(EmployerContext)
   const changeModalClass = showModalField ? `modal show ${style}` : "modal hide"
 
   const [name, setName] = useState(initialName)
@@ -18,14 +18,17 @@ const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree, heading, i
     let updatedEmployeeDetails
     if (employeeForm) {
       updatedEmployeeDetails = {
-        password: password.toString()
+        name,
+        username_id: employeeId,
+        password: password.toString(),
+        name: initialName
       }
       await postUpdateEmployee(updatedEmployeeDetails, initalEmployeeId, method, path)
     } else {
         updatedEmployeeDetails = {
-          name,
-          username_id: employeeId,
-          password: password.toString()
+          password: password.toString(),
+          username_id: initalEmployeeId,
+          name: initialName
         }
         await postUpdateEmployee(updatedEmployeeDetails, initalEmployeeId, method, path)
     }

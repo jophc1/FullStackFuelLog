@@ -32,22 +32,6 @@ const EmployerDashboard = ({ children }) => {
     }
   }
 
-  async function postUpdateEmployee (userObject, initialEmployeeId, method, path) {
-    
-    if (method === 'PUT') {
-      path = path + '/' + initialEmployeeId
-      if (!userObject.password) { // If no password is provided in object then remove password key (Update route only)
-        delete userObject.password
-      }
-    } 
-    
-    const res = await fetchMod(method, path, userObject)
-   
-    if (res.status === 500){
-      console.log("error with post or put on postUpdateEmployee") // TODO: error message popup when error occurs
-    } 
-  }
-
   
   async function postUpdateVehicle ({ make, model, year, asset_id, registration, image, method, urlSuffix }) {
     let formData = new FormData()
@@ -128,7 +112,7 @@ const EmployerDashboard = ({ children }) => {
   return userAccess && authorised ? 
   <>
     <NavBar />
-    <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, paginationInfo, deleteLog, getAllReviews}}>
+    <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, getAllLogs, allLogs, paginationInfo, deleteLog, getAllReviews}}>
     {children}
     </EmployerContext.Provider>   
   </>

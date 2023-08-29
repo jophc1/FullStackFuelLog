@@ -72,8 +72,20 @@ function App() {
   }
 
   // Employee components
-  async function editEmployee(employeeData) {
+   async function postUpdateEmployee (userObject, initialEmployeeId, method, path) {
     
+    if (method === 'PUT') {
+      path = path + '/' + initialEmployeeId
+      if (!userObject.password) { // If no password is provided in object then remove password key (Update route only)
+        delete userObject.password
+      }
+    } 
+    
+    const res = await fetchMod(method, path, userObject)
+   
+    if (res.status === 500){
+      console.log("error with post or put on postUpdateEmployee") // TODO: error message popup when error occurs
+    } 
   }
 
   async function postLogEntry (data) {
@@ -202,7 +214,7 @@ function App() {
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate, editEmployee, editVehicle, deleteVehicle, logId, postLogEntry, newLogCreated, newLogRequest, userId}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate, editVehicle, deleteVehicle, logId, postLogEntry, newLogCreated, newLogRequest, userId, postUpdateEmployee}}>
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/employer'></Route>
