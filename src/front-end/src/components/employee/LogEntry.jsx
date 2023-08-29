@@ -14,8 +14,8 @@ const LogEntry = () => {
 
   const emptyVehicleProfile = { make: '', model: '', year: '', asset_id: '', registration: '', vehicleImage_URL: placeHolderImage }
 
-  const { getAllVehicles, allVehicles, currentVehicleDetails, currentVehicle, authorised, backButton, displayVehicleInfo, displayPlaceholderVehicleInfo } = useContext(FuelLogContext)
-  const { postLogEntry } = useContext(EmployeeContext)
+  const { postLogEntry, allVehicles, currentVehicleDetails, currentVehicle, authorised, backButton, displayVehicleInfo, displayPlaceholderVehicleInfo } = useContext(FuelLogContext)
+  // const { postLogEntry } = useContext(EmployeeContext)
 
   let isVehicleImageReady = false
 

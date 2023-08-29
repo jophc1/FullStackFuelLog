@@ -39,7 +39,7 @@ function reducer (currentState, action) {
       return {
         ...currentState,
         newLogCreated: action.newLogCreated,
-        logId: action.logId,
+        logId: action.logId
       }
     case 'popUpText':
       return {

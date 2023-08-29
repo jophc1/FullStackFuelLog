@@ -32,10 +32,10 @@ const EmployerDashboard = ({ children }) => {
     }
   }
 
-  async function postUpdateEmployee (userObject, method, path) {
+  async function postUpdateEmployee (userObject, initialEmployeeId, method, path) {
     
     if (method === 'PUT') {
-      path = path + '/' + userObject.username_id
+      path = path + '/' + initialEmployeeId
       if (!userObject.password) { // If no password is provided in object then remove password key (Update route only)
         delete userObject.password
       }
@@ -118,11 +118,17 @@ const EmployerDashboard = ({ children }) => {
     }
   }
 
+  // Log reviews
+  async function getAllReviews() {
+    const res = await fetchMod('GET', 'logs/reviews', '')
+    return res.body
+  }
+
 
   return userAccess && authorised ? 
   <>
     <NavBar />
-    <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, paginationInfo, deleteLog}}>
+    <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, paginationInfo, deleteLog, getAllReviews}}>
     {children}
     </EmployerContext.Provider>   
   </>

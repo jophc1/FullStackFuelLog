@@ -19,6 +19,7 @@ import ScatterGraphVehicleDistanceFuel from './components/employer/ScatterGraphV
 import EmployeeListFetch from './components/employer/EmployeeListFetch.jsx'
 import EmployeeContextLayout from './components/employee/EmployeeContextLayout.jsx'
 import LogsFetchList from './components/employer/LogsFetchList.jsx'
+import ReviewsFetchList from './components/employer/ReviewsFetchList.jsx'
 
 
 
@@ -33,7 +34,9 @@ function App() {
           showModalField,
           displayVehicleInfo,
           displayPlaceholderVehicleInfo,
-          propsObject } = store
+          propsObject,
+          logId,
+          newLogCreated } = store
   
   const navigate = useNavigate()
 
@@ -65,10 +68,41 @@ function App() {
     res === 'OK' ? navigate('/') : console.log('logout failed')
   }
 
-  // Employee
+  // Employee components
   async function editEmployee(employeeData) {
     
   }
+
+  async function postLogEntry (data) {
+    const res = await fetchMod('POST', 'logs', data)
+    if (res.status === 200) {
+      dispatch({
+        type: 'newLog',
+        newLogCreated: true,
+        logId: res.body._id
+      })
+      navigate('/employee/dashboard/home')
+    }
+    // TODO: if post failed, return a error popup condition
+  }
+
+  async function newLogRequest(event) {
+    let res = {}
+    if (event.target.value === 'submit'){
+      res = await fetchMod('POST', 'logs/reviews', {log_id: logId})
+    }
+    if (event.target.value === 'cancel' || res.status === 201) {
+      dispatch({
+        type: 'newLog',
+        newLogCreated: false,
+        logId: {}
+      })
+    } else {
+      console.log('new log request post failed', res.status, res.body.error) // TODO: if post of log review is unsuccessful, display error on screen
+    }
+  }
+
+
 
   // NAV
 
@@ -124,7 +158,7 @@ function App() {
     navigate(`/employer/dashboard/all/vehicles/edit/${assetID}`)
   }
 
-  async function deleteVehicle (assetID) {  // TALK ABOUT THIS WITH JORDAN ABOUT VEHICLE LIST UPDATE ON DELETION AND HOW allVehicles state not updating even with dispatch
+  async function deleteVehicle (assetID) {  
     const res = await fetchMod('DELETE', `vehicles/${assetID}`, '')
     const newAllVehicles = allVehicles.filter(vehicle => {return vehicle.asset_id != assetID})
     dispatch({
@@ -165,7 +199,7 @@ function App() {
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate, editEmployee, editVehicle, deleteVehicle}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate, editEmployee, editVehicle, deleteVehicle, logId, postLogEntry, newLogCreated, newLogRequest}}>
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/employer'></Route>
@@ -180,7 +214,7 @@ function App() {
             <Route path='dashboard/all/vehicles/edit/:assetID' element={<EmployerDashboard><VehicleForm {...propsObject} /></EmployerDashboard>} />
             <Route path='dashboard/all/employees' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
             <Route path='dashboard/all/logs' element={<EmployerDashboard><LogsFetchList /></EmployerDashboard>} />
-            <Route path='dashboard/all/logs/reviews' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
+            <Route path='dashboard/all/logs/reviews' element={<EmployerDashboard><ReviewsFetchList /></EmployerDashboard>} />
           </Route>
         </Routes>
     </FuelLogContext.Provider>
