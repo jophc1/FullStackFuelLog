@@ -11,7 +11,8 @@ function reducer (currentState, action) {
         userAccess: action.isAdmin,
         authorised: action.authorised,
         userName: action.userName,
-        allVehicles: action.allVehicles
+        allVehicles: action.allVehicles,
+        userId: action.userId
       }
     case 'retainUserInfo':
       return {
@@ -71,6 +72,7 @@ const initialState = {
   userAccess: "",
   authorised: false,
   userName: "",
+  userId: null,
   allVehicles: [],
   currentVehicle: {},
   newLogCreated: false,
@@ -81,7 +83,7 @@ const initialState = {
   propsObject: {},
   showModalField: false,
   paginationInfo: {},
-  allLogs: [],
+  allLogs: []
 }
 
 export {

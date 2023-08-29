@@ -36,7 +36,8 @@ function App() {
           displayPlaceholderVehicleInfo,
           propsObject,
           logId,
-          newLogCreated } = store
+          newLogCreated,
+          userId } = store
   
   const navigate = useNavigate()
 
@@ -44,6 +45,7 @@ function App() {
 
   async function loginAccess (username, password) {
     const res = await basicAuthFetch(username, password)
+    console.log(res.returnedData)
     if (res.status === 200) {
     const initialVehicles = await fetchMod('GET', 'vehicles', '')
       dispatch({
@@ -51,7 +53,8 @@ function App() {
         isAdmin: res.returnedData.isAdmin,
         authorised: true,
         userName: res.returnedData.name,
-        allVehicles: initialVehicles.body
+        allVehicles: initialVehicles.body,
+        userId: res.returnedData.usernameId
       })
       // TODO: set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login
       res.returnedData.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home') // TODO chnage route back to /employee/dashboard/home
@@ -199,7 +202,7 @@ function App() {
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate, editEmployee, editVehicle, deleteVehicle, logId, postLogEntry, newLogCreated, newLogRequest}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate, editEmployee, editVehicle, deleteVehicle, logId, postLogEntry, newLogCreated, newLogRequest, userId}}>
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/employer'></Route>
