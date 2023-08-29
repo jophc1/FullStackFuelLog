@@ -45,7 +45,6 @@ function App() {
 
   async function loginAccess (username, password) {
     const res = await basicAuthFetch(username, password)
-    console.log(res.returnedData)
     if (res.status === 200) {
     const initialVehicles = await fetchMod('GET', 'vehicles', '')
       dispatch({
