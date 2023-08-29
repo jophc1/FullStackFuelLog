@@ -9,6 +9,11 @@ router.use(authAccess)
 
 router.get('/', verifyAdmin, async (req, res) => {
   // access the query params
+  // query
+  let query 
+  query = req.query.dateFrom && req.query.dateTo ? { date: { $gte: new Date(req.query.dateFrom), $lte: new Date(req.query.dateTo) } } : {}
+  query = req.query.vehicle_id ? { vehicle_id:  req.query.vehicle_id  } : {}
+  // page options
   const pageOptions = {
     page: parseInt(req.query.page, 10) || 0,
     limit: parseInt(req.query.limit, 10) || 10,
@@ -16,7 +21,7 @@ router.get('/', verifyAdmin, async (req, res) => {
     populate: [{ path: 'vehicle_id', select: 'asset_id'}, { path: 'user_id', select: 'name username_id -_id'}]
   }
   /* querying for `all` {} items in `LogModel`, paginating by pageOptions.page, pageOptions.limit items per page */
-  let logPagination = await LogModel.paginate({}, pageOptions, function(error, result) {
+  let logPagination = await LogModel.paginate(query, pageOptions, function(error, result) {
     if (error) {
       throw error
     } else {
