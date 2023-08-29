@@ -86,6 +86,7 @@ const EmployerDashboard = ({ children }) => {
       type: 'allLogs',
       allLogs: newAllLogs
     })
+    return res
     // TODO: return response and render
   }
 
@@ -116,11 +117,16 @@ const EmployerDashboard = ({ children }) => {
     return res.body
   }
 
+  async function deleteReview(reviewID) {
+    const res = await fetchMod('DELETE', 'logs/reviews/${reviewID}')
+    return res
+  }
+
 
   return userAccess && authorised ? 
   <>
     <NavBar />
-    <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, deleteLog, getAllReviews}}>
+    <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, deleteLog, getAllReviews, deleteReview}}>
     {children}
     </EmployerContext.Provider>   
   </>
