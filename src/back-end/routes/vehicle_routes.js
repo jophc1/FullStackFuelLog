@@ -26,7 +26,7 @@ router.get('/:asset_id', async (req, res) => {
 router.post('/', verifyAdmin, postToS3, async (req, res) => {
   try {
     // save this in database with vehicle data to use to retrive img .png from S3 bucket
-    const url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.body.asset_id}.png`
+    const url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.key}.png`
     // create new document
     const newVehicle = {
       ...req.body,
@@ -57,7 +57,7 @@ router.put('/:asset_id', verifyAdmin, postToS3, async (req, res) => {
     const oldVehicleData = await VehicleModel.findOne({ asset_id: req.params.asset_id }).exec()
     oldVehicleData.asset_id !== req.body.asset_id && !req.files
       ? url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${oldVehicleData.asset_id}.png`
-      : url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.body.asset_id}.png`
+      : url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.key}.png`
 
     const vehicleUpdated = {
       ...req.body,

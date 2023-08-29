@@ -25,8 +25,7 @@ const vehicleSchema = mongoose.Schema({
   },
   vehicleImage_URL: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   }
 })
 
