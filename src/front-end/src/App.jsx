@@ -19,6 +19,7 @@ import ScatterGraphVehicleDistanceFuel from './components/employer/ScatterGraphV
 import EmployeeListFetch from './components/employer/EmployeeListFetch.jsx'
 import EmployeeContextLayout from './components/employee/EmployeeContextLayout.jsx'
 import LogsFetchList from './components/employer/LogsFetchList.jsx'
+import ReviewsFetchList from './components/employer/ReviewsFetchList.jsx'
 
 
 
@@ -180,7 +181,7 @@ function App() {
             <Route path='dashboard/all/vehicles/edit/:assetID' element={<EmployerDashboard><VehicleForm {...propsObject} /></EmployerDashboard>} />
             <Route path='dashboard/all/employees' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
             <Route path='dashboard/all/logs' element={<EmployerDashboard><LogsFetchList /></EmployerDashboard>} />
-            <Route path='dashboard/all/logs/reviews' element={<EmployerDashboard><EmployeeListFetch /></EmployerDashboard>} />
+            <Route path='dashboard/all/logs/reviews' element={<EmployerDashboard><ReviewsFetchList /></EmployerDashboard>} />
           </Route>
         </Routes>
     </FuelLogContext.Provider>

@@ -110,11 +110,17 @@ const EmployerDashboard = ({ children }) => {
     }
   }
 
+  // Log reviews
+  async function getAllReviews() {
+    const res = await fetchMod('GET', 'logs/reviews', '')
+    return res.body
+  }
+
 
   return userAccess && authorised ? 
   <>
     <NavBar />
-    <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, deleteLog}}>
+    <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, deleteLog, getAllReviews}}>
     {children}
     </EmployerContext.Provider>   
   </>

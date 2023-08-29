@@ -43,7 +43,7 @@ const EmployeeContextLayout = () => {
     }
 
   return <>
-    <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest}} >
+    <EmployeeContext.Provider value={{postLogEntry, newLogCreated, newLogRequest, logId}} >
       <Outlet />
     </EmployeeContext.Provider>
   </>
