@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
 router.use(verifyAdmin)
 
 router.get('/', async (req, res) => {
-  const allLogReviews = await LogReviewModel.find().populate('employee_id', '-_id username_id').populate({path: 'log_id', select: '_id -date -user_id', populate: {path: 'vehicle_id', select: 'asset_id -_id'}}).exec()
+  const allLogReviews = await LogReviewModel.find().populate('employee_id', '-_id username_id').populate({path: 'log_id', populate: {path: 'vehicle_id'}}).exec()
   allLogReviews ? res.send(allLogReviews) : res.status(200).send({ LogReviews: 'No log reviews found' })
 })
 
