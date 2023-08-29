@@ -13,7 +13,7 @@ router.get('/', verifyAdmin, async (req, res) => {
     page: parseInt(req.query.page, 10) || 0,
     limit: parseInt(req.query.limit, 10) || 10,
     sort: { date: -1 },
-    populate: ['vehicle_id', 'user_id']
+    populate: [{ path: 'vehicle_id', select: 'asset_id'}, { path: 'user_id', select: 'name username_id -_id'}]
   }
   /* querying for `all` {} items in `LogModel`, paginating by pageOptions.page, pageOptions.limit items per page */
   let logPagination = await LogModel.paginate({}, pageOptions, function(error, result) {
