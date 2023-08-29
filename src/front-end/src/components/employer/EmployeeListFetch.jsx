@@ -110,7 +110,7 @@ const EmployeeListFetch = () => {
       
     
    
-    {showForm && <ModalFields {...modalFieldProps} />}
+    {showForm && <ModalFields {...modalFieldProps} employeeForm={true} />}
   </>
 }
 

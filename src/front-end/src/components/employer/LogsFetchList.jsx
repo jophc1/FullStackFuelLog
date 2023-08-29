@@ -84,6 +84,18 @@ const LogsFetchList = () => {
                   <td>Fuel Added:</td>
                   <td>{selectedLog.current.fuel_added}</td>
                 </tr>
+                <tr>
+                  <td>Asset ID:</td>
+                  <td>{selectedLog.current.vehicle_id.asset_id}</td>
+                </tr>
+                <tr>
+                  <td>Employee:</td>
+                  <td>{selectedLog.current.user_id.name}</td>
+                </tr>
+                <tr>
+                  <td>Employee ID:</td>
+                  <td>{selectedLog.current.user_id.username_id}</td>
+                </tr>
               </tbody>
             </table>
       </ModalText>
