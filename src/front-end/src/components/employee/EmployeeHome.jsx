@@ -12,8 +12,8 @@ import { Navigate } from 'react-router-dom'
 
 const EmployeeHome = ({ children }) => {
 
-const { authorised, userLogout, userAccess, navigate } = useContext(FuelLogContext)
-const { newLogCreated } = useContext(EmployeeContext)
+const { authorised, userLogout, userAccess, navigate, newLogCreated } = useContext(FuelLogContext)
+// const { newLogCreated } = useContext(EmployeeContext)
 
   const handleLogoutClick = event => {
     event.preventDefault()

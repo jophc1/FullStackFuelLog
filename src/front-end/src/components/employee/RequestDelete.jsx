@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import Card from '../styled/ProfileCard'
 import CompanyButton from '../styled/CompanyButton'
-import { EmployeeContext } from '../../context'
+import { EmployeeContext, FuelLogContext } from '../../context'
 
 const RequestDelete = () => {
-  const { newLogRequest } = useContext(EmployeeContext)
+  const { newLogRequest } = useContext(FuelLogContext)
 
   function handleNewLogRequest (event) {
     event.preventDefault()

@@ -14,7 +14,6 @@ const ReviewsFetchList = () => {
   const [totalPages, setTotalPages] = useState(0)
   const [page, setPage] = useState(1)
   const [reviews, setReviews] = useState([])
-  const [employees, setEmployees] = useState([])
   const selectedLog = useRef({})
   const logID = useRef('')
 
@@ -30,9 +29,8 @@ const ReviewsFetchList = () => {
   useEffect(() => {
     (async () => {
       const allReviews = await getAllReviews()
-      const allEmployees = await getAllEmployees()
+      console.log(allReviews)
       setReviews(allReviews)
-      setEmployees(allEmployees)
     })()
     
   }, [])

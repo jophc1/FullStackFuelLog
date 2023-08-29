@@ -34,7 +34,9 @@ function App() {
           showModalField,
           displayVehicleInfo,
           displayPlaceholderVehicleInfo,
-          propsObject } = store
+          propsObject,
+          logId,
+          newLogCreated } = store
   
   const navigate = useNavigate()
 
@@ -66,10 +68,41 @@ function App() {
     res === 'OK' ? navigate('/') : console.log('logout failed')
   }
 
-  // Employee
+  // Employee components
   async function editEmployee(employeeData) {
     
   }
+
+  async function postLogEntry (data) {
+    const res = await fetchMod('POST', 'logs', data)
+    if (res.status === 200) {
+      dispatch({
+        type: 'newLog',
+        newLogCreated: true,
+        logId: res.body._id
+      })
+      navigate('/employee/dashboard/home')
+    }
+    // TODO: if post failed, return a error popup condition
+  }
+
+  async function newLogRequest(event) {
+    let res = {}
+    if (event.target.value === 'submit'){
+      res = await fetchMod('POST', 'logs/reviews', {log_id: logId})
+    }
+    if (event.target.value === 'cancel' || res.status === 201) {
+      dispatch({
+        type: 'newLog',
+        newLogCreated: false,
+        logId: {}
+      })
+    } else {
+      console.log('new log request post failed', res.status, res.body.error) // TODO: if post of log review is unsuccessful, display error on screen
+    }
+  }
+
+
 
   // NAV
 
@@ -166,7 +199,7 @@ function App() {
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate, editEmployee, editVehicle, deleteVehicle}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate, editEmployee, editVehicle, deleteVehicle, logId, postLogEntry, newLogCreated, newLogRequest}}>
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/employer'></Route>
