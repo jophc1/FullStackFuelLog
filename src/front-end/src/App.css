@@ -15,6 +15,11 @@ form, form div {
   margin: 0 auto;
 }
 
+li {
+  padding: 0 0.5rem;
+  cursor: pointer;
+}
+
 /* EMPLOYEE */
 #logo {
   width: 30%;

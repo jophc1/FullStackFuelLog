@@ -25,6 +25,7 @@ function reducer (currentState, action) {
     case 'allLogs':
       return {
         ...currentState,
+        paginationInfo: action.paginationInfo,
         allLogs: action.allLogs
       }
     case 'selectVehicle':
@@ -79,6 +80,7 @@ const initialState = {
   displayPlaceholderVehicleInfo: true,
   propsObject: {},
   showModalField: false,
+  paginationInfo: {},
   allLogs: [],
 }
 

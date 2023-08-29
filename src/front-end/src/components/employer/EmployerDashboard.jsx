@@ -11,7 +11,7 @@ const EmployerDashboard = ({ children }) => {
   
 
   const [store, dispatch] = useReducer(reducer, initialState)
-  const { propsObject, allLogs } = store
+  const { propsObject, allLogs, paginationInfo } = store
 
   const { userAccess, authorised, navigate } = useContext(FuelLogContext)
   
@@ -70,11 +70,19 @@ const EmployerDashboard = ({ children }) => {
 
   async function getAllLogs (page) {
     const res = await fetchMod('GET', `logs?page=${page}&limit=20`, '')
-    const sortedLogRecordsByDate = res.body
+    const paginationLogs = res.body
     // const LogsDateFormatted = sortedLogRecordsByDate.map(log => log.date = new Date(log.date).toISOString().split('T')[0])
     dispatch({
       type: 'allLogs',
-      allLogs: sortedLogRecordsByDate
+      allLogs: paginationLogs,
+      paginationInfo : {
+        currentPage: paginationLogs.page,
+        totalPages: paginationLogs.totalPages,
+        hasPrevPage: paginationLogs.hasPrevPage,
+        hasNextPage: paginationLogs.hasNextPage,
+        nextPage: paginationLogs.nextPage,
+        prevPage: paginationLogs.prevPage
+      }
     })
   }
 
@@ -114,7 +122,7 @@ const EmployerDashboard = ({ children }) => {
   return userAccess && authorised ? 
   <>
     <NavBar />
-    <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, deleteLog}}>
+    <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, postUpdateEmployee, getAllLogs, allLogs, paginationInfo, deleteLog}}>
     {children}
     </EmployerContext.Provider>   
   </>
