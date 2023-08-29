@@ -35,8 +35,6 @@ const users = [
 
 const arrayUsers = await UserModel.insertMany(users)
 
-// console.log(await bcrypt.compare('test password', arrayUsers[0].password))
-
 const vehicles = [
   {
     asset_id: 'HRT1',
