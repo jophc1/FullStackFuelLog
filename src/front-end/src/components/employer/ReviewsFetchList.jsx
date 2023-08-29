@@ -62,11 +62,12 @@ const ReviewsFetchList = () => {
   return (reviews && 
     <>
         <h3>Log delete requests</h3>
-      <div className='allVehiclesEmployesLogs'>
+      <div className='allRequests'>
         <table>
           <tbody>
             {reviews.map( review => (
               <tr key={review._id} onClick={handleReviewClick} value={review._id}>
+                <td><span className='fa fa-exclamation-circle'></span></td>
                 <td>Vehicle ID:</td>
                 <td>{review.log_id && review.log_id.vehicle_id.asset_id}</td>
                 <td>Employee ID:</td>

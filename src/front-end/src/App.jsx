@@ -45,7 +45,6 @@ function App() {
 
   async function loginAccess (username, password) {
     const res = await basicAuthFetch(username, password)
-    console.log(res.returnedData)
     if (res.status === 200) {
     const initialVehicles = await fetchMod('GET', 'vehicles', '')
       dispatch({
@@ -216,7 +215,7 @@ function App() {
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, 
       currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, 
-      modalTextOperation, showModalField, modalFieldOperation, navigate, editEmployee, editVehicle, deleteVehicle, 
+      modalTextOperation, showModalField, modalFieldOperation, navigate, editVehicle, deleteVehicle, 
       postLogEntry, newLogCreated, newLogRequest, userId, postUpdateEmployee}}>
         <Routes>
           <Route path='/' element={<Login />} />
