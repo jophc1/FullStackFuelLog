@@ -43,7 +43,7 @@ const EmployerDashboard = ({ children }) => {
     formData.append('image', image)
     const res = await fetchFiles(method, urlSuffix, formData)
     console.log(formData) // TODO: gather response data and render a succeful component display
-    if (res.status == 201) {
+    if (res.status == 201 || res.status == 200) {
       navigate('/employer/dashboard/all/vehicles/') // TODO: show new vehicle details
     }
   }
@@ -71,6 +71,7 @@ const EmployerDashboard = ({ children }) => {
   }
 
   async function deleteLog (logID) {
+    console.log(logID)
     const res = await fetchMod('DELETE', `logs/${logID}`, '')
     const newAllLogs = allLogs.filter(log => {return log._id != logID})
     // const sortedLogRecordsByDate = newAllLogs.sort((logOne, logTwo) => new Date(logTwo.date).getTime() - new Date(logOne.date).getTime() )
@@ -78,6 +79,7 @@ const EmployerDashboard = ({ children }) => {
       type: 'allLogs',
       allLogs: newAllLogs
     })
+    return res
     // TODO: return response and render
   }
 
@@ -108,11 +110,16 @@ const EmployerDashboard = ({ children }) => {
     return res.body
   }
 
+  async function deleteReview(reviewID) {
+    const res = await fetchMod('DELETE', `logs/reviews/${reviewID}`, '')
+    return res
+  }
+
 
   return userAccess && authorised ? 
   <>
     <NavBar />
-    <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, getAllLogs, allLogs, paginationInfo, deleteLog, getAllReviews}}>
+    <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, getAllLogs, allLogs, deleteLog, getAllReviews, deleteReview, paginationInfo}}>
     {children}
     </EmployerContext.Provider>   
   </>

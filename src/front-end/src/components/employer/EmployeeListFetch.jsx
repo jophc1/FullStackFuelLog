@@ -15,7 +15,7 @@ const EmployeeListFetch = () => {
 
   const [showForm, setShowForm] = useState(false)
   const { getAllEmployees, deleteEmployee } = useContext(EmployerContext)
-  const { modalTextOperation, editEmployee, modalFieldOperation, backButton } = useContext(FuelLogContext)
+  const { modalTextOperation, modalFieldOperation, backButton } = useContext(FuelLogContext)
   const employeeID = useRef('')
   const employeeName = useRef('')
 

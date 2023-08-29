@@ -110,6 +110,54 @@ li {
   background-color: #e7e9eb80
 }
 
+/* Log review requests employer */
+
+.allRequests  tr {
+  cursor: pointer;
+}
+
+.allRequests tr:hover {
+  background-color: #53f50dc6 !important;
+}
+
+.allRequests span {
+  font-size: 20px;
+}
+
+.allRequests table {
+  margin: 0 auto;
+}
+
+.allRequests table tbody tr td {
+  font-size: 0.9rem;
+  padding: 0.8rem 0.6rem;
+  text-align: center;
+}
+
+.allRequests table tbody tr td:nth-child(1),
+.allRequests table tbody tr td:nth-child(2),
+.allRequests table tbody tr td:nth-child(4),
+.allRequests table tbody tr td:nth-child(6) {
+  border-left: 1px solid #000000;
+}
+
+.allRequests table tbody tr td:nth-child(even) {
+  font-weight: bold;
+}
+
+.allRequests table tbody tr td:nth-child(7) {
+  border-right: 1px solid #000000;
+}
+
+.allRequests table tbody tr td {
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+}
+
+.allRequests table tbody tr:nth-child(even) { 
+  background-color: #e7e9eb80;
+}
+
 /* ****************** */
 /* All Vehicles */
 .allVehiclesEmployesLogs {
@@ -142,9 +190,6 @@ li {
   border-top: 1px solid #000000;
   border-bottom: 1px solid #000000;
 }
-
-
-
 
 .allVehiclesEmployesLogs table tbody tr td:nth-child(3), .allVehiclesEmployesLogs table tbody tr td:nth-child(5) {
   font-weight: bold;

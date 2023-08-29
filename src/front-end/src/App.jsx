@@ -213,7 +213,10 @@ function App() {
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, modalTextOperation, showModalField, modalFieldOperation, navigate, editVehicle, deleteVehicle, logId, postLogEntry, newLogCreated, newLogRequest, userId, postUpdateEmployee}}>
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, 
+      currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, 
+      modalTextOperation, showModalField, modalFieldOperation, navigate, editVehicle, deleteVehicle, 
+      postLogEntry, newLogCreated, newLogRequest, userId, postUpdateEmployee}}>
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/employer'></Route>
