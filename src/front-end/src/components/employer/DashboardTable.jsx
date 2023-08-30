@@ -56,7 +56,7 @@ const DashboardTable = () => {
 
   return <>
   <div>
-    <h4>first date here - other date here analytics</h4>
+    {fromDate.current && toDate.current ? <h5>{fromDate.current} <span className='fa fa-arrow-right'></span> {toDate.current} analytics</h5> : <h5>Please set date and choose vehicle</h5>}
     <table className='employer-table'>
         <tbody>
           <tr>
