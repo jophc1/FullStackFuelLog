@@ -21,7 +21,7 @@ const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree, heading, i
         name,
         username_id: employeeId,
         password: password.toString(),
-        name: initialName
+        name: name
       }
       await postUpdateEmployee(updatedEmployeeDetails, initalEmployeeId, method, path)
     } else {

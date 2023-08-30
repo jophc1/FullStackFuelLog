@@ -45,7 +45,7 @@ const ReviewsFetchList = () => {
       console.log('error: Log was deleted but didnt delete Review') // TODO: error message if review didn't delete
       return {} // TODO maybe return an error message object if error occurs
     }
-    setReRender(reRender ? false : true)
+    setReRender(!reRender)
     modalTextOperation(false)
     setRenderModal(false)
   }
@@ -67,7 +67,7 @@ const ReviewsFetchList = () => {
           <tbody>
             {reviews.map( review => (
               <tr key={review._id} onClick={handleReviewClick} value={review._id}>
-                <td><span className='fa fa-exclamation-circle'></span></td>
+                <td><span className='fa fa-exclamation-circle' ></span></td>
                 <td>Vehicle ID:</td>
                 <td>{review.log_id && review.log_id.vehicle_id.asset_id}</td>
                 <td>Employee ID:</td>

@@ -147,6 +147,10 @@ li {
   background-color: #e7e9eb80;
 }
 
+.fa-exclamation-circle {
+  color: red;
+}
+
 /* ****************** */
 /* All Vehicles */
 .allVehiclesEmployesLogs {
