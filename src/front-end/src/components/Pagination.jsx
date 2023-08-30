@@ -17,6 +17,7 @@ const Pagination = ({ currentPage = 1, totalPages, hasPrevPage, hasNextPage, nex
 
   const handleDisplayNextPages = event => {
     event.preventDefault()
+    console.log(pagesToDisplay)
     if (endIndex + 1 == totalPages) {
       setHideNextPage(false)
       setHidePrevPage(true)

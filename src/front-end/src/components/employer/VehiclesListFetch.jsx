@@ -58,8 +58,8 @@ const VehiclesListFetch = () => {
               <tbody>
                 {allVehicles.map(vehicle => (
                   <tr key={vehicle.asset_id}>
-                    <td><CompanyButton value={vehicle.asset_id} onClick={handleEditClick}>Edit</CompanyButton></td>
-                    <td value={vehicle.asset_id} onClick={handleDeleteIconClick}><span value={vehicle.asset_id} className='fa fa-trash-alt'></span></td>
+                    <th className='fixedColumn'><CompanyButton value={vehicle.asset_id} onClick={handleEditClick}>Edit</CompanyButton></th>
+                    <th className='fixedColumnTwo' value={vehicle.asset_id} onClick={handleDeleteIconClick}><span value={vehicle.asset_id} className='fa fa-trash-alt'></span></th>
                     <td>Asset ID:</td>
                     <td>{vehicle.asset_id}</td>
                     <td>Registration No:</td>

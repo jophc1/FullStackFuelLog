@@ -99,8 +99,8 @@ const EmployeeListFetch = () => {
           <tbody>
             {allEmployees.map(employee => (
               <tr key={employee.username_id}>
-                <td><CompanyButton value={employee.username_id} onClick={handleEditClick}>Edit</CompanyButton></td>
-                <td value={employee.username_id} onClick={handleDeleteIconClick}><span value={employee.username_id} className='fa fa-trash-alt'></span></td>
+                <th className='fixedColumn'><CompanyButton value={employee.username_id} onClick={handleEditClick}>Edit</CompanyButton></th>
+                <th className='fixedColumnTwo' value={employee.username_id} onClick={handleDeleteIconClick}><span value={employee.username_id} className='fa fa-trash-alt'></span></th>
                 <td>Employee ID:</td>
                 <td>{employee.username_id}</td>
                 <td>Employee:</td>
