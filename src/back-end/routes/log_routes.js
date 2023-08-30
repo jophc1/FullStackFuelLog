@@ -13,13 +13,14 @@ router.get('/', verifyAdmin, async (req, res) => {
   // query
   let query = {}
 
-  if (req.query.dateTo) {
+  if (req.query.dateTo && req.query.vehicle_id) {
     query = { date: { $gte: new Date(req.query.dateFrom), $lte: new Date(req.query.dateTo) }, vehicle_id:  req.query.vehicle_id }
   } else if (req.query.vehicle_id) {
     query = { vehicle_id:  req.query.vehicle_id  }
+  } else if (req.query.dateTo) {
+    query = { date: { $gte: new Date(req.query.dateFrom), $lte: new Date(req.query.dateTo) } }
   }
 
-  console.log(query)
   // page options
   const pageOptions = {
     page: parseInt(req.query.page, 10) || 0,
