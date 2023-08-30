@@ -37,7 +37,6 @@ const VehiclesListFetch = () => {
 
   async function handleSearchSubmit (event) {
     event.preventDefault()
-    search
   }
 
   useEffect(() => {

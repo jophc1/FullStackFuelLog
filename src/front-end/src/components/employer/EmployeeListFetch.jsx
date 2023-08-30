@@ -16,6 +16,7 @@ const EmployeeListFetch = () => {
   const [showForm, setShowForm] = useState(false)
   const { getAllEmployees, deleteEmployee } = useContext(EmployerContext)
   const { modalTextOperation, modalFieldOperation, backButton } = useContext(FuelLogContext)
+  const [assetId, setAssetId] = useState('')
   const employeeID = useRef('')
   const employeeName = useRef('')
 
@@ -56,6 +57,10 @@ const EmployeeListFetch = () => {
     console.log(deleteEmployeeResponse)
     setModalRender(false)
     modalTextOperation(false)
+  }
+
+  async function handleSearchSubmit (event) {
+    event.preventDefault()
   }
 
   useEffect(() => {
