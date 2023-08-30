@@ -73,7 +73,7 @@ const ReviewsFetchList = () => {
                 <td>Employee ID:</td>
                 <td>{review.employee_id && review.employee_id.username_id}</td>
                 <td>Date:</td>
-                <td>{review.date}</td>
+                <td>{review.date = new Date(review.date).toISOString().split('T')[0]}</td>
               </tr>
             ))}
           </tbody>

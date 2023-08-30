@@ -74,10 +74,12 @@ const EmployerDashboard = ({ children }) => {
     console.log(logID)
     const res = await fetchMod('DELETE', `logs/${logID}`, '')
     const newAllLogs = allLogs.docs.filter(log => {return log._id != logID})
+    console.log(allLogs)
     // const sortedLogRecordsByDate = newAllLogs.sort((logOne, logTwo) => new Date(logTwo.date).getTime() - new Date(logOne.date).getTime() )
     dispatch({
       type: 'allLogs',
-      allLogs: newAllLogs
+      allLogs: {...allLogs, docs: newAllLogs},
+      paginationInfo: {...paginationInfo}
     })
     return res
     // TODO: return response and render

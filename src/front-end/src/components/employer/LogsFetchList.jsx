@@ -42,7 +42,7 @@ const LogsFetchList = () => {
   useEffect(() => {
     (async () => getAllLogs(page))()
     setTotalDocs(allLogs.totalDocs)
-  }, [modalDeleteRender, page])
+  }, [modalDeleteRender, page, renderModal])
 
   return paginationInfo && allLogs.docs &&
     <>
