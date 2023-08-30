@@ -14,9 +14,9 @@ router.get('/', verifyAdmin, async (req, res) => {
   let query = {}
 
   if (req.query.dateTo) {
-    query = { date: { $gte: new Date(req.query.dateFrom), $lte: new Date(req.query.dateTo) } }
+    query = { date: { $gte: new Date(req.query.dateFrom), $lte: new Date(req.query.dateTo) }, vehicle_id:  req.query.vehicle_id }
   } else if (req.query.vehicle_id) {
-    { vehicle_id:  req.query.vehicle_id  }
+    query = { vehicle_id:  req.query.vehicle_id  }
   }
 
   console.log(query)
