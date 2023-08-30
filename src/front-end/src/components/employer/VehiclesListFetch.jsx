@@ -45,6 +45,7 @@ const VehiclesListFetch = () => {
   }, [])
 
   return <>
+    <h3>All Vehicles</h3>
     <FetchHeader>
         <form className='search' onSubmit={handleSearchSubmit}>
           <input type="text" placeholder='Search by AssetID' value={assetId} onChange={event => setAssetId(event.target.value)} />
