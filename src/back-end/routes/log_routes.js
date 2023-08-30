@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import LogModel from '../models/Log.js'
+import LogReviewModel from '../models/LogReview.js'
 import { errorAuth, authAccess, verifyAdmin } from '../middleware/auth_mw.js'
 import mongoose from 'mongoose'
 
@@ -66,7 +67,11 @@ router.post('/', async (req, res) => {
 // the log id will be the mongoDB generated _id
 router.delete('/:id', verifyAdmin, async (req, res) => {
   try {
+    const logDetails = await LogModel.findById(req.params.id)
     const deletedLog = await LogModel.findByIdAndDelete(req.params.id)
+
+    const targetReview = await LogReviewModel.deleteOne({ log_id: logDetails._id })
+
     deletedLog ? res.sendStatus(200) : res.status(404).send({ error: 'Log not found' })
   } catch (err) {
     res.status(500).send({ error: err.message })

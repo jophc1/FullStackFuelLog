@@ -2,6 +2,7 @@ import express from 'express'
 import UserModel from '../models/User.js'
 import bcrypt from 'bcrypt'
 import { authAccess, verifyAdmin, errorAuth } from '../middleware/auth_mw.js'
+import LogReviewModel from '../models/LogReview.js'
 
 const router = express.Router()
 
@@ -62,8 +63,13 @@ router.get('/:username_id', async (req, res) => {
 
 // Delete an employee
 router.delete('/:username_id', async (req, res) => {
+  const employeeDetails = await UserModel.findOne({ username_id: req.params.username_id })
   const targetEmployee = await UserModel.deleteOne({ username_id: req.params.username_id })
+
+  const targetReview = await LogReviewModel.deleteOne({ employee_id: employeeDetails._id })
+
   targetEmployee.acknowledged && targetEmployee.deletedCount ? res.status(201).send(targetEmployee) : res.status(202).send({ message: 'No employee deleted' })
+
 })
 
 router.use(errorAuth)

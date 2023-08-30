@@ -42,8 +42,8 @@ router.post('/', verifyAdmin, postToS3, async (req, res) => {
 
 router.delete('/:asset_id', verifyAdmin, deleteObjectS3, async (req, res) => {
   try {
-    const vehicle = await VehicleModel.deleteOne({ asset_id: req.params.asset_id })
-    vehicle ? res.sendStatus(200) : res.status(400).send({ error: 'Vehicle not found' })
+    const targetVehicle = await VehicleModel.deleteOne({ asset_id: req.params.asset_id })
+    targetVehicle ? res.sendStatus(200) : res.status(400).send({ error: 'Vehicle not found' })
   } catch (err) {
     res.status(500).send({ error: err.message })
   }
