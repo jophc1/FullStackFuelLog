@@ -10,10 +10,12 @@ const LogsFetchList = () => {
   const { modalTextOperation } = useContext(FuelLogContext)
   const [renderModal, setRenderModal] = useState(false)
   const [modalDeleteRender, setModalDeleteRender] = useState(false)
-  const [totalDocs, setTotalDocs] = useState(0)
   const [page, setPage] = useState(1)
+  const [assetId, setAssetId] = useState('')
   const selectedLog = useRef({})
   const logID = useRef('')
+  const toDate = useRef('')
+  const fromDate = useRef('')
 
   const handleLogClick = event => {
     event.preventDefault()
@@ -39,14 +41,64 @@ const LogsFetchList = () => {
     modalTextOperation(false)
   }
 
+  async function handleSearchSubmit (event) {
+    event.preventDefault()
+    // check if filter dates have a value
+
+    if (toDate.current && fromDate.current) {
+      // const formatToDateString = toDate.current.split('-')
+      // const formatFromDateString = fromDate.current.split('-')
+      if (new Date(fromDate.current) <= new Date(toDate.current)){
+        await getAllLogs(page, 'vehicleDate', toDate.current, fromDate.current, assetId)
+      }
+    } else {
+       await getAllLogs(page, 'vehicle', '', '', assetId)
+    }
+    // setRenderReset(false)
+  }
+
+  async function handleFilterDates (event) {
+    event.preventDefault()
+    if (event.target.name === 'to-date'){
+      toDate.current = event.target.value
+    } else {
+      fromDate.current = event.target.value
+    }
+    // check that both dates are defined
+    if (toDate.current && fromDate.current) {
+  
+      if (new Date(fromDate.current) <= new Date(toDate.current)){
+        await getAllLogs(page, 'date', toDate.current, fromDate.current)
+      }
+      //setRenderReset(false)
+    }
+  }
+
   useEffect(() => {
     (async () => getAllLogs(page))()
-    setTotalDocs(allLogs.totalDocs)
+    setAssetId('')
   }, [modalDeleteRender, page, renderModal])
 
   return paginationInfo && allLogs.docs &&
     <>
       <h3>All Log Records</h3>
+      <div>
+        <div>
+          <p>Filter dates</p>
+          <div>
+            <label>From:</label>
+            <input type="date" name='from-date' onChange={handleFilterDates} />
+            <label>To:</label>
+            <input type="date" name='to-date'  onChange={handleFilterDates} />
+          </div>
+        </div>
+        <div>
+          <form className='search' onSubmit={handleSearchSubmit}>
+            <input type="text" placeholder='Search by AssetID' value={assetId} onChange={event => setAssetId(event.target.value)} />
+            <span className='fa fa-search'></span>
+          </form>
+        </div>
+      </div>
       <div className='allLogs'>
         <table>
           <tbody>
@@ -62,7 +114,7 @@ const LogsFetchList = () => {
           </tbody>
         </table>
       </div>
-      {paginationInfo &&  <Pagination {...paginationInfo} setPage={setPage} /> }
+      {paginationInfo.totalPages > 1 &&  <Pagination {...paginationInfo} setPage={setPage} /> }
       {renderModal &&
       <ModalText setRenderModal={setRenderModal}>
             <h5>Log Details</h5>

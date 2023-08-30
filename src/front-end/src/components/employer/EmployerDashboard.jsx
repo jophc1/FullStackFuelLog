@@ -13,7 +13,7 @@ const EmployerDashboard = ({ children }) => {
   const [store, dispatch] = useReducer(reducer, initialState)
   const { propsObject, allLogs, paginationInfo } = store
 
-  const { userAccess, authorised, navigate } = useContext(FuelLogContext)
+  const { userAccess, authorised, navigate, allVehicles } = useContext(FuelLogContext)
   
 
   // EMPLOYEES
@@ -52,8 +52,25 @@ const EmployerDashboard = ({ children }) => {
 
   // LOGS
 
-  async function getAllLogs (page) {
-    const res = await fetchMod('GET', `logs?page=${page}&limit=20`, '')
+  async function getAllLogs (page, queryCase, dateTo, dateFrom, assetId) {
+    let res
+    let searchedVehicle
+    switch (queryCase) {
+      case 'vehicle':
+        searchedVehicle = allVehicles.find(vehcile => vehcile.asset_id == assetId)
+        res =  await fetchMod('GET', `logs?page=${page}&limit=20&vehicle_id=${searchedVehicle._id}`)
+        break
+      case 'vehicleDate':
+        searchedVehicle = allVehicles.find(vehcile => vehcile.asset_id == assetId)
+        res =  await fetchMod('GET', `logs?page=${page}&limit=20&vehicle_id=${searchedVehicle._id}&dateTo=${dateTo}&dateFrom=${dateFrom}`)
+        break
+      case 'date':
+        res =  await fetchMod('GET', `logs?page=${page}&dateTo=${dateTo}&dateFrom=${dateFrom}`)
+        break
+      default:
+        res = await fetchMod('GET', `logs?page=${page}&limit=20`, '')
+    }
+
     const paginationLogs = res.body
     const LogsDateFormatted = paginationLogs.docs.map(log => log.date = new Date(log.date).toISOString().split('T')[0])
     dispatch({
@@ -74,14 +91,12 @@ const EmployerDashboard = ({ children }) => {
     console.log(logID)
     const res = await fetchMod('DELETE', `logs/${logID}`, '')
     const newAllLogs = allLogs.docs.filter(log => {return log._id != logID})
-    console.log(allLogs)
     // const sortedLogRecordsByDate = newAllLogs.sort((logOne, logTwo) => new Date(logTwo.date).getTime() - new Date(logOne.date).getTime() )
     dispatch({
       type: 'allLogs',
       allLogs: {...allLogs, docs: newAllLogs},
       paginationInfo: {...paginationInfo}
     })
-    return res
     // TODO: return response and render
   }
 

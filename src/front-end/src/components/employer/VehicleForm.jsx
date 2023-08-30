@@ -3,7 +3,7 @@ import { EmployerContext, FuelLogContext } from '../../context.js'
 import CompanyButton from '../styled/CompanyButton.jsx'
 import placeholderImage from '../../assets/no-image.png'
 
-const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit = '', regoInit = '', method = 'POST', urlSuffix = 'vehicles', heading = 'Add Vehicle'  }) => {
+const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit = '', regoInit = '', previewImageInit = placeholderImage, method = 'POST', urlSuffix = 'vehicles', heading = 'Add Vehicle'  }) => {
 
   const { postUpdateVehicle } = useContext(EmployerContext)
   const { backButton } = useContext(FuelLogContext)
@@ -14,7 +14,7 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
   const [assetId, setAssetId] = useState(assetIdInit)
   const [rego, setRego] = useState(regoInit)
   const [selectedFile, setSelectedFile] = useState(null)
-  const [previewImage, setPreviewImage] = useState(placeholderImage)
+  const [previewImage, setPreviewImage] = useState(previewImageInit)
 
   const handleSubmit = event => {
     event.preventDefault()
