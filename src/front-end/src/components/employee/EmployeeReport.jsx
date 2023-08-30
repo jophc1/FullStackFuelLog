@@ -11,31 +11,27 @@ const EmployeeReport = () => {
     })()
   }, [])
 
-  return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th><h3>Current monthly report</h3></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Fuel Total:</td>
-            <td>{employeeReport.fuelTotal} L</td>
-          </tr>
-          <tr>
-            <td>Vehicles Used:</td>
-            <td>{employeeReport.vehicleCount}</td>
-          </tr>
-          <tr>
-            <td>Log Entries:</td>
-            <td>{employeeReport.totalFuelLogs}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  )
+  return <>
+    <div className='employeeMonthlyReport'>
+    <h5>Current monthly report</h5>
+        <table>
+          <tbody>
+            <tr>
+              <td>Fuel Total:</td>
+              <td>{employeeReport.fuelTotal} L</td>
+            </tr>
+            <tr>
+              <td>Vehicles Used:</td>
+              <td>{employeeReport.vehicleCount}</td>
+            </tr>
+            <tr>
+              <td>Log Entries:</td>
+              <td>{employeeReport.totalFuelLogs}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  </>
 }
 
 export default EmployeeReport

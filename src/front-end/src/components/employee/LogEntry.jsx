@@ -47,30 +47,39 @@ const LogEntry = () => {
     backButton('/employee/dashboard/home')
   }
 
-  return authorised ? <>
-      <img src={companyIcon} />
-      <div><h3>New Log Entry</h3></div>
-      <label>Select Vehicle:</label>
-      <select onChange={selectVehicle} defaultValue={'default'}>
-        <option value='default' disabled>No car selected</option>
-        {allVehicles && allVehicles.map(vehicle => <option key={vehicle.asset_id} value={vehicle.asset_id}>{vehicle.asset_id}</option>)}
-      </select>
+  return authorised ? <div className='logEntryComponent'>
+      <div className='logEntryTitleLogo'>
+        <img src={companyIcon} />
+        <h3>New Log Entry</h3>
+      </div>
+      <div className='selectVehicleDropmenu'>
+        <label>Select Vehicle:</label>
+        <select onChange={selectVehicle} defaultValue={'default'}>
+          <option value='default' disabled>No car selected</option>
+          {allVehicles && allVehicles.map(vehicle => <option key={vehicle.asset_id} value={vehicle.asset_id}>{vehicle.asset_id}</option>)}
+        </select>
+      </div>
+      
 
       {displayPlaceholderVehicleInfo && <VehicleDetails displayDetails={displayPlaceholderVehicleInfo} data={emptyVehicleProfile} />}
       {displayVehicleInfo && isVehicleImageReady ? <VehicleDetails displayDetails={displayPlaceholderVehicleInfo} data={emptyVehicleProfile} /> : <VehicleDetails displayDetails={displayVehicleInfo} data={currentVehicle} />}
       
-      <form onSubmit={handleSubmit}>
-        <label>Current ODO:</label>
-          <input onChange={evt => setOdometer(evt.target.value)}></input>
-        <label>Added Fuel:</label>
-          <input onChange={evt => setFuel(evt.target.value)}></input>
+      <form onSubmit={handleSubmit} className='logEntryForm'>
+        <div>
+          <label>Current ODO (km):</label>
+          <input onChange={evt => setOdometer(evt.target.value)} />
+        </div>
+        <div>
+          <label>Added Fuel (L):</label>
+          <input onChange={evt => setFuel(evt.target.value)} />
+        </div>
         <div className='logEntryButtons'>
           <CompanyButton onClick={handleLogEntryBackButton}>Back</CompanyButton>
           <CompanyButton>Submit log</CompanyButton>
         </div>
-        
       </form>
-    </> : <Navigate to='/' />
+    
+    </div> : <Navigate to='/' />
     
   
 }

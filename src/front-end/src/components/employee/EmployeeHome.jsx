@@ -56,7 +56,7 @@ const [showForm, setShowForm] = useState(false)
       <Header />
       {newLogCreated ? <RequestDelete /> : <EmployeeProfile />}
       {isLogImgReady && isPasswordImgReady && isLogoutImgReady ? <></> :  
-      <Row>
+      <Row className='employeeDashButtons'>
         <SquareButton onClick={() => navigate('/employee/dashboard/new/log')}>
           <img src={logIcon} alt="logout icon" className='employeeButton' />
           <p>New Log Entry</p>

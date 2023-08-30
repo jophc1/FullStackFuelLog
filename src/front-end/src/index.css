@@ -7,8 +7,14 @@ p {
 }
 
 td {
-  font-size: 0.9rem;
-  padding: 0 1rem;
+  font-size: 0.7rem;
+  padding: 0 0.5rem;
+}
+
+table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 a {

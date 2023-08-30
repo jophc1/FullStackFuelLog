@@ -16,8 +16,8 @@ const VehicleDetails = ({ displayDetails, data }) => {
   }
 
   return displayDetails &&
-    <Card>
-      <Row>
+    <Card className='vehicleCard'>
+      <Row className='vehicleRow'>
         <div>
           <table>
             <tbody>

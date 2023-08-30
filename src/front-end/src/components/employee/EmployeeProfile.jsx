@@ -8,7 +8,7 @@ const EmployeeProfile = () => {
   const firstUserInitial = userName.substring(0,1)
   const secondUserInital = userName.substring(userName.indexOf(' ') + 1, userName.indexOf(' ') + 2)
   return (
-    <Card>
+    <Card className='employeeProfile'>
       <div className='profileIcon'>{firstUserInitial + secondUserInital}</div>
       <h2>{userName}</h2>
       <EmployeeReport />
