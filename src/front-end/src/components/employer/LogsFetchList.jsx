@@ -78,8 +78,8 @@ const LogsFetchList = () => {
   return paginationInfo && allLogs.docs &&
     <>
       <h3>All Log Records</h3>
-      <div>
-        <div>
+      <div id='logsHeader'>
+        <div id='logDates'>
           <p>Filter by dates</p>
           <div>
             <label>From:</label>

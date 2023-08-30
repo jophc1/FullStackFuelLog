@@ -16,6 +16,7 @@ const EmployeeListFetch = () => {
   const [showForm, setShowForm] = useState(false)
   const { getAllEmployees, deleteEmployee } = useContext(EmployerContext)
   const { modalTextOperation, modalFieldOperation, backButton } = useContext(FuelLogContext)
+  const [assetId, setAssetId] = useState('')
   const employeeID = useRef('')
   const employeeName = useRef('')
 
@@ -58,6 +59,10 @@ const EmployeeListFetch = () => {
     modalTextOperation(false)
   }
 
+  async function handleSearchSubmit (event) {
+    event.preventDefault()
+  }
+
   useEffect(() => {
     (async () => {
       setAllEmployees(await getAllEmployees())
@@ -80,7 +85,12 @@ const EmployeeListFetch = () => {
   }
 
   return <>
+    <h3>All Employees</h3>
     <FetchHeader>
+      <form className='search' onSubmit={handleSearchSubmit}>
+          <input type="text" placeholder='Search by AssetID' value={assetId} onChange={event => setAssetId(event.target.value)} />
+          <span className='fa fa-search'></span>
+        </form>
       <CompanyButton onClick={handleAddButton} ><span className='fa fa-plus'></span> Add Employee </CompanyButton>
     </FetchHeader>
     {allEmployees &&
