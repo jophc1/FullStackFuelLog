@@ -44,10 +44,7 @@ const LogsFetchList = () => {
   async function handleSearchSubmit (event) {
     event.preventDefault()
     // check if filter dates have a value
-
     if (toDate.current && fromDate.current) {
-      // const formatToDateString = toDate.current.split('-')
-      // const formatFromDateString = fromDate.current.split('-')
       if (new Date(fromDate.current) <= new Date(toDate.current)){
         await getAllLogs(page, 'vehicleDate', toDate.current, fromDate.current, assetId)
       }
@@ -65,13 +62,12 @@ const LogsFetchList = () => {
       fromDate.current = event.target.value
     }
     // check that both dates are defined
-    if (toDate.current && fromDate.current) {
+    // if (toDate.current && fromDate.current) {
   
-      if (new Date(fromDate.current) <= new Date(toDate.current)){
-        await getAllLogs(page, 'date', toDate.current, fromDate.current)
-      }
-      //setRenderReset(false)
-    }
+    //   if (new Date(fromDate.current) <= new Date(toDate.current)){
+    //     await getAllLogs(page, 'date', toDate.current, fromDate.current)
+    //   }
+    // }
   }
 
   useEffect(() => {
@@ -84,7 +80,7 @@ const LogsFetchList = () => {
       <h3>All Log Records</h3>
       <div>
         <div>
-          <p>Filter dates</p>
+          <p>Filter by dates</p>
           <div>
             <label>From:</label>
             <input type="date" name='from-date' onChange={handleFilterDates} />

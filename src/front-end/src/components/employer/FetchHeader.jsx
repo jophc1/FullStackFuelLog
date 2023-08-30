@@ -6,7 +6,6 @@ const FetchHeader = ({ children }) => {
 
   return <>
     <div className='searchButton'>
-      <span className='fa fa-search'></span>
       {children}
     </div>
   </>

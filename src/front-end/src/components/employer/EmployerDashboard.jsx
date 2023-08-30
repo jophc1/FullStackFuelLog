@@ -54,14 +54,16 @@ const EmployerDashboard = ({ children }) => {
 
   async function getAllLogs (page, queryCase, dateTo, dateFrom, assetId) {
     let res
+    let expression = `.*${assetId}.*`
+    const re = new RegExp(expression, 'i')
     let searchedVehicle
     switch (queryCase) {
       case 'vehicle':
-        searchedVehicle = allVehicles.find(vehcile => vehcile.asset_id == assetId)
+        searchedVehicle = allVehicles.find(vehcile => re.test(vehcile.asset_id))
         res =  await fetchMod('GET', `logs?page=${page}&limit=20&vehicle_id=${searchedVehicle._id}`)
         break
       case 'vehicleDate':
-        searchedVehicle = allVehicles.find(vehcile => vehcile.asset_id == assetId)
+        searchedVehicle = allVehicles.find(vehcile => re.test(vehcile.asset_id))
         res =  await fetchMod('GET', `logs?page=${page}&limit=20&vehicle_id=${searchedVehicle._id}&dateTo=${dateTo}&dateFrom=${dateFrom}`)
         break
       case 'date':

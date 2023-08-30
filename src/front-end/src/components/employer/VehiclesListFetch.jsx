@@ -7,6 +7,7 @@ import ModalText from '../ModalText.jsx'
 const VehiclesListFetch = () => {
   const { allVehicles, getAllVehicles, modalTextOperation, navigate, editVehicle, deleteVehicle } = useContext(FuelLogContext)
   const [modalRender, setModalRender] = useState(false)
+  const [assetId, setAssetId] = useState('')
   const assetID = useRef('')
 
   const handleEditClick = event => {
@@ -34,12 +35,21 @@ const VehiclesListFetch = () => {
     navigate('/employer/dashboard/vehicle/new')
   }
 
+  async function handleSearchSubmit (event) {
+    event.preventDefault()
+    search
+  }
+
   useEffect(() => {
     (async () => await getAllVehicles())()
   }, [])
 
   return <>
     <FetchHeader>
+        <form className='search' onSubmit={handleSearchSubmit}>
+          <input type="text" placeholder='Search by AssetID' value={assetId} onChange={event => setAssetId(event.target.value)} />
+          <span className='fa fa-search'></span>
+        </form>
       <CompanyButton onClick={handleNewVehicle}><span className='fa fa-plus'></span> Add Vehicle</CompanyButton>
     </FetchHeader>
     {allVehicles && 
