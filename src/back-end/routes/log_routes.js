@@ -11,9 +11,15 @@ router.use(authAccess)
 router.get('/', verifyAdmin, async (req, res) => {
   // access the query params
   // query
-  let query 
-  query = req.query.dateFrom && req.query.dateTo ? { date: { $gte: new Date(req.query.dateFrom), $lte: new Date(req.query.dateTo) } } : {}
-  query = req.query.vehicle_id ? { vehicle_id:  req.query.vehicle_id  } : {}
+  let query = {}
+
+  if (req.query.dateTo) {
+    query = { date: { $gte: new Date(req.query.dateFrom), $lte: new Date(req.query.dateTo) } }
+  } else if (req.query.vehicle_id) {
+    { vehicle_id:  req.query.vehicle_id  }
+  }
+
+  console.log(query)
   // page options
   const pageOptions = {
     page: parseInt(req.query.page, 10) || 0,
