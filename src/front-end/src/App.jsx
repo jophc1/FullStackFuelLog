@@ -159,6 +159,7 @@ function App() {
       yearInit: selectedVehicle.year,
       assetIdInit: selectedVehicle.asset_id,
       regoInit: selectedVehicle.registration,
+      previewImageInit: selectedVehicle.vehicleImage_URL,
       method: 'PUT',
       urlSuffix: `vehicles/${assetID}`,
       heading: 'Update Vehicle'
