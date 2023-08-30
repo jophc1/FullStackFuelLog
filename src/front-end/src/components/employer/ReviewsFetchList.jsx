@@ -2,6 +2,8 @@ import React, { useEffect, useContext, useRef, useState } from 'react'
 import { EmployerContext, FuelLogContext } from '../../context.js'
 import CompanyButton from '../styled/CompanyButton.jsx'
 import ModalText from '../ModalText.jsx'
+import noRequest from '../../assets/request.png'
+import Card from '../styled/ProfileCard.jsx'
 
 const ReviewsFetchList = () => {
   
@@ -22,8 +24,6 @@ const ReviewsFetchList = () => {
     event.preventDefault()
     const reviewId = event.target.parentNode.attributes.value.value
     selectedReview.current = reviews.find(review => reviewId === review._id)
-    console.log(selectedReview.current)
-
     modalTextOperation(true)
     setRenderModal(true)
   }
@@ -33,7 +33,7 @@ const ReviewsFetchList = () => {
     if (selectedReview.current.log_id && event.target.name === 'delete') {
       const deletionLogResponse = await deleteLog(selectedReview.current.log_id._id)
 
-      if (deletionLogResponse.status === 500) {
+      if (deletionLogResponse === 'OK') {
         console.log('error: didnt delete log, review cannot be deleted') // TODO: error message if log didn't delete
         return {}
       }
@@ -41,7 +41,7 @@ const ReviewsFetchList = () => {
     
     const deletionReviewResponse = await deleteReview(selectedReview.current._id) 
 
-    if (deletionReviewResponse.status === 500){
+    if (deletionReviewResponse === 'OK'){
       console.log('error: Log was deleted but didnt delete Review') // TODO: error message if review didn't delete
       return {} // TODO maybe return an error message object if error occurs
     }
@@ -54,32 +54,38 @@ const ReviewsFetchList = () => {
   useEffect(() => {
     (async () => {
       const allReviews = await getAllReviews()
-      console.log(allReviews)
       setReviews(allReviews)
     })()
   }, [reRender])
 
-  return (reviews && 
-    <>
-        <h3>Log delete requests</h3>
+  return <>
+      <h3>Log delete requests</h3>
+      <p>Current log delete requests from employees that need approval or rejection:</p>
+      {
+      reviews.length > 0 ?
       <div className='allRequests'>
         <table>
           <tbody>
             {reviews.map( review => (
               <tr key={review._id} onClick={handleReviewClick} value={review._id}>
-                <td><span className='fa fa-exclamation-circle' ></span></td>
-                <td>Vehicle ID:</td>
-                <td>{review.log_id && review.log_id.vehicle_id.asset_id}</td>
-                <td>Employee ID:</td>
-                <td>{review.employee_id && review.employee_id.username_id}</td>
-                <td>Date:</td>
-                <td>{review.date = new Date(review.date).toISOString().split('T')[0]}</td>
+                <th className='fixedColumn'><span className='fa fa-exclamation-circle' ></span></th>
+                <td className='long'>Vehicle ID:</td>
+                <td className='long'>{review.log_id && review.log_id.vehicle_id.asset_id}</td>
+                <td className='long'>Employee ID:</td>
+                <td className='long'>{review.employee_id && review.employee_id.username_id}</td>
+                <td className='long'>Date:</td>
+                <td className='long'>{review.date = new Date(review.date).toISOString().split('T')[0]}</td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div> 
-
+      </div>
+      :
+      <Card id="request">
+        <p>No delete requests to review</p>
+        <img src={noRequest} alt='company logo' />
+      </Card>
+      }
       {renderModal &&
       <ModalText setRenderModal={setRenderModal}>
             <h5>Log Deletion Request Details</h5>
@@ -112,7 +118,6 @@ const ReviewsFetchList = () => {
       </ModalText>
       }
     </>
-    )
 }
 
 export default ReviewsFetchList

@@ -90,13 +90,16 @@ const EmployerDashboard = ({ children }) => {
   }
 
   async function deleteLog (logID) {
-    console.log(logID)
+   let newAllLogs
+   let allLogsUpdate = {}
     const res = await fetchMod('DELETE', `logs/${logID}`, '')
-    const newAllLogs = allLogs.docs.filter(log => {return log._id != logID})
-    // const sortedLogRecordsByDate = newAllLogs.sort((logOne, logTwo) => new Date(logTwo.date).getTime() - new Date(logOne.date).getTime() )
+    if (!allLogs == {}) {
+      newAllLogs = allLogs.docs.filter(log => {return log._id != logID})
+      allLogsUpdate = {...allLogs, docs: newAllLogs}
+    }
     dispatch({
       type: 'allLogs',
-      allLogs: {...allLogs, docs: newAllLogs},
+      allLogs: allLogsUpdate,
       paginationInfo: {...paginationInfo}
     })
     // TODO: return response and render

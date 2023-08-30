@@ -1,9 +1,19 @@
 p {
-  padding: 0;
+  padding: 0.5rem;
   margin: 0;
-  /* width: 6em; */
   font-size: 0.9rem;
   line-height: 0.75rem;
+}
+
+table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+td, th {
+  margin: 0;
+  white-space: nowrap;
 }
 
 td {
@@ -18,7 +28,7 @@ a {
 html,
 body {
   height: 100%;
-  width: 100%;
   margin: 0px;
-  padding: 0px
+  padding: 0px;
+  width: auto;
 }

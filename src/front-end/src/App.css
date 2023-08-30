@@ -20,6 +20,10 @@ li {
   cursor: pointer;
 }
 
+#root h3 {
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+}
+
 /* EMPLOYEE */
 #logo {
   width: 30%;
@@ -112,8 +116,17 @@ li {
 
 /* Log review requests employer */
 
+.allRequests {
+  width: 100%;
+  position: relative;
+  overflow: auto;
+  border: 1px solid black;
+  white-space: nowrap;
+}
+
 .allRequests  tr {
   cursor: pointer;
+  position: relative;
 }
 
 .allRequests tr:hover {
@@ -128,10 +141,33 @@ li {
   margin: 0 auto;
 }
 
+.fixedColumn {
+  position: sticky;
+  background-color: #f8f9fa;
+  width: 5em;
+  min-width: 2.5em;
+  left: 0;
+  border: 1px solid #000;
+}
+
+.fixedColumn span {
+  margin-left: 0.5em;
+}
+
 .allRequests table tbody tr td {
-  font-size: 0.9rem;
-  padding: 0.8rem 0.6rem;
+  /* font-size: 0.7rem; */
+  padding: 0.25rem 0.6rem;
   text-align: center;
+}
+
+#request img {
+  opacity: 40%;
+}
+
+#request {
+  text-align: center;
+  width: 95%;
+  margin: 1rem auto;
 }
 
 .allRequests table tbody tr td:nth-child(1),
