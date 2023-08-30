@@ -71,6 +71,17 @@ li {
 
 /* EMPLOYER */
 
+/* Preview Image Vehicle Form */
+
+.previewImage img {
+  width: 200;
+  height: 200;
+}
+.previewImage {
+  width: 80%;
+  border: 1px solid #000000;
+}
+
 /* Search Button  */
 
 .searchButton {

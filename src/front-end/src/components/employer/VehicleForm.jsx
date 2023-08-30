@@ -1,10 +1,12 @@
 import React, { useState, useContext } from 'react'
-import { EmployerContext } from '../../context.js'
+import { EmployerContext, FuelLogContext } from '../../context.js'
 import CompanyButton from '../styled/CompanyButton.jsx'
+import placeholderImage from '../../assets/no-image.png'
 
 const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit = '', regoInit = '', method = 'POST', urlSuffix = 'vehicles', heading = 'Add Vehicle'  }) => {
 
   const { postUpdateVehicle } = useContext(EmployerContext)
+  const { backButton } = useContext(FuelLogContext)
 
   const [make, setMake] = useState(makeInit)
   const [model, setModel] = useState(modelInit)
@@ -12,6 +14,7 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
   const [assetId, setAssetId] = useState(assetIdInit)
   const [rego, setRego] = useState(regoInit)
   const [selectedFile, setSelectedFile] = useState(null)
+  const [previewImage, setPreviewImage] = useState(placeholderImage)
 
   const handleSubmit = event => {
     event.preventDefault()
@@ -27,9 +30,21 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
     })
   }
 
+  const handleSelectedFile = event => {
+    event.preventDefault()
+    setSelectedFile(event.target.files[0], 'image')
+    setPreviewImage(URL.createObjectURL(event.target.files[0]))
+  }
+
+  const handleBackButtonClick = event => {
+    event.preventDefault()
+    backButton('/employer/dashboard/all/vehicles')
+  }
+
   return <>
     <h3>{heading}</h3>
-    <form onSubmit={handleSubmit}>
+    <CompanyButton onClick={handleBackButtonClick}>&larr;</CompanyButton>
+    <form className='vehicleForm' onSubmit={handleSubmit}>
       <div>
         <label>Car Make</label>
         <input type="text" value={make} onChange={event => setMake(event.target.value)} />
@@ -43,10 +58,19 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
         <input type="text" value={rego} onChange={event => setRego(event.target.value)} />
       </div>
       <div>
-        <input type="file" onChange={event => setSelectedFile(event.target.files[0], 'image')} />
+        <label>Upload Vehicle Image:</label>
+        <input type="file" onChange={handleSelectedFile} />
+         { previewImage && 
+            <div className='previewImage'>
+              <img src={previewImage} alt="uploaded image" />
+            </div>
+          }
       </div>
-      <CompanyButton>Submit</CompanyButton>
+      <div>
+        <CompanyButton>Submit</CompanyButton>
+      </div>
     </form>
+   
   </>
 }
 
