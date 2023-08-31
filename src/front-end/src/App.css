@@ -245,6 +245,7 @@ select {
   border: 0;
   border-radius: 25px;
   width: 9rem;
+  padding: 0;
   background-color: rgb(253, 34, 34);
   font-size: 1.3rem;
 }
