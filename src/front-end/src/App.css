@@ -340,6 +340,12 @@ select {
 
 /* ///////////////////////////////// EMPLOYER ///////////////////////////////////////////// */
 
+/* Navbar */
+
+.navbar {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
 /* Preview Image Vehicle Form */
 
 .previewImage img {
@@ -352,13 +358,6 @@ select {
 }
 
 /* Search Button  */
-
-/* .searchButton {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 0.5rem;
-} */
 
 .search {
   position: relative;
@@ -607,6 +606,7 @@ select {
 
 .reports {
   margin: 0 auto 2rem auto;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .reports h5, .reports h4 {
