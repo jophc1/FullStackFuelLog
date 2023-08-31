@@ -671,7 +671,7 @@ form input{
 }
 
 #loginCard {
-  max-width: calc(375px 0.9);
+  max-width: calc(375px * 0.9);
 }
 
 #loginButton {
