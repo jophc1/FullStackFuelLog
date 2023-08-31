@@ -2,11 +2,12 @@ import React, { useState, useContext } from 'react'
 import { EmployerContext, FuelLogContext } from '../../context.js'
 import CompanyButton from '../styled/CompanyButton.jsx'
 import placeholderImage from '../../assets/no-image.png'
+import ModalText from '../ModalText.jsx'
 
 const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit = '', regoInit = '', previewImageInit = placeholderImage, method = 'POST', urlSuffix = 'vehicles', heading = 'Add Vehicle'  }) => {
 
   const { postUpdateVehicle } = useContext(EmployerContext)
-  const { backButton } = useContext(FuelLogContext)
+  const { backButton, errorMessage, modalErrorRender, setModalErrorRender } = useContext(FuelLogContext)
 
   const [make, setMake] = useState(makeInit)
   const [model, setModel] = useState(modelInit)
@@ -79,6 +80,11 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
           <CompanyButton>Submit</CompanyButton>
         </div>
       </form>
+      { modalErrorRender &&
+      <ModalText setRenderModal={setModalErrorRender} style={'error'}>
+          <p>{ errorMessage }</p>
+      </ModalText>
+      }
     </div>
   </>
 }

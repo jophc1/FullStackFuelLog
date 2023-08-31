@@ -249,10 +249,9 @@ function App() {
       postLogEntry, newLogCreated, newLogRequest, userId, postUpdateEmployee, errorMessage, modalErrorRender, setModalErrorRender,  errorHandler}}>
         <Routes>
           <Route path='/' element={<Login />} />
-          <Route path='/employer'></Route>
           <Route path='/employee' element={<EmployeeContextLayout />} >
               <Route path='dashboard/home' element={<EmployeeHome />} />
-              <Route path='dashboard/new/log' element={<LogEntry />} />
+              <Route path='dashboard/new/log/all' element={<LogEntry />} />
           </Route>
           <Route path='/employer'>
             <Route path='dashboard/home' element={<HomeReportWrapper />} />

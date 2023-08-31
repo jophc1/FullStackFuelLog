@@ -42,9 +42,18 @@ const EmployerDashboard = ({ children }) => {
     formData.append('registration', registration) 
     formData.append('image', image)
     const res = await fetchFiles(method, urlSuffix, formData)
-    console.log(formData) // TODO: gather response data and render a succeful component display
+     // TODO: gather response data and render a succeful component display
     if (res.status == 201 || res.status == 200) {
       navigate('/employer/dashboard/all/vehicles/') // TODO: show new vehicle details
+    } else {
+      console.log(new RegExp('(?=.*registration)(?=.*dup)', 'i').test(res.body.error))
+      if (new RegExp('(?=.*asset_id)(?=.*dup)', 'i').test(res.body.error)) {
+        errorHandler('Asset ID already exists.')
+      } else if (new RegExp('(?=.*registration)(?=.*dup)', 'i').test(res.body.error)) {
+        errorHandler('Registration already exists.')
+      } else {
+        errorHandler('Required fields must be filled in.')
+      }
     }
   }
 

@@ -18,11 +18,21 @@ const LogEntry = () => {
   // const { postLogEntry } = useContext(EmployeeContext)
 
   let isVehicleImageReady = false
+  let isPlaceHolderImageReady = false
+  let isCompanyIconReady = false
 
-  if (currentVehicle) {
+  const loadLogo = new Image()
+  loadLogo.src = companyIcon
+  loadLogo.onload = () => isCompanyIconReady = true
+  
+  const loadImg = new Image()
+  loadImg.src = placeHolderImage
+  loadImg.onload = () => isPlaceHolderImageReady = true
+
+  if (currentVehicle.vehicleImage_URL) {
     const vehicleImage = new Image()
     vehicleImage.src = currentVehicle.vehicleImage_URL
-    vehicleImage.onload = async () => isVehicleImageReady = true
+    vehicleImage.onload = () => isVehicleImageReady = true
   }
 
 
@@ -49,7 +59,7 @@ const LogEntry = () => {
 
   return authorised ? <div className='logEntryComponent'>
       <div className='logEntryTitleLogo'>
-        <img src={companyIcon} />
+        {isCompanyIconReady ? <></> : <img src={companyIcon} /> }
         <h3>New Log Entry</h3>
       </div>
       <div className='selectVehicleDropmenu'>
@@ -61,8 +71,8 @@ const LogEntry = () => {
       </div>
       
 
-      {displayPlaceholderVehicleInfo && <VehicleDetails displayDetails={displayPlaceholderVehicleInfo} data={emptyVehicleProfile} />}
-      {displayVehicleInfo && isVehicleImageReady ? <VehicleDetails displayDetails={displayPlaceholderVehicleInfo} data={emptyVehicleProfile} /> : <VehicleDetails displayDetails={displayVehicleInfo} data={currentVehicle} />}
+      {displayPlaceholderVehicleInfo && isPlaceHolderImageReady ? <></> : <VehicleDetails displayDetails={displayPlaceholderVehicleInfo} data={emptyVehicleProfile} />}
+      {displayVehicleInfo && isVehicleImageReady ? <></> : isPlaceHolderImageReady ?  <VehicleDetails displayDetails={displayPlaceholderVehicleInfo} data={emptyVehicleProfile} /> : <VehicleDetails displayDetails={displayVehicleInfo} data={currentVehicle} />}
       
       <form onSubmit={handleSubmit} className='logEntryForm'>
         <div>
