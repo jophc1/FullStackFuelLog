@@ -32,6 +32,19 @@ h3 {
   padding: 1rem 0.5rem 0.5rem 0.5rem;
 }
 
+#logo {
+  width: 30%;
+  margin: 1rem 0 1rem 1rem;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
 /* /////////////////////////////////////// EMPLOYEE ////////////////////////////////////// */
 
 /* Vehicle Details component */
@@ -804,17 +817,6 @@ form input{
 
 
 /* ///////////////////////////////////// Misc styling //////////////////////////////////////// */
-#logo {
-  width: 30%;
-  margin: 1rem 0 1rem 1rem;
-}
 
-.show {
-  display: block;
-}
-
-.hide {
-  display: none;
-}
 
 /* ////////////////////////////////////////////////////////////////////////// */
