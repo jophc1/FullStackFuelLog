@@ -37,9 +37,11 @@ function App() {
           propsObject,
           logId,
           newLogCreated,
-          userId } = store
+          userId,
+          errorMessage } = store
   
   const navigate = useNavigate()
+  const [modalErrorRender, setModalErrorRender] = useState(false)
 
   // USER ACCESS
 
@@ -58,7 +60,17 @@ function App() {
       // TODO: set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login
       res.returnedData.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home') // TODO chnage route back to /employee/dashboard/home
     } else {
-      navigate('/')
+      dispatch({
+        type: 'errMsg',
+        errMsg: 'Invalid username or password.',
+        showModalText: true
+      })
+      modalTextOperation(true)
+      setModalErrorRender(true)
+      setTimeout(() => {
+        modalTextOperation(false)
+        setModalErrorRender(false)
+      }, [5000])
     }
   }
 
@@ -218,7 +230,7 @@ function App() {
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, 
       currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, 
       modalTextOperation, showModalField, modalFieldOperation, navigate, editVehicle, deleteVehicle, 
-      postLogEntry, newLogCreated, newLogRequest, userId, postUpdateEmployee}}>
+      postLogEntry, newLogCreated, newLogRequest, userId, postUpdateEmployee, errorMessage, modalErrorRender, setModalErrorRender}}>
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/employer'></Route>
