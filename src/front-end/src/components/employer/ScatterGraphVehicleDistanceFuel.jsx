@@ -26,22 +26,26 @@ const ScatterGraphVehicleDistanceFuel = () => {
           <option value="default" disabled>No car selected</option>
           {allVehicles && allVehicles.map(vehicle => <option key={vehicle.asset_id} value={vehicle._id}>{vehicle.asset_id}</option>)}
         </select>
-        {scatterData && <ResponsiveContainer width="100%" height={400}>
-          <ScatterChart
-            margin={{
-              top: 20,
-              right: 20,
-              bottom: 20,
-              left: 20,
-            }}
-          >
-            <CartesianGrid />
-            <XAxis type="number" dataKey="distance" name="distance travelled" unit="km" />
-            <YAxis type="number" dataKey="fuelAdded" name="fuel added" unit="Litres" />
-            <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-            <Scatter name="distanceVsfuel" data={scatterData} fill="#8884d8" />
-          </ScatterChart>
-        </ResponsiveContainer>}
+        {scatterData && 
+        <div className='graphThreeDataPlot'>
+          <ResponsiveContainer width="100%" height={400}>
+            <ScatterChart
+              margin={{
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 20,
+              }}
+            >
+              <CartesianGrid />
+              <XAxis type="number" dataKey="distance" name="distance travelled" unit="km" />
+              <YAxis type="number" dataKey="fuelAdded" name="fuel added" unit="Litres" />
+              <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+              <Scatter name="distanceVsfuel" data={scatterData} fill="#8884d8" />
+            </ScatterChart>
+          </ResponsiveContainer>
+        </div>
+        }
       </div>   
   </>
     

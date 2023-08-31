@@ -37,7 +37,8 @@ const DonutGraphVehicleUsage = () => {
 
   return (
     pieData && <>
-    <h4>Vehicle total fuel usage all time</h4>
+    <div className='graphOne'>
+      <h4>Vehicle total fuel usage all time</h4>
       <div className='pieContent'>
         <div className='pieContainer'>
           <ResponsiveContainer width={'100%'} height="100%">
@@ -61,6 +62,8 @@ const DonutGraphVehicleUsage = () => {
           </ResponsiveContainer>
         </div>
       </div>
+    </div>
+    
     </>
   )
 }

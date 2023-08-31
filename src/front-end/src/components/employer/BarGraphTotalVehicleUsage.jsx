@@ -37,8 +37,8 @@ const BarGraphTotalVehicleUsage = () => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar name="total distance (km)" dataKey="totalMonthlyDistance" fill="#8884d8" />
-          <Bar name="total fuel consumed (litres)" dataKey="totalMonthlyUsage" fill="#82ca9d" />
+          <Bar name="Total distance (km)" dataKey="totalMonthlyDistance" fill="#8884d8" />
+          <Bar name="Total fuel consumed (litres)" dataKey="totalMonthlyUsage" fill="#82ca9d" />
         </BarChart>
       </ResponsiveContainer>
     </div>
