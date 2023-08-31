@@ -2,11 +2,12 @@ import React, { useState, useContext } from 'react'
 import { FuelLogContext } from '../context.js'
 import companyIcon from '../assets/fuel-log-logo.png'
 import Card from './styled/ProfileCard.jsx'
+import ModalText from './ModalText.jsx'
 
 const Login = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const { loginAccess } = useContext(FuelLogContext)
+  const { loginAccess, errorMessage,  modalErrorRender, setModalErrorRender } = useContext(FuelLogContext)
 
   const loginSubmit = (event) => {
     event.preventDefault()
@@ -36,6 +37,11 @@ const Login = () => {
       </Card>
       <footer>&copy; Freight Forwarding Service Trucking 2023</footer>
     </div>
+    { modalErrorRender &&
+      <ModalText setRenderModal={setModalErrorRender} style={'error'}>
+          <p>{ errorMessage }</p>
+      </ModalText>
+    }
   </>
 }
 

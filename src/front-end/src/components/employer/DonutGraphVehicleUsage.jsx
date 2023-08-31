@@ -34,12 +34,16 @@ const DonutGraphVehicleUsage = () => {
       </text>
     )
   }
+  useEffect(() => {
+    const overflowContainer = document.getElementById('pieContent')
+    overflowContainer.scrollTo(( overflowContainer.offsetWidth / 6 ), 0)
+  }, [])
 
   return (
     pieData && <>
     <div className='graphOne'>
       <h4>Vehicle total fuel usage all time</h4>
-      <div className='pieContent'>
+      <div id='pieContent' className='pieContent'>
         <div className='pieContainer'>
           <ResponsiveContainer width={'100%'} height="100%">
             <PieChart width={700} height={700}>

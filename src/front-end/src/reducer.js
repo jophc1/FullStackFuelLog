@@ -63,6 +63,12 @@ function reducer (currentState, action) {
         ...currentState,
         propsObject: action.props
       }
+    case 'errMsg':
+      return {
+        ...currentState,
+        errorMessage: action.errMsg,
+        showModalText: action.showModalText
+      }
     default:
         return currentState
   }
@@ -83,7 +89,8 @@ const initialState = {
   propsObject: {},
   showModalField: false,
   paginationInfo: {},
-  allLogs: []
+  allLogs: [],
+  errorMessage: ''
 }
 
 export {
