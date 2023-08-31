@@ -53,7 +53,7 @@ const verifyAuth = async (req, res, next) => {
       req.isAdmin = user.isAdmin
       req.name = user.name
       // res.setHeader('Set-Cookie', [`accessToken=${jwtGenerate(jwtUser)}; HttpOnly; Max-Age=${24*3600}; SameSite=Secure`])
-      res.cookie('accessToken', jwtGenerate(jwtUser), { httpOnly: true, sameSite: 'none' }) // maxAge was removed so that the cookie is a session cookie
+      res.cookie('accessToken', jwtGenerate(jwtUser), { httpOnly: true, sameSite: 'none', secure: true }) // maxAge was removed so that the cookie is a session cookie
     }
     next()
   } catch (err) {
