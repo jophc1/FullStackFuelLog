@@ -16,7 +16,6 @@ import helmet from 'helmet'
 const whitelist = ['http://localhost:5173', 'http://127.0.0.1:5173', 'https://fuel-log.onrender.com'] 
 const corsOptions = {
   credentials: true,
-  // origin: '*',
   origin: function(origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1){
        callback(null, true)
