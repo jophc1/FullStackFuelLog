@@ -106,35 +106,35 @@ const LogsFetchList = () => {
       {renderModal &&
       <ModalText setRenderModal={setRenderModal}>
             <h5>Log Details</h5>
-            <table>
+            <table id='logModalDetails'>
               <tbody>
                 <tr>
                   <td>Log ID:</td>
-                  <td>{logID.current}</td>
+                  <td>&rarr; {logID.current}</td>
                 </tr>
                 <tr>
                   <td>Date Added:</td>
-                  <td>{new Date(selectedLog.current.date).toISOString().split('T')[0]}</td>
+                  <td>&rarr; {new Date(selectedLog.current.date).toISOString().split('T')[0]}</td>
                 </tr>
                 <tr>
-                  <td>Current ODO:</td>
-                  <td>{selectedLog.current.current_odo}</td>
+                  <td>Current ODO (km):</td>
+                  <td>&rarr; {selectedLog.current.current_odo}</td>
                 </tr>
                 <tr>
-                  <td>Fuel Added:</td>
-                  <td>{selectedLog.current.fuel_added}</td>
+                  <td>Fuel Added (L):</td>
+                  <td>&rarr; {selectedLog.current.fuel_added}</td>
                 </tr>
                 <tr>
                   <td>Asset ID:</td>
-                  <td>{selectedLog.current.vehicle_id.asset_id}</td>
+                  <td>&rarr; {selectedLog.current.vehicle_id.asset_id}</td>
                 </tr>
                 <tr>
                   <td>Employee:</td>
-                  <td>{selectedLog.current.user_id.name}</td>
+                  <td>&rarr; {selectedLog.current.user_id.name}</td>
                 </tr>
                 <tr>
                   <td>Employee ID:</td>
-                  <td>{selectedLog.current.user_id.username_id}</td>
+                  <td>&rarr; {selectedLog.current.user_id.username_id}</td>
                 </tr>
               </tbody>
             </table>

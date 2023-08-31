@@ -28,8 +28,8 @@ const EmployeeListFetch = () => {
     employeeName.current = targetEmployee.name
 
     setModalFieldProps({
-      fieldLabelOne: 'Full name',
-      fieldLabelTwo: 'Employee ID',
+      fieldLabelOne: 'Full name (Capatilized e.g John Smith)',
+      fieldLabelTwo: 'Employee ID (Number only, greater than 10000)',
       fieldLabelThree: 'Change Password (min 8 characters, optional)', 
       heading: 'Update Employee', 
       initalEmployeeId: employeeID.current, 
@@ -73,8 +73,8 @@ const EmployeeListFetch = () => {
     event.preventDefault()
     
     setModalFieldProps({
-      fieldLabelOne: 'Full name',
-      fieldLabelTwo: 'Employee ID',
+      fieldLabelOne: 'Full name (Capatilized e.g John Smith)',
+      fieldLabelTwo: 'Employee ID (Number only, greater than 10000)',
       fieldLabelThree: 'Password (min 8 characters)', 
       heading: 'Add Employee', 
       setShowForm: setShowForm
@@ -112,7 +112,7 @@ const EmployeeListFetch = () => {
       </div>
     }
     {modalRender && 
-      <ModalText setRenderModal={setModalRender}>
+        <ModalText setRenderModal={setModalRender}>
           <p>Are you sure you want to delete this Employee?</p>
           <CompanyButton onClick={handleDeleteButtonClick} value={employeeID.current}>Confirm</CompanyButton>
         </ModalText>

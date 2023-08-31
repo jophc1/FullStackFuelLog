@@ -89,7 +89,7 @@ const ReviewsFetchList = () => {
       {renderModal &&
       <ModalText setRenderModal={setRenderModal}>
             <h5>Log Deletion Request Details</h5>
-            <table>
+            <table id='reviewModalDetails'>
               <tbody>
                 <tr>
                   <td>Employee ID:</td>
@@ -104,17 +104,19 @@ const ReviewsFetchList = () => {
                   <td>{selectedReview.current.log_id && selectedReview.current.log_id.vehicle_id.asset_id}</td>
                 </tr>
                 <tr>
-                  <td>Current ODO:</td>
+                  <td>Current ODO (km):</td>
                   <td>{selectedReview.current.log_id && selectedReview.current.log_id.current_odo}</td>
                 </tr>
                 <tr>
-                  <td>Fuel Added:</td>
+                  <td>Fuel Added (L):</td>
                   <td>{selectedReview.current.log_id && selectedReview.current.log_id.fuel_added}</td>
                 </tr>
               </tbody>
             </table>
-            <CompanyButton onClick={handleDeleteButtonClick} name='delete' >Delete Log</CompanyButton>
-            <CompanyButton onClick={handleDeleteButtonClick} name='keep' >Keep Log</CompanyButton>
+            <div id='reviewModalButtons'>
+              <CompanyButton onClick={handleDeleteButtonClick} name='delete' >Delete Log</CompanyButton>
+              <CompanyButton onClick={handleDeleteButtonClick} name='keep' >Keep Log</CompanyButton> 
+            </div> 
       </ModalText>
       }
     </>

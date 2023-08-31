@@ -757,7 +757,7 @@ form input{
 
 /* ////////////////////// */
 
-/* MODALS */
+/* /////////////////// MODALS ///////////////////////*/
 
 .modal {
   position: fixed;
@@ -784,17 +784,68 @@ form input{
 
 .modal-content > :not(span) {
   padding: 0.5rem;
-  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   line-height: 1.5rem;
 }
 
 .modal-content span {
   float: right;
-  color: #d9d9d9;
-  /* padding: 0 0.5rem; */
+  color: #e6101083;
 }
 
+.modal-content h5 {
+  padding: 0;
+}
+
+.modal-content form {
+  text-align: left;
+}
+
+.modal-content label, .modal-content input {
+  margin-bottom: 0.8rem;
+  text-align: center;
+  width: 100%;
+}
+
+.modal-content button {
+  margin: 1rem auto;
+  width: 50%;
+}
+
+#reviewModalDetails td {
+  text-align: left;
+}
+
+#reviewModalButtons button {
+  width: 45%;
+  margin: 0;
+}
+
+#reviewModalButtons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+#logModalDetails td:nth-child(odd) {
+  text-align: left;
+  text-decoration: underline;
+  width: 50%;
+  padding-left: 0;
+  padding-right: 2rem;
+}
+
+#logModalDetails td:nth-child(even) {
+  text-align: right;
+  width: 50%;
+  padding: 0;
+
+}
+
+/* /////// Error Modal ////////*/
 .error {
+
   background: transparent;
   bottom: 0%;
   left: 50%;

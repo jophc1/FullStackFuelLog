@@ -46,7 +46,7 @@ const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree, heading, i
       <div className={changeModalClass} >
         <div className='modal-content'>
           <span className='fa fa-times'  onClick={handleCloseModalClick}></span>
-          {heading}
+          <h5>{heading}</h5>
           <form onSubmit={handleNewSubmit}>
             { employeeForm && 
             <>
