@@ -120,6 +120,7 @@ select {
 
 /* Employee Dashboard Home & Request component */
 
+
 .employeeDashButtons {
   margin: 0 auto;
   display: flex;
@@ -169,9 +170,36 @@ select {
   margin: 1rem auto;
 }
 
+.requestDelete {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 20rem;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 20px !important;
+}
+
+.requestDelete > * {
+  margin: 1rem auto;
+  width: 80%;
+}
+
+.requestDelete div {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
 /* /////////////////////// */
 
 
+/* Login page */
+
+
+
+/* //////////////////////// */
 
 /*  */
 

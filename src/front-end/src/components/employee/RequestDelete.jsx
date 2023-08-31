@@ -12,11 +12,13 @@ const RequestDelete = () => {
   }
 
   return <>
-    <Card>
-      <h4>Log entry added successfully!</h4>
-      <p>If you made an error in the entry, you can request a delete:</p>
-      <CompanyButton onClick={handleNewLogRequest} value='submit'>Request delete</CompanyButton>
-      <CompanyButton onClick={handleNewLogRequest} value='cancel'>Cancel</CompanyButton>
+    <Card className='requestDelete'>
+        <h4>Log entry added successfully!</h4>
+        <p>If you made an error in the entry, you can request a delete:</p>
+        <div>
+          <CompanyButton onClick={handleNewLogRequest} value='submit'>Request delete</CompanyButton>
+          <CompanyButton onClick={handleNewLogRequest} value='cancel'>Cancel</CompanyButton>
+        </div>
     </Card>
   </>
 }
