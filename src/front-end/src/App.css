@@ -760,7 +760,6 @@ form input{
 /* MODALS */
 
 .modal {
-  display: block;
   position: fixed;
   top: 0;
   left: 0;
@@ -771,6 +770,7 @@ form input{
 
 .modal-content {
   position:fixed;
+  display: block;
   background: white;
   color: #000;
   width: 19rem;
