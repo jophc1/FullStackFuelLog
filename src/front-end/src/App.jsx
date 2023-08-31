@@ -211,6 +211,22 @@ function App() {
     })
   }
 
+  // ERRORS 
+
+  function errorHandler (message) {
+    dispatch({
+      type: 'errMsg',
+      errMsg: message,
+      showModalText: true
+    })
+    modalTextOperation(true)
+    setModalErrorRender(true)
+    setTimeout(() => {
+      modalTextOperation(false)
+      setModalErrorRender(false)
+    }, [5000])
+  }
+
   // WRAPPERS
 
   function HomeReportWrapper() {
@@ -230,7 +246,7 @@ function App() {
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, 
       currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, 
       modalTextOperation, showModalField, modalFieldOperation, navigate, editVehicle, deleteVehicle, 
-      postLogEntry, newLogCreated, newLogRequest, userId, postUpdateEmployee, errorMessage, modalErrorRender, setModalErrorRender}}>
+      postLogEntry, newLogCreated, newLogRequest, userId, postUpdateEmployee, errorMessage, modalErrorRender, setModalErrorRender,  errorHandler}}>
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/employer'></Route>

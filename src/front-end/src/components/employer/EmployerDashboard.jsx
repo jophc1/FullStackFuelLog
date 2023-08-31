@@ -13,7 +13,7 @@ const EmployerDashboard = ({ children }) => {
   const [store, dispatch] = useReducer(reducer, initialState)
   const { propsObject, allLogs, paginationInfo } = store
 
-  const { userAccess, authorised, navigate, allVehicles } = useContext(FuelLogContext)
+  const { userAccess, authorised, navigate, allVehicles,  errorHandler } = useContext(FuelLogContext)
   
 
   // EMPLOYEES
@@ -26,7 +26,7 @@ const EmployerDashboard = ({ children }) => {
   async function deleteEmployee (employeeID) {
     const res = await fetchMod('DELETE', 'employed/' + employeeID, '')
     if (res.status === 500) {
-      console.log("Error occured with delete employee - deleteEmployee function") // TODO: display error message is error occurs
+      errorHandler('Something went wrong trying to delete employee. Try again later!') // TODO: display error message is error occurs
     } else {
       return res.body
     }
