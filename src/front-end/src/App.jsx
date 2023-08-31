@@ -204,8 +204,9 @@ function App() {
   function HomeReportWrapper() {
     return(
       <EmployerDashboard>
-        <h3>Employer Dashboard Home</h3>
+        <h3>Dashboard Home</h3>
         <DashboardTable />
+        <h4 className='dashboardTitle'>Graphs</h4>
         <DonutGraphVehicleUsage />
         <BarGraphTotalVehicleUsage />
         <ScatterGraphVehicleDistanceFuel />

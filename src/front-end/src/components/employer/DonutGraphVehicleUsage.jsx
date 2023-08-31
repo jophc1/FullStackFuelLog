@@ -36,30 +36,36 @@ const DonutGraphVehicleUsage = () => {
   }
 
   return (
-    pieData && <div className='pieContainer'>
-                  <h4>Vehicle total fuel usage all time</h4>
-                  <ResponsiveContainer width={'100%'} height="100%">
-                          <PieChart width={500} height={500}>
-                            <Pie
-                              title='test'
-                              data={pieData}
-                              dataKey="totalUsageforVehicle"
-                              cx="50%"
-                              cy="50%"
-                              innerRadius={70}
-                              outerRadius={90}
-                              fill="#82ca9d"
-                              label={pieCustomLabel}
-                            >
-                              {pieData.map((_, index) => (
-                              <Cell key={`c-${index}`} fill={COLORS[index % COLORS.length]} />
-                              ))}
-                            </Pie>
-                          </PieChart>
-                        </ResponsiveContainer>
-                </div>
-  );
-
+    pieData && <>
+    <div className='graphOne'>
+      <h4>Vehicle total fuel usage all time</h4>
+      <div className='pieContent'>
+        <div className='pieContainer'>
+          <ResponsiveContainer width={'100%'} height="100%">
+            <PieChart width={700} height={700}>
+              <Pie
+                title='test'
+                data={pieData}
+                dataKey="totalUsageforVehicle"
+                cx="50%"
+                cy="50%"
+                innerRadius={60}
+                outerRadius={80}
+                fill="#82ca9d"
+                label={pieCustomLabel}
+              >
+                {pieData.map((_, index) => (
+                <Cell key={`c-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+    </div>
+    
+    </>
+  )
 }
 
 export default DonutGraphVehicleUsage

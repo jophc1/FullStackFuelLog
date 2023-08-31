@@ -51,7 +51,6 @@ const LogsFetchList = () => {
     } else {
        await getAllLogs(page, 'vehicle', '', '', assetId)
     }
-    // setRenderReset(false)
   }
 
   async function handleFilterDates (event) {
@@ -61,13 +60,6 @@ const LogsFetchList = () => {
     } else {
       fromDate.current = event.target.value
     }
-    // check that both dates are defined
-    // if (toDate.current && fromDate.current) {
-  
-    //   if (new Date(fromDate.current) <= new Date(toDate.current)){
-    //     await getAllLogs(page, 'date', toDate.current, fromDate.current)
-    //   }
-    // }
   }
 
   useEffect(() => {
