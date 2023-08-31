@@ -476,25 +476,86 @@ select {
   width: 50%;
 }
 
+.dashboardTitle {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 2;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 0;
+}
+
+.reports {
+  margin: 0 auto 2rem auto;
+}
+
+.reports h5, .reports h4 {
+  font-size: 1.15rem;
+  padding: 0.5rem;
+}
+
+.reports > div:first-of-type {
+  background-color: 	#000;
+  color: #fff;
+}
+
+.reports > div:nth-of-type(3) {
+  padding: 0.5rem;
+  margin: 0.5rem 0.25rem;
+  background-color: #f8f9fa;
+}
+
+.reports > div:nth-of-type(3) select {
+  margin-left: 0.5rem;
+  padding: 0.25rem;
+}
+
+.employer-table tr td {
+  padding: 0.5rem 1rem;
+}
+
+.employer-table {
+  margin: 1rem 0;
+}
+
+.employer-table th {
+  font-size: 1rem;
+}
+
+.reportDates {
+  color: #FFCCCB;
+}
+
+.employer-table tr td:nth-of-type(1) {
+  width: 50%;
+}
+
+.employer-table tr td:nth-of-type(2) {
+  width: 50%;
+}
+
 .employer-table * {
-border: 1px solid black;
+border: 1px solid #ccc;
 text-align: center;
 }
 
 .employer-table-dates-container {
   display: flex;
-  justify-content: space-around;
-  width: 80%;
+  flex-direction: column;
+  margin-top: 1rem;
 }
 
 .employer-table-dates-container div {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-around;
 }
 
 .employer-table-dates-container div input {
   text-align: center;
+  margin: 0.5rem 0.5rem;
+  padding: 0.25rem;
+  border: 1px solid #ccc;
 }
 
 /* Employee log entry page */

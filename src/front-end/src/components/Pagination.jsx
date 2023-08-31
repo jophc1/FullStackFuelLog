@@ -54,7 +54,7 @@ const Pagination = ({ currentPage = 1, totalPages, hasPrevPage, hasNextPage, nex
    <PaginationButtons>
       {hidePrevPage && <li key={prevPage} onClick={handleDisplayPreviousPages}>&hellip;</li>}
     {pagesToDisplay.slice(startIndex, endIndex).map(page => (
-        <li key={page} value={page} onClick={handlePageClick}>{page}</li>
+        <li key={page} value={page} onClick={handlePageClick} className='pageNumber'>{page}</li>
     ))}
       {hideNextPage &&  <li key={nextPage} onClick={handleDisplayNextPages}>&hellip;</li>}
     </PaginationButtons>
