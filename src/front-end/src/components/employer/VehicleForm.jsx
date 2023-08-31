@@ -42,35 +42,44 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
   }
 
   return <>
-    <h3>{heading}</h3>
-    <CompanyButton onClick={handleBackButtonClick}>&larr;</CompanyButton>
-    <form className='vehicleForm' onSubmit={handleSubmit}>
-      <div>
-        <label>Car Make</label>
-        <input type="text" value={make} onChange={event => setMake(event.target.value)} />
-        <label>Model</label>
-        <input type="text" value={model} onChange={event => setModel(event.target.value)} />
-        <label>Year</label>
-        <input type="text" value={year} onChange={event => setYear(event.target.value)} />
-        <label>Asset ID</label>
-        <input type="text" value={assetId} onChange={event => setAssetId(event.target.value)} />
-        <label>Registration</label>
-        <input type="text" value={rego} onChange={event => setRego(event.target.value)} />
-      </div>
-      <div>
-        <label>Upload Vehicle Image:</label>
-        <input type="file" onChange={handleSelectedFile} />
-         { previewImage && 
-            <div className='previewImage'>
-              <img src={previewImage} alt="uploaded image" />
-            </div>
-          }
-      </div>
-      <div>
-        <CompanyButton>Submit</CompanyButton>
-      </div>
-    </form>
-   
+    <div className='vehicleForm'>
+      <h3>{heading}</h3>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Car Make</label>
+          <input type="text" value={make} onChange={event => setMake(event.target.value)} />     
+        </div>
+        <div>
+          <label>Model</label>
+          <input type="text" value={model} onChange={event => setModel(event.target.value)} />
+        </div>
+        <div>
+          <label>Year</label>
+          <input type="text" value={year} onChange={event => setYear(event.target.value)} />
+        </div>
+        <div>
+          <label>Asset ID</label>
+          <input type="text" value={assetId} onChange={event => setAssetId(event.target.value)} />
+        </div>
+        <div>
+          <label>Registration</label>
+          <input type="text" value={rego} onChange={event => setRego(event.target.value)} />
+        </div>
+        <div>
+          <label>Upload Vehicle Image:</label>
+          <input id='inputFile' type="file" name='fileButton' onChange={handleSelectedFile} />
+        </div>
+        { previewImage && 
+        <div id='previewImage'>
+          <img src={previewImage} alt="uploaded image" />
+        </div>
+        }
+        <div>
+          <CompanyButton onClick={handleBackButtonClick}>&larr; BACK</CompanyButton>
+          <CompanyButton>Submit</CompanyButton>
+        </div>
+      </form>
+    </div>
   </>
 }
 
