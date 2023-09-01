@@ -553,30 +553,14 @@ h3 {
   padding: 0.25rem 0.6rem;
 }
 
-.allVehiclesEmployesLogs table tbody tr td:nth-child(4) {
-  padding: 0.25rem 1.5rem 0.25rem 0rem;
-  border-right: 1px solid #ccc;
-}
-
-.allVehiclesEmployesLogs table tbody tr td:nth-child(6) {
-  padding: 0.25rem 0.2rem 0.25rem 0rem;
-  border-right: 1px solid #ccc;
-}
-
-.allVehiclesEmployesLogs table tbody tr td:nth-child(3),
-.allVehiclesEmployesLogs table tbody tr td:nth-child(5),
-.allVehiclesEmployesLogs table tbody tr td:nth-child(4),
-.allVehiclesEmployesLogs table tbody tr td:nth-child(6) {
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-}
-
-.allVehiclesEmployesLogs table tbody tr td:nth-child(3), .allVehiclesEmployesLogs table tbody tr td:nth-child(5) {
+.allVehiclesEmployesLogs table tbody tr td:nth-of-type(odd) {
   font-weight: bold;
+  padding-left: 2rem;
 }
 
 .allVehiclesEmployesLogs table tbody tr {
   padding: 0.5rem 0;
+  cursor: pointer;
 }
 
 .allVehiclesEmployesLogs table tbody tr:nth-child(even) {
@@ -589,6 +573,10 @@ h3 {
 
 .allVehiclesEmployesLogs table tbody tr td:nth-child(2) {
   font-size: 0.9rem;
+}
+
+.employer {
+  margin: 2rem 0;
 }
 
 /* ******************* */

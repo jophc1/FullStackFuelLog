@@ -3,6 +3,7 @@ import CompanyButton from '../styled/CompanyButton.jsx'
 import { EmployerContext, FuelLogContext } from '../../context.js'
 import FetchHeader from './FetchHeader.jsx'
 import ModalText from '../ModalText.jsx'
+import VehicleDetails from '../employee/VehicleDetails.jsx'
 
 const VehiclesListFetch = () => {
   const { allVehicles, 
@@ -13,9 +14,14 @@ const VehiclesListFetch = () => {
           deleteVehicle,
           errorMessage,
           modalErrorRender,
-          setModalErrorRender } = useContext(FuelLogContext)
+          setModalErrorRender,
+          currentVehicleDetails,
+          currentVehicle,
+          displayVehicleInfo } = useContext(FuelLogContext)
+  
   const [modalRender, setModalRender] = useState(false)
   const [assetId, setAssetId] = useState('')
+  const [vehicleDetailsModal, setVehicleDetailsModal] = useState(false)
   const assetID = useRef('')
 
   const handleEditClick = event => {
@@ -34,7 +40,7 @@ const VehiclesListFetch = () => {
   const handleCompanyButtonClick = async event => {
     event.preventDefault()
     await deleteVehicle(event.target.value)
-
+    // turn modal off
     setModalRender(false)
     modalTextOperation(false)
   }
@@ -46,6 +52,15 @@ const VehiclesListFetch = () => {
   async function handleSearchSubmit (event) {
     event.preventDefault()
   }
+
+  const handleVehicleClick = event => {
+    event.preventDefault()
+    setVehicleDetailsModal(true)
+    currentVehicleDetails(event.target.attributes.value.value)
+    modalTextOperation(true)
+  }
+
+
 
   useEffect(() => {
     (async () => await getAllVehicles())()
@@ -68,10 +83,14 @@ const VehiclesListFetch = () => {
                   <tr key={vehicle.asset_id}>
                     <th className='fixedColumn'><CompanyButton value={vehicle.asset_id} onClick={handleEditClick}>Edit</CompanyButton></th>
                     <th className='fixedColumnTwo' value={vehicle.asset_id} onClick={handleDeleteIconClick}><span value={vehicle.asset_id} className='fa fa-trash-alt'></span></th>
-                    <td>Asset ID:</td>
-                    <td>{vehicle.asset_id}</td>
-                    <td>Registration No:</td>
-                    <td>{vehicle.registration}</td>
+                    <td value={vehicle.asset_id} onClick={handleVehicleClick}>Asset ID:</td>
+                    <td value={vehicle.asset_id} onClick={handleVehicleClick}>{vehicle.asset_id}</td>
+                    <td value={vehicle.asset_id} onClick={handleVehicleClick}>Registration No:</td>
+                    <td value={vehicle.asset_id} onClick={handleVehicleClick}>{vehicle.registration}</td>
+                    <td value={vehicle.asset_id} onClick={handleVehicleClick}>Make:</td>
+                    <td value={vehicle.asset_id} onClick={handleVehicleClick}>{vehicle.make}</td>
+                    <td value={vehicle.asset_id} onClick={handleVehicleClick}>Model:</td>
+                    <td value={vehicle.asset_id} onClick={handleVehicleClick}>{vehicle.model}</td>
                   </tr>
                 ))}
               </tbody>
@@ -89,6 +108,12 @@ const VehiclesListFetch = () => {
           { errorMessage }
           </div>
       </ModalText>
+    }
+    { vehicleDetailsModal &&
+       <ModalText setRenderModal={setVehicleDetailsModal}>
+          <h4>Selected Vehicle</h4>
+          {<VehicleDetails style={'employer'}  displayDetails={displayVehicleInfo} data={currentVehicle} />}
+       </ModalText>
     }
   </>
 }

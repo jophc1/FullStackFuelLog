@@ -20,9 +20,7 @@ const LogEntry = () => {
           authorised,
           backButton,
           displayVehicleInfo,
-          displayPlaceholderVehicleInfo,
-          setComponentMount,
-          newLogCreated } = useContext(FuelLogContext)
+          displayPlaceholderVehicleInfo } = useContext(FuelLogContext)
 
   let isVehicleImageReady = false
   let isPlaceHolderImageReady = false

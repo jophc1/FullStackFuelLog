@@ -3,7 +3,7 @@ import Card from '../styled/ProfileCard'
 import { FuelLogContext } from '../../context.js'
 import Row from '../styled/Row'
 
-const VehicleDetails = ({ displayDetails, data }) => {
+const VehicleDetails = ({ displayDetails, data, style = '' }) => {
 
   const { currentVehicle } = useContext(FuelLogContext)
 
@@ -16,7 +16,7 @@ const VehicleDetails = ({ displayDetails, data }) => {
   }
 
   return displayDetails &&
-    <Card className='vehicleCard'>
+    <Card className={'vehicleCard ' + `${style}`}>
       <Row className='vehicleRow'>
         <div className='vehicleDetailTable'>
           <table>

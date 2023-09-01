@@ -89,7 +89,9 @@ function App() {
     } 
     
     const res = await fetchMod(method, path, userObject)
-    console.log(res)
+
+    // if response returns error, display back to user based on error msgs
+    // regexp used for different cases and messages customised for end user
     if (res.status === 500){
       if (new RegExp('(?=.*username_id)(?=.*dup)', 'i').test(res.body.error)) {
         errorHandler(<p>Employee ID already exists.</p>)
@@ -160,7 +162,7 @@ function App() {
 
   async function currentVehicleDetails (vehicleID) {
     const currentVehicle = allVehicles.filter(vehicle => {return vehicle.asset_id === vehicleID})
-
+    console.log(currentVehicle)
     dispatch({
       type: 'selectVehicle',
       currentVehicle: currentVehicle[0],
@@ -232,6 +234,7 @@ function App() {
     })
     modalTextOperation(true)
     setModalErrorRender(true)
+    // set time to turn off notification after 5 seconds
     setTimeout(() => {
       modalTextOperation(false)
       setModalErrorRender(false)
