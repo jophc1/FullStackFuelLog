@@ -1,23 +1,20 @@
 import React, { PureComponent, useContext, useEffect, useState } from 'react'
 import { PieChart, Pie, Sector, Tooltip, Cell, ResponsiveContainer } from 'recharts';
-import { EmployerContext, FuelLogContext } from '../../context';
-import ModalText from '../ModalText';
+import { EmployerContext } from '../../context';
+
 
 
 const DonutGraphVehicleUsage = () => {
 
   const { graphData } = useContext(EmployerContext)
-  const {modalErrorRender, setModalErrorRender, errorMessage } = useContext(FuelLogContext)
 
   const [pieData, setPieData] = useState([])
 
   useEffect(() => {
     (async () => {
       const data = await graphData("reports/graph/pie/vehicles/usage/all/time", "pie")
-      if (data !== 'ERR') {
-        const filteredVehicles = data.vehicles.filter(vehicle => vehicle.vehicleID.length > 0)
-        setPieData(filteredVehicles)
-      }
+      const filteredVehicles = data.vehicles.filter(vehicle => vehicle.vehicleID.length > 0)
+      setPieData(filteredVehicles)
     })()
   }, [])
 
@@ -45,8 +42,7 @@ const DonutGraphVehicleUsage = () => {
     overflowContainer.scrollTo(( overflowContainer.offsetWidth / 6 ), 0)
   }, [])
 
-  return (<>
-   {pieData &&
+  return (pieData &&
     <div className='graphOne'>
       <h4>Vehicle total fuel usage all time</h4>
       <div id='pieContent' className='pieContent'>
@@ -72,16 +68,7 @@ const DonutGraphVehicleUsage = () => {
           </ResponsiveContainer>
         </div>
       </div>
-    </div>}
-
-    { modalErrorRender &&
-    <ModalText setRenderModal={setModalErrorRender} style={'error'}>
-        <div>
-          { errorMessage }
-        </div>
-    </ModalText>
-    }
-    </>
+    </div>
   )
 }
 

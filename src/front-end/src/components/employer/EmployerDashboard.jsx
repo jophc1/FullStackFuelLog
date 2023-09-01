@@ -127,13 +127,14 @@ const EmployerDashboard = ({ children }) => {
   // Employer Dashboard Graphs
   async function graphData(path, graphType) {
     const res = await fetchMod('GET', path, '')
-    // res.status = 500
+    
     if (res.status === 200) {
       return res.body
     }
     else {
-      errorHandler(<p>'Error with pie graph, try again later'</p>)
-      // return 'ERR'
+      // TODO: have a error message popup with error, not easy to do at the moment without completely reworking how graphs load onto page
+      // as the current error Modal causes an infinite render loop with graphing loops
+      console.log(`problem occured with graph ${graphType}`) 
     }
   }
 
