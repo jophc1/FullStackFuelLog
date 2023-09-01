@@ -11,14 +11,18 @@ router.use(authAccess)
 // Update an employee route
 router.put('/:username_id', async (req, res) => {
   try {
-    if (req.jwtIdentity.isAdmin || req.jwtIdentity.username_id === req.params.username_id) {
-      if (req.body.password) {
-        req.body.password = await bcrypt.hash(req.body.password, process.env.SALT_ADD) 
-      }
-      const targetEmployee = await UserModel.updateOne({ username_id: req.params.username_id }, req.body, { new: true, runValidators: true })
-      targetEmployee.acknowledged && targetEmployee.matchedCount ? res.status(201).send(targetEmployee) : res.status(202).send({ message: 'no updates made' })
+    if (req.body.password.length <= 8) {
+      res.status(500).send({ error: 'Password must be 8 characters or more' })
     } else {
-      res.status(401).send({ error: 'Not authorised' })
+      if (req.jwtIdentity.isAdmin || req.jwtIdentity.username_id === req.params.username_id) {
+        if (req.body.password) {
+          req.body.password = await bcrypt.hash(req.body.password, process.env.SALT_ADD) 
+        }
+        const targetEmployee = await UserModel.updateOne({ username_id: req.params.username_id }, req.body, { new: true, runValidators: true })
+        targetEmployee.acknowledged && targetEmployee.matchedCount ? res.status(201).send(targetEmployee) : res.status(202).send({ message: 'no updates made' })
+      } else {
+        res.status(401).send({ error: 'Not authorised' })
+      }
     }
   } catch (err) {
     res.status(500).send({ error: err.message })
@@ -40,12 +44,16 @@ router.get('/', async (req, res) => {
 // Create a employee route
 router.post('/', async (req, res) => {
   try {
-    const { _id } = await UserModel.create({
-      name: req.body.name,
-      username_id: req.body.username_id,
-      password: await bcrypt.hash(req.body.password, process.env.SALT_ADD)
-    })
-    res.send(await UserModel.findById(_id, '-password -isAdmin'))
+    if (req.body.password.length <= 8) {
+      res.status(500).send({ error: 'Password must be 8 characters or more' })
+    } else {
+      const { _id } = await UserModel.create({
+        name: req.body.name,
+        username_id: req.body.username_id,
+        password: await bcrypt.hash(req.body.password, process.env.SALT_ADD)
+      })
+      res.send(await UserModel.findById(_id, '-password -isAdmin'))
+    }
   } catch (err) {
     res.status(500).send({ error: err.message })
   }
