@@ -30,6 +30,7 @@ select {
 
 h3 {
   padding: 1rem 0.5rem 0.5rem 0.5rem;
+  margin-left: 0.5rem;
 }
 
 #loading {
@@ -359,6 +360,7 @@ h3 {
   min-height: 100vh;
   max-width: 1350px;
   margin: 2rem auto 0 auto;
+  padding-bottom: 0.5rem;
 }
 
 /* Navbar */
@@ -425,7 +427,7 @@ h3 {
 
 .search {
   padding: 0.5rem;
-  margin: 0.5rem auto 1rem auto;
+  margin: 0.5rem 1rem 1rem auto;
   align-items: end;
 }
 
@@ -516,8 +518,9 @@ h3 {
 
 #request {
   text-align: center;
-  width: 95%;
-  margin: 1rem auto;
+  width: calc(375px * 0.95);
+  margin: 5rem auto 0 auto;
+  padding: 5rem
 }
 
 .allRequests table tbody tr td:nth-child(1),
@@ -555,6 +558,7 @@ h3 {
 
 .allVehiclesEmployesLogs table {
   margin: 0 auto;
+  /* width: 80%; */
 }
 
 .allVehiclesEmployesLogs th:not(:nth-of-type(1)) {
@@ -587,6 +591,10 @@ h3 {
 
 .allVehiclesEmployesLogs table tbody tr:nth-child(even) {
   background-color: #e7e9eb80;
+}
+
+.allVehiclesEmployesLogs table tbody tr:hover {
+  background-color: #53f50dc6;
 }
 
 .allVehiclesEmployesLogs table tbody tr td:nth-child(2), .allVehiclesEmployesLogs table tbody tr td:nth-child(1) {
