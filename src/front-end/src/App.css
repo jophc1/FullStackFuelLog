@@ -30,6 +30,7 @@ select {
 
 h3 {
   padding: 1rem 0.5rem 0.5rem 0.5rem;
+  margin-left: 0.5rem;
 }
 
 #loading {
@@ -54,6 +55,24 @@ h3 {
 
 .notification {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+/* Pagination */
+
+.currentPage {
+  border: 1px solid #AAAAAA;
+  cursor: default;
+}
+
+.pageNumber, .currentPage {
+  margin: 0 1rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 5px;
+}
+
+.pageNumber {
+  background-color: #001f3f;
+  color: #fff;
 }
 
 /* /////////////////////////////////////// EMPLOYEE ////////////////////////////////////// */
@@ -354,6 +373,15 @@ h3 {
 
 /* Content Div */
 
+.dashboardContent {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  min-height: 100vh;
+  max-width: 1350px;
+  margin: 2rem auto 0 auto;
+  padding-bottom: 0.5rem;
+  /* overflow-x: scroll; */
+}
+
 /* Navbar */
 
 .navbar {
@@ -395,17 +423,30 @@ h3 {
 #logDates {
   font-size: 0.9rem;
   display: flex;
+  overflow: auto;
+  margin: 0.5rem 1.5rem;
+  padding: 0.5rem 0.5rem;
   flex-direction: column;
-  margin: 0.5rem auto;
-  align-items: end;
+  background-color: #3D9970 ;
 }
 
-#logDates div label {
+#logDates div label, #logDates p {
+  padding: 0.5rem 0.5rem;
+  color: #fff;
+}
+
+#logDates p {
+  width: 80%;
+}
+
+#logDates input {
   padding: 0 0.5rem;
 }
 
 #logDates div {
-  margin: 0.5rem auto;
+  margin: 0.5rem 0;
+  display: flex;
+  width: 120%;
 }
 
 #logsHeader {
@@ -417,7 +458,7 @@ h3 {
 
 .search {
   padding: 0.5rem;
-  margin: 0.5rem auto 1rem auto;
+  margin: 0.5rem 1rem 1rem auto;
   align-items: end;
 }
 
@@ -425,14 +466,23 @@ h3 {
   float: right;
 }
 
+@media only screen and (min-width: 455px) {
+  #logDates div {
+    width: 100%;
+  }
+}
+
 /* Logs */
 
 .allLogs {
   text-decoration: underline;
-  width: 100%;
+  width: 98%;
   position: relative;
   overflow: auto;
   white-space: nowrap;
+  margin: 1rem;
+  padding: 1rem;
+  background-color: #fff;
 }
 
 .allLogs tr {
@@ -464,6 +514,11 @@ h3 {
 
 .allRequests tr:hover {
   background-color: #53f50dc6 !important;
+}
+
+.allLogs td:nth-of-type(even) {
+  font-weight: bold;
+  padding-left: 3rem;
 }
 
 .allRequests span {
@@ -508,8 +563,9 @@ h3 {
 
 #request {
   text-align: center;
-  width: 95%;
-  margin: 1rem auto;
+  width: calc(375px * 0.95);
+  margin: 5rem auto 0 auto;
+  padding: 5rem
 }
 
 .allRequests table tbody tr td:nth-child(1),
@@ -543,10 +599,13 @@ h3 {
   position: relative;
   overflow: auto;
   white-space: nowrap;
+  margin: 1rem 0 1rem 0.25rem;
+  padding: 1rem;
 }
 
 .allVehiclesEmployesLogs table {
   margin: 0 auto;
+  /* width: 80%; */
 }
 
 .allVehiclesEmployesLogs th:not(:nth-of-type(1)) {
@@ -579,6 +638,10 @@ h3 {
 
 .allVehiclesEmployesLogs table tbody tr:nth-child(even) {
   background-color: #e7e9eb80;
+}
+
+.allVehiclesEmployesLogs table tbody tr:hover {
+  background-color: #53f50dc6;
 }
 
 .allVehiclesEmployesLogs table tbody tr td:nth-child(2), .allVehiclesEmployesLogs table tbody tr td:nth-child(1) {
@@ -924,7 +987,7 @@ text-align: center;
   display: block;
   background: white;
   color: #000;
-  width: 19rem;
+  width: calc(375px * 0.87);
   height: auto;
   top: 50%;
   left: 50%;
@@ -933,28 +996,62 @@ text-align: center;
   text-align: center;
 }
 
+.special-modal {
+  width: 81%;
+}
+
+.special-modal form {
+  flex-direction: column;
+}
+
+.special-modal form button {
+  width: calc(375px * 0.45)
+}
+
+
 .modal-content > :not(span) {
-  padding: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin: 1.5rem;
   line-height: 1.5rem;
 }
 
-.modal-content > span {
+.modal-content div > span, .modal-content > span {
   float: right;
   color: #e6101083;
 }
 
+.modal-content > div:nth-of-type(1) {
+  display: block;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
 .modal-content h5 {
   padding: 0;
+  width: max-content;
 }
 
 .modal-content form {
   text-align: left;
+  overflow-x: scroll;
+  width: fit-content;
+}
+
+.modal-content form div {
+  flex-direction: column;
+  align-items: center;
 }
 
 .modal-content label, .modal-content input {
   margin-bottom: 0.8rem;
   text-align: center;
+}
+
+.modal-content label {
+  width: max-content;
+}
+
+.modal-content input {
+  padding: 0.25rem 0.5rem;
   width: 100%;
 }
 
@@ -992,6 +1089,38 @@ text-align: center;
   width: 50%;
   padding: 0;
 
+}
+
+.vehicleModal {
+  width: 81%;
+}
+
+@media only screen and (min-width: 950px) {
+  .special-modal form {
+    flex-direction: column;
+    width: 120%;
+  }
+
+  .special-modal form > div {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .special-modal input {
+    width: calc(375px * 0.84);
+  }
+}
+
+@media only screen and (min-width: 1010px) {
+  .special-modal form {
+    width: calc(1010px * 0.85);
+  }
+}
+
+@media only screen and (min-width: 1140px) {
+  .special-modal form {
+    width: calc(1140px * 0.75);
+  }
 }
 
 /* /////// Error Modal ////////*/

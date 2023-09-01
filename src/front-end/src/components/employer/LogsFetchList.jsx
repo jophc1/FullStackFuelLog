@@ -78,7 +78,7 @@ const LogsFetchList = () => {
       <h3>All Log Records</h3>
       <div id='logsHeader'>
         <div id='logDates'>
-          <p>Filter by dates</p>
+          <p>Filter search by dates</p>
           <div>
             <label>From:</label>
             <input type="date" name='from-date' onChange={handleFilterDates} />
@@ -88,7 +88,7 @@ const LogsFetchList = () => {
         </div>
         <div>
           <form className='search' onSubmit={handleSearchSubmit}>
-            <input type="text" placeholder='Search by AssetID' value={assetId} onChange={event => setAssetId(event.target.value)} />
+            <input type="text" placeholder='Search by Asset ID' value={assetId} onChange={event => setAssetId(event.target.value)} />
             <span className='fa fa-search'></span>
           </form>
         </div>
@@ -99,7 +99,7 @@ const LogsFetchList = () => {
             {allLogs.map((log, index) => (
               <tr key={log._id}>
                 <td value={log._id} onClick={handleDeleteIconClick}><span value={log._id} className='fa fa-trash-alt'></span></td>
-                <td onClick={handleLogClick} value={log._id}>Log ID:</td>
+                {/* <td onClick={handleLogClick} value={log._id}>Log ID:</td> */}
                 {/* <td onClick={handleLogClick} value={log._id}>{(paginationInfo.totalDocs - paginationInfo.limit * (paginationInfo.page - 1)) - index }</td> */}
                 <td onClick={handleLogClick} value={log._id}>Log Date:</td>
                 <td onClick={handleLogClick} value={log._id}>{log.date}</td>

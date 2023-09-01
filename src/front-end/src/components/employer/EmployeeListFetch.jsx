@@ -77,7 +77,8 @@ const EmployeeListFetch = () => {
       fieldLabelTwo: 'Employee ID (Number only, greater than 10000)',
       fieldLabelThree: 'Password (min 8 characters)', 
       heading: 'Add Employee', 
-      setShowForm: setShowForm
+      setShowForm: setShowForm,
+      styleSpecial: 'special-modal'
     })
 
     modalFieldOperation(true)
@@ -89,7 +90,7 @@ const EmployeeListFetch = () => {
     <FetchHeader>
       <CompanyButton onClick={handleAddButton} ><span className='fa fa-plus'></span> Add Employee </CompanyButton>
       <form className='search' onSubmit={handleSearchSubmit}>
-          <input type="text" placeholder='Search by AssetID' value={assetId} onChange={event => setAssetId(event.target.value)} />
+          <input type="text" placeholder='Search by Employee ID' value={assetId} onChange={event => setAssetId(event.target.value)} />
           <span className='fa fa-search'></span>
       </form>
     </FetchHeader>
@@ -120,7 +121,7 @@ const EmployeeListFetch = () => {
       
     
    
-    {showForm && <ModalFields {...modalFieldProps} employeeForm={true} />}
+    {showForm && <ModalFields {...modalFieldProps} styleSpecial='special-modal' employeeForm={true} />}
   </>
 }
 

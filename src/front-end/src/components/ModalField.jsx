@@ -3,7 +3,7 @@ import { EmployerContext, FuelLogContext } from '../context.js'
 import CompanyButton from './styled/CompanyButton'
 import ModalText from './ModalText.jsx'
 
-const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree, heading, initialName = '', initalEmployeeId = '', setShowForm, style='', method='POST', path='employed', employeeForm = false}) => {
+const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree, heading, initialName = '', initalEmployeeId = '', setShowForm, style='', styleSpecial = '', method='POST', path='employed', employeeForm = false}) => {
   
   const { showModalField, modalFieldOperation, postUpdateEmployee, errorMessage, modalErrorRender, setModalErrorRender } = useContext(FuelLogContext)
   // const { postUpdateEmployee } = useContext(EmployerContext)
@@ -49,22 +49,35 @@ const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree, heading, i
   
   return  <>
       <div className={changeModalClass} >
-        <div className='modal-content'>
-          <span className='fa fa-times'  onClick={handleCloseModalClick}></span>
-          <h5>{heading}</h5>
-          <form onSubmit={handleNewSubmit}>
-            { employeeForm && 
-            <>
-              <label>{fieldLabelOne} <span className='required'>*</span></label>
-              <input type="text" value={name} onChange={event => setName(event.target.value)} />
-              <label>{fieldLabelTwo} <span className='required'>*</span></label>
-              <input type="text" value={employeeId} onChange={event => setEmployeeId(event.target.value)} />
-              <label>{fieldLabelThree} <span className='required'>*</span></label>
-            </>
-            }
-            <input type="password" value={password} onChange={event => setPassword(event.target.value)} />
-            <CompanyButton>Submit</CompanyButton>
-          </form>
+        <div className={`${styleSpecial} modal-content`}>
+            <span className='fa fa-times'  onClick={handleCloseModalClick}></span>
+            <h5>{heading}</h5>
+          <div>
+            <form onSubmit={handleNewSubmit}>
+              { employeeForm ? 
+              <>
+                <div>
+                  <label>{fieldLabelOne} <span className='required'>*</span></label>
+                  <input type="text" value={name} onChange={event => setName(event.target.value)} />
+                </div>
+                <div>
+                  <label>{fieldLabelTwo} <span className='required'>*</span></label>
+                  <input type="text" value={employeeId} onChange={event => setEmployeeId(event.target.value)} />
+                </div>
+                <div>
+                  <label>{fieldLabelThree} <span className='required'>*</span></label>
+                  <input type="password" value={password} onChange={event => setPassword(event.target.value)} />
+                </div>
+              </>
+              :
+              <div>
+                <label>{fieldLabelThree} <span className='required'>*</span></label>
+                <input type="password" value={password} onChange={event => setPassword(event.target.value)} />
+              </div>
+              }
+              <CompanyButton>Submit</CompanyButton>
+            </form>
+          </div>
         </div>
       </div>
       { modalErrorRender &&
