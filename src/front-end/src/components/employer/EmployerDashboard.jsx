@@ -127,11 +127,13 @@ const EmployerDashboard = ({ children }) => {
   // Employer Dashboard Graphs
   async function graphData(path, graphType) {
     const res = await fetchMod('GET', path, '')
+    // res.status = 500
     if (res.status === 200) {
       return res.body
     }
     else {
-      console.log(`error: ${graphType} graph not retrieved`) // TODO: show error if pie graph data isn't retrieved
+      errorHandler(<p>'Error with pie graph, try again later'</p>)
+      // return 'ERR'
     }
   }
 

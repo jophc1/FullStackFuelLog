@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { EmployerContext } from '../../context'
+import { EmployerContext, FuelLogContext } from '../../context'
+import ModalText from '../ModalText'
 
 const DashboardTable = () => {
   
   // const [employerTableDate, setEmployerTableData] = useState({})
+  const { errorHandler, modalErrorRender, setModalErrorRender, errorMessage } = useContext(FuelLogContext)
   const { getEmployerTableReports } = useContext(EmployerContext)
   const [reportArray, setReportArray] = useState([])
   const [renderReset, setRenderReset] = useState(true)
@@ -34,8 +36,9 @@ const DashboardTable = () => {
         setReportArray(reports)
        
       } else {
-        setReportArray([])
-        setTableData({ totalLogsRecorded: 0, totalFuel: 0, totalDistance: 0})
+        // setReportArray([])
+        // setTableData({ totalLogsRecorded: 0, totalFuel: 0, totalDistance: 0})
+        errorHandler(<p>"From date" must be before or on "To date"</p>)
       }
       
       setRenderReset(false)
@@ -94,6 +97,13 @@ const DashboardTable = () => {
         </tbody>
       </table>
   </div>
+  { modalErrorRender &&
+        <ModalText setRenderModal={setModalErrorRender} style={'error'}>
+            <div>
+              { errorMessage }
+            </div>
+        </ModalText>
+  }
   </>
 }
 

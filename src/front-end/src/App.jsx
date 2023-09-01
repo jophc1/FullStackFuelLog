@@ -110,8 +110,18 @@ function App() {
         logId: res.body._id
       })
       navigate('/employee/dashboard/home')
+    } 
+    else {
+      if (new RegExp('(?=.*fuel_added)(?=.*value)', 'i').test(res.body.error)) {
+        errorHandler(<p>Fuel field must be greater than 0</p>)
+      }
+      else if (new RegExp('(?=.*fuel_added)(?=.*required)', 'i').test(res.body.error)) {
+        errorHandler(<p>Fuel field must be a number</p>)
+      }
+      else {
+        errorHandler(<p>{res.body.error}</p>)
+      }
     }
-    // TODO: if post failed, return a error popup condition
   }
 
   async function newLogRequest(event) {

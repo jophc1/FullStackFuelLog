@@ -26,7 +26,7 @@ const [showForm, setShowForm] = useState(false)
     event.preventDefault()
     setModalFieldProps({
       fieldLabelThree: 'Change Password (min 8 characters, optional)', 
-      heading: 'Reset Password', 
+      heading: <><span>Reset Password </span><span className='required'>*</span></>, 
       setShowForm: setShowForm,
       initalEmployeeId: userId,
       initialName: userName,
