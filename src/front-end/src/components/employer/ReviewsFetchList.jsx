@@ -9,7 +9,7 @@ const ReviewsFetchList = () => {
   
   
   const { deleteLog, getAllReviews, deleteReview } = useContext(EmployerContext)
-  const { modalTextOperation } = useContext(FuelLogContext)
+  const { modalTextOperation, modalErrorRender, setModalErrorRender, errorMessage } = useContext(FuelLogContext)
   const [renderModal, setRenderModal] = useState(false)
   const [modalDeleteRender, setModalDeleteRender] = useState(false)
   const [totalDocs, setTotalDocs] = useState(0)
@@ -30,21 +30,17 @@ const ReviewsFetchList = () => {
 
   async function handleDeleteButtonClick (event) {
     event.preventDefault()
+
     if (selectedReview.current.log_id && event.target.name === 'delete') {
       const deletionLogResponse = await deleteLog(selectedReview.current.log_id._id)
+      console.log(deletionLogResponse)
+    }
 
-      if (deletionLogResponse === 'OK') {
-        console.log('error: didnt delete log, review cannot be deleted') // TODO: error message if log didn't delete
-        return {}
-      }
+    if (selectedReview.current.log_id && event.target.name === 'keep') {
+      const deletionReviewResponse = await deleteReview(selectedReview.current._id)
+      console.log(deletionReviewResponse)
     }
     
-    const deletionReviewResponse = await deleteReview(selectedReview.current._id) 
-
-    if (deletionReviewResponse === 'OK'){
-      console.log('error: Log was deleted but didnt delete Review') // TODO: error message if review didn't delete
-      return {} // TODO maybe return an error message object if error occurs
-    }
     setReRender(!reRender)
     modalTextOperation(false)
     setRenderModal(false)
@@ -118,6 +114,13 @@ const ReviewsFetchList = () => {
               <CompanyButton onClick={handleDeleteButtonClick} name='keep' >Keep Log</CompanyButton> 
             </div> 
       </ModalText>
+      }
+      { modalErrorRender &&
+        <ModalText setRenderModal={setModalErrorRender} style={'error'}>
+            <div>
+              { errorMessage }
+            </div>
+        </ModalText>
       }
     </>
 }
