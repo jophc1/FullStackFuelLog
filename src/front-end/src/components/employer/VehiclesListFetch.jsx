@@ -69,11 +69,11 @@ const VehiclesListFetch = () => {
   return <>
     <h3>All Vehicles</h3>
     <FetchHeader>
+        <CompanyButton onClick={handleNewVehicle}><span className='fa fa-plus'></span> Add Vehicle</CompanyButton>
         <form className='search' onSubmit={handleSearchSubmit}>
           <input type="text" placeholder='Search by AssetID' value={assetId} onChange={event => setAssetId(event.target.value)} />
           <span className='fa fa-search'></span>
         </form>
-      <CompanyButton onClick={handleNewVehicle}><span className='fa fa-plus'></span> Add Vehicle</CompanyButton>
     </FetchHeader>
     {allVehicles && 
       <div className='allVehiclesEmployesLogs'>

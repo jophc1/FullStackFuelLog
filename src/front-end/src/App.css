@@ -361,20 +361,33 @@ h3 {
 
 /* ///////////////  Search Button ////////////////  */
 
+.searchButton button {
+  margin-bottom: 1.5rem;
+  margin-right: 1.5rem;
+  width: calc(375px * 0.40);
+}
+
+.searchButton {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
 .search {
   position: relative;
 }
 
 .search input {
   display: inline-block;
-  width: 60%;
+  width: calc(375px * 0.6);
+  padding: 0.2rem 0.5rem;
 }
 
 .search span {
   display: inline-block;
   position: absolute;
-  top: 32%;
-  right: 5%;
+  top: calc(375px * 0.045);
+  right: calc(375px * 0.05);
   opacity: 50%;
 }
 
@@ -383,7 +396,7 @@ h3 {
   display: flex;
   flex-direction: column;
   margin: 0.5rem auto;
-  
+  align-items: end;
 }
 
 #logDates div label {
@@ -457,7 +470,7 @@ h3 {
 }
 
 .allRequests table {
-  margin: 0 auto;
+  margin: 1.5rem auto;
 }
 
 .fixedColumn {
@@ -808,14 +821,6 @@ form input{
   margin: 0 auto;
   
 }
-
-/* .vehicleForm div:nth-child(7) {
-  width: 50%;
-} */
-
-/* .vehicleForm button {
-  display: block;
-} */
 
 /* ////////////////////// */
 
