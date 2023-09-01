@@ -20,6 +20,7 @@ import EmployeeListFetch from './components/employer/EmployeeListFetch.jsx'
 import EmployeeContextLayout from './components/employee/EmployeeContextLayout.jsx'
 import LogsFetchList from './components/employer/LogsFetchList.jsx'
 import ReviewsFetchList from './components/employer/ReviewsFetchList.jsx'
+import loaderGif from './assets/loader.gif'
 
 
 
@@ -42,11 +43,13 @@ function App() {
   
   const navigate = useNavigate()
   const [modalErrorRender, setModalErrorRender] = useState(false)
+  const [renderLoadingGif, setRenderLoadingGif] = useState(false)
 
   // USER ACCESS
 
   async function loginAccess (username, password) {
     const res = await basicAuthFetch(username, password)
+    setRenderLoadingGif(false)
     if (res.status === 200) {
     const initialVehicles = await fetchMod('GET', 'vehicles', '')
       dispatch({
@@ -187,11 +190,16 @@ function App() {
 
   async function deleteVehicle (assetID) {  
     const res = await fetchMod('DELETE', `vehicles/${assetID}`, '')
-    const newAllVehicles = allVehicles.filter(vehicle => {return vehicle.asset_id != assetID})
-    dispatch({
-      type: 'allVehicles',
-      allVehicles: newAllVehicles
-    })
+    if (res === 'OK') {
+      const newAllVehicles = allVehicles.filter(vehicle => {return vehicle.asset_id != assetID})
+      dispatch({
+        type: 'allVehicles',
+        allVehicles: newAllVehicles
+      })
+    } else {
+
+    }
+    
   }
 
   // MODALS
@@ -200,7 +208,6 @@ function App() {
     dispatch({
       type: 'popUpText',
       toggleModal: toggle,
-      // allVehicles: [...allVehicles]
     })
   }
 
@@ -243,7 +250,7 @@ function App() {
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, 
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, loaderGif, renderLoadingGif, setRenderLoadingGif, allVehicles, getAllVehicles, 
       currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, 
       modalTextOperation, showModalField, modalFieldOperation, navigate, editVehicle, deleteVehicle, 
       postLogEntry, newLogCreated, newLogRequest, userId, postUpdateEmployee, errorMessage, modalErrorRender, setModalErrorRender,  errorHandler}}>

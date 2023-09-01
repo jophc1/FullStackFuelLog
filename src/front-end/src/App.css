@@ -32,6 +32,13 @@ h3 {
   padding: 1rem 0.5rem 0.5rem 0.5rem;
 }
 
+#loading {
+  width: 50%;
+  position: absolute;
+  bottom: 1%;
+  right: -1%;
+}
+
 #logo {
   width: 30%;
   margin: 1rem 0 1rem 1rem;
