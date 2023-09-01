@@ -51,22 +51,28 @@ router.get('/:id', verifyAdmin, async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     // get
-    const vehicleID = new mongoose.Types.ObjectId(req.body.vehicle_id)
-    let lastLog = await LogModel.find({ vehicle_id: vehicleID }).sort({ current_odo: -1 })
+    if (req.body.vehicle_id) {
+      const vehicleID = new mongoose.Types.ObjectId(req.body.vehicle_id)
 
-    // if no log entry exists
-    if (lastLog.length == 0) {
-      lastLog.push({
-        current_odo: 0
-      })
-    }
-
-    if (req.body.current_odo > lastLog[0].current_odo) {
-      const newLog = await LogModel.create({ ...req.body, user_id: req.jwtIdentity.id })
-      res.send(newLog)
+      let lastLog = await LogModel.find({ vehicle_id: vehicleID }).sort({ current_odo: -1 })
+  
+      // if no log entry exists
+      if (lastLog.length == 0) {
+        lastLog.push({
+          current_odo: 0
+        })
+      }
+  
+      if (req.body.current_odo > lastLog[0].current_odo) {
+        const newLog = await LogModel.create({ ...req.body, user_id: req.jwtIdentity.id })
+        res.send(newLog)
+      } else {
+        throw new Error(`Current ODO must be greater than ${lastLog[0].current_odo}`)
+      }
     } else {
-      throw new Error(`Current ODO must be greater than ${lastLog[0].current_odo}`)
+      throw new Error(`Vehicle must be selected`)
     }
+   
   } catch (err) {
     res.status(500).send({ error: err.message })
   }
