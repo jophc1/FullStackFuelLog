@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { FuelLogContext, EmployeeContext } from '../../context.js'
+import { FuelLogContext } from '../../context.js'
 import companyIcon from '../../assets/fuel-log-logo.png'
 import { Navigate } from 'react-router-dom'
 import CompanyButton from '../styled/CompanyButton.jsx'
@@ -15,16 +15,19 @@ const LogEntry = () => {
   const emptyVehicleProfile = { make: '', model: '', year: '', asset_id: '', registration: '', vehicleImage_URL: placeHolderImage }
 
   const { postLogEntry, allVehicles, currentVehicleDetails, currentVehicle, authorised, backButton, displayVehicleInfo, displayPlaceholderVehicleInfo } = useContext(FuelLogContext)
-  // const { postLogEntry } = useContext(EmployeeContext)
 
   let isVehicleImageReady = false
+  let isLogoImageReady = false
 
-  if (currentVehicle) {
+  const logo = new Image()
+  logo.src = companyIcon
+  logo.onload = () => isLogoImageReady = true
+
+  if (currentVehicle.vehicleImage_URL) {
     const vehicleImage = new Image()
     vehicleImage.src = currentVehicle.vehicleImage_URL
     vehicleImage.onload = async () => isVehicleImageReady = true
   }
-
 
   function selectVehicle(event) {
     currentVehicleDetails(event.target.value)
@@ -49,7 +52,7 @@ const LogEntry = () => {
 
   return authorised ? <div className='logEntryComponent'>
       <div className='logEntryTitleLogo'>
-        <img src={companyIcon} />
+        {isLogoImageReady ? <></> : <img src={companyIcon} />}
         <h3>New Log Entry</h3>
       </div>
       <div className='selectVehicleDropmenu'>
@@ -60,7 +63,6 @@ const LogEntry = () => {
         </select>
       </div>
       
-
       {displayPlaceholderVehicleInfo && <VehicleDetails displayDetails={displayPlaceholderVehicleInfo} data={emptyVehicleProfile} />}
       {displayVehicleInfo && isVehicleImageReady ? <VehicleDetails displayDetails={displayPlaceholderVehicleInfo} data={emptyVehicleProfile} /> : <VehicleDetails displayDetails={displayVehicleInfo} data={currentVehicle} />}
       

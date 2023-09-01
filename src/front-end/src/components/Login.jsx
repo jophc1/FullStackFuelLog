@@ -9,6 +9,12 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const { loginAccess, errorMessage,  modalErrorRender, setModalErrorRender } = useContext(FuelLogContext)
 
+  let isLogoImageReady = false
+  const logo = new Image()
+
+  logo.src = companyIcon
+  logo.onload = () => isLogoImageReady = true
+
   const loginSubmit = (event) => {
     event.preventDefault()
     loginAccess(username, password)
@@ -16,7 +22,7 @@ const Login = () => {
 
   return <>
     <div className='loginPage'>
-      <img src={companyIcon} />
+      {isLogoImageReady ? <></> : <img src={companyIcon} />}
       <h3>Company Fuel Log</h3>
       <Card id='loginCard'>
         <form onSubmit={loginSubmit}>

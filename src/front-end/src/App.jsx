@@ -1,10 +1,10 @@
 import { useReducer, useState } from 'react'
 import { reducer, initialState } from './reducer.js'
 import { Routes, Route, useNavigate } from 'react-router-dom'
-import Login from './components/Login'
-import EmployeeHome from './components/employee/EmployeeHome'
-import LogEntry from './components/employee/LogEntry'
-import EmployerDashboard from './components/employer/EmployerDashboard'
+import Login from './components/Login.jsx'
+import EmployeeHome from './components/employee/EmployeeHome.jsx'
+import LogEntry from './components/employee/LogEntry.jsx'
+import EmployerDashboard from './components/employer/EmployerDashboard.jsx'
 import basicAuthFetch from './fetch/auth/basic_fetch.js'
 import fetchMod from './fetch/fetch.js'
 import DashboardTable from './components/employer/DashboardTable.jsx'
@@ -135,6 +135,7 @@ function App() {
   function backButton(path) {
     dispatch({ 
       type: 'backButton',
+      currentVehicle: {},
       displayVehicleInfo: false,
       displayPlaceholderVehicleInfo: true
     })
@@ -249,8 +250,8 @@ function App() {
       postLogEntry, newLogCreated, newLogRequest, userId, postUpdateEmployee, errorMessage, modalErrorRender, setModalErrorRender,  errorHandler}}>
         <Routes>
           <Route path='/' element={<Login />} />
-          <Route path='/employer'></Route>
-          <Route path='/employee' element={<EmployeeContextLayout />} >
+          {/* <Route path='/employer'></Route> */}
+          <Route path='/employee' >
               <Route path='dashboard/home' element={<EmployeeHome />} />
               <Route path='dashboard/new/log' element={<LogEntry />} />
           </Route>

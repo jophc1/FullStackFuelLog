@@ -9,7 +9,18 @@ const VehicleDetails = ({ displayDetails, data }) => {
 
   let isVehicleImageReady = false
 
-  if (currentVehicle) {
+  // import placeHolderImage from '../../assets/no-image.png'
+
+  // let isPlaceHolderImageReady = false
+
+  // const noImage = new Image()
+  // noImage.src = placeHolderImage
+  // noImage.onload = () => isPlaceHolderImageReady = true
+  // console.log(data.vehicleImage_URL === '/src/assets/no-image.png')
+
+
+
+  if (currentVehicle.vehicleImage_URL) {
     const vehicleImage = new Image()
     vehicleImage.src = currentVehicle.vehicleImage_URL
     vehicleImage.onload = async () => isVehicleImageReady = true

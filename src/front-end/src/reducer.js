@@ -50,6 +50,7 @@ function reducer (currentState, action) {
     case 'backButton':
       return {
         ...currentState,
+        currentVehicle: action.currentVehicle,
         displayVehicleInfo: action.displayVehicleInfo,
         displayPlaceholderVehicleInfo: action.displayPlaceholderVehicleInfo
       }
