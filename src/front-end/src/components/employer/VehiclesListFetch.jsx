@@ -5,7 +5,15 @@ import FetchHeader from './FetchHeader.jsx'
 import ModalText from '../ModalText.jsx'
 
 const VehiclesListFetch = () => {
-  const { allVehicles, getAllVehicles, modalTextOperation, navigate, editVehicle, deleteVehicle } = useContext(FuelLogContext)
+  const { allVehicles, 
+          getAllVehicles,
+          modalTextOperation,
+          navigate,
+          editVehicle,
+          deleteVehicle,
+          errorMessage,
+          modalErrorRender,
+          setModalErrorRender } = useContext(FuelLogContext)
   const [modalRender, setModalRender] = useState(false)
   const [assetId, setAssetId] = useState('')
   const assetID = useRef('')
@@ -75,6 +83,13 @@ const VehiclesListFetch = () => {
       <p>Are you sure you want to delete this Vehicle?</p>
       <CompanyButton onClick={handleCompanyButtonClick} value={assetID.current}>Confirm</CompanyButton>
     </ModalText>}
+    { modalErrorRender &&
+      <ModalText setRenderModal={setModalErrorRender} style={'error'}>
+          <div>
+          { errorMessage }
+          </div>
+      </ModalText>
+    }
   </>
 }
 

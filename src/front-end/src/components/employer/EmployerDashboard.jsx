@@ -26,7 +26,7 @@ const EmployerDashboard = ({ children }) => {
   async function deleteEmployee (employeeID) {
     const res = await fetchMod('DELETE', 'employed/' + employeeID, '')
     if (res.status === 500) {
-      errorHandler('Something went wrong trying to delete employee. Try again later!') // TODO: display error message is error occurs
+      errorHandler(<p>Something went wrong trying to delete employee. Try again later!</p>)
     } else {
       return res.body
     }

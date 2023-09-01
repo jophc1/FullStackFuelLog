@@ -207,7 +207,17 @@ function App() {
         allVehicles: newAllVehicles
       })
     } else {
-
+      dispatch({
+        type: 'errMsg',
+        errMsg: <p>Something went wrong trying to delete vehicle. Try again later!</p>,
+        showModalText: true
+      })
+      modalTextOperation(true)
+      setModalErrorRender(true)
+      setTimeout(() => {
+        modalTextOperation(false)
+        setModalErrorRender(false)
+      }, [5000])
     }
     
   }
