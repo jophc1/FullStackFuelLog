@@ -101,10 +101,11 @@ const EmployerDashboard = ({ children }) => {
    let newAllLogs
    let allLogsUpdate = {}
     const res = await fetchMod('DELETE', `logs/${logID}`, '')
-    if (!allLogs == {}) {
+    if (allLogs.docs != []) {
       newAllLogs = allLogs.docs.filter(log => {return log._id != logID})
       allLogsUpdate = {...allLogs, docs: newAllLogs}
     }
+    console.log(allLogsUpdate, paginationInfo)
     dispatch({
       type: 'allLogs',
       allLogs: allLogsUpdate,
