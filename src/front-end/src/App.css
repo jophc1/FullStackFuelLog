@@ -352,6 +352,14 @@ h3 {
 
 /* ///////////////////////////////// EMPLOYER ///////////////////////////////////////////// */
 
+/* Content Div */
+
+.dashboardContent {
+  margin-top: 2rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  min-height: 100vh;
+}
+
 /* Navbar */
 
 .navbar {

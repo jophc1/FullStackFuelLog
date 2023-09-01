@@ -215,7 +215,6 @@ function App() {
     } else {
       errorHandler(<p>Something went wrong trying to delete vehicle. Try again later!</p>)
     }
-    
   }
 
   // MODALS

@@ -162,7 +162,9 @@ const EmployerDashboard = ({ children }) => {
   <>
     <NavBar />
     <EmployerContext.Provider value={{postUpdateVehicle, getEmployerTableReports, propsObject, getAllEmployees, graphData, deleteEmployee, getAllLogs, allLogs, deleteLog, getAllReviews, deleteReview, paginationInfo}}>
-    {children}
+    <div className='dashboardContent'>
+      {children}
+    </div>
     </EmployerContext.Provider>   
   </>
   :
