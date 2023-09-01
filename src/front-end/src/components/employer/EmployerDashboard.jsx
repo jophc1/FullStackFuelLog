@@ -83,9 +83,10 @@ const EmployerDashboard = ({ children }) => {
 
     const paginationLogs = res.body
     const LogsDateFormatted = paginationLogs.docs.map(log => log.date = new Date(log.date).toISOString().split('T')[0])
+    console.log(paginationLogs.docs)
     dispatch({
       type: 'allLogs',
-      allLogs: paginationLogs,
+      allLogs: paginationLogs.docs,
       paginationInfo : {
         currentPage: paginationLogs.page,
         totalPages: paginationLogs.totalPages,
@@ -99,18 +100,17 @@ const EmployerDashboard = ({ children }) => {
 
   async function deleteLog (logID) {
    let newAllLogs
-   let allLogsUpdate = {}
     const res = await fetchMod('DELETE', `logs/${logID}`, '')
-    if (res == 'OK') {
-      if (allLogs.docs != []) {
-        newAllLogs = allLogs.docs.filter(log => {return log._id != logID})
-        allLogsUpdate = {...allLogs, docs: newAllLogs}
+    if (res == 'OK') { 
+      if (allLogs.length > 0) {
+        newAllLogs = allLogs.filter(log => {return log._id != logID})
+        dispatch({
+          type: 'allLogs',
+          allLogs: newAllLogs,
+          paginationInfo: {...paginationInfo}
+        })
       }
-      dispatch({
-        type: 'allLogs',
-        allLogs: allLogsUpdate,
-        paginationInfo: {...paginationInfo}
-      })
+      return res
     } else {
       errorHandler(<p>Something went wrong trying to delete log. Try again later!</p>)
     }
@@ -129,11 +129,14 @@ const EmployerDashboard = ({ children }) => {
   // Employer Dashboard Graphs
   async function graphData(path, graphType) {
     const res = await fetchMod('GET', path, '')
+    
     if (res.status === 200) {
       return res.body
     }
     else {
-      console.log(`error: ${graphType} graph not retrieved`) // TODO: show error if pie graph data isn't retrieved
+      // TODO: have a error message popup with error, not easy to do at the moment without completely reworking how graphs load onto page
+      // as the current error Modal causes an infinite render loop with graphing loops
+      console.log(`problem occured with graph ${graphType}`) 
     }
   }
 
@@ -145,7 +148,13 @@ const EmployerDashboard = ({ children }) => {
 
   async function deleteReview(reviewID) {
     const res = await fetchMod('DELETE', `logs/reviews/${reviewID}`, '')
-    return res
+
+    if (res == 'OK') {
+      return res
+    }
+    else {
+      errorHandler(<p>Something went wrong trying to delete log review request. Try again later!</p>)
+    }
   }
 
 

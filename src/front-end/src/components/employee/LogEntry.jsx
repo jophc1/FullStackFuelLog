@@ -5,6 +5,7 @@ import { Navigate } from 'react-router-dom'
 import CompanyButton from '../styled/CompanyButton.jsx'
 import VehicleDetails from './VehicleDetails.jsx'
 import placeHolderImage from '../../assets/no-image.png'
+import ModalText from '../ModalText.jsx'
 
 const LogEntry = () => {
 
@@ -13,14 +14,8 @@ const LogEntry = () => {
 
   const emptyVehicleProfile = { make: '', model: '', year: '', asset_id: '', registration: '', vehicleImage_URL: placeHolderImage }
 
-  const { postLogEntry,
-          allVehicles,
-          currentVehicleDetails,
-          currentVehicle,
-          authorised,
-          backButton,
-          displayVehicleInfo,
-          displayPlaceholderVehicleInfo } = useContext(FuelLogContext)
+  const { postLogEntry, allVehicles, currentVehicleDetails, currentVehicle, authorised, backButton, 
+    displayVehicleInfo, displayPlaceholderVehicleInfo, modalErrorRender, setModalErrorRender, errorMessage } = useContext(FuelLogContext)
 
   let isVehicleImageReady = false
   let isPlaceHolderImageReady = false
@@ -48,12 +43,14 @@ const LogEntry = () => {
   // calling post method for log
   async function handleSubmit(event) {
     event.preventDefault()
-    const postLog = {
+    
+      const postLog = {
       vehicle_id: currentVehicle._id,
       fuel_added: parseInt(fuel),
       current_odo: parseInt(odometer)
     }
     postLogEntry(postLog)
+    
   }
 
   function handleLogEntryBackButton (event) {
@@ -92,10 +89,15 @@ const LogEntry = () => {
           <CompanyButton>Submit log</CompanyButton>
         </div>
       </form>
-    
+
+      { modalErrorRender &&
+        <ModalText setRenderModal={setModalErrorRender} style={'error'}>
+            <div>
+              { errorMessage }
+            </div>
+        </ModalText>
+      }
     </div> : <Navigate to='/' />
-    
-  
 }
 
 export default LogEntry
