@@ -63,17 +63,7 @@ function App() {
       // TODO: set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login
       res.returnedData.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home') // TODO chnage route back to /employee/dashboard/home
     } else {
-      dispatch({
-        type: 'errMsg',
-        errMsg: <p>Invalid username or password.</p>,
-        showModalText: true
-      })
-      modalTextOperation(true)
-      setModalErrorRender(true)
-      setTimeout(() => {
-        modalTextOperation(false)
-        setModalErrorRender(false)
-      }, [5000])
+      errorHandler(<p>Invalid username or password.</p>)
     }
   }
 
@@ -207,17 +197,7 @@ function App() {
         allVehicles: newAllVehicles
       })
     } else {
-      dispatch({
-        type: 'errMsg',
-        errMsg: <p>Something went wrong trying to delete vehicle. Try again later!</p>,
-        showModalText: true
-      })
-      modalTextOperation(true)
-      setModalErrorRender(true)
-      setTimeout(() => {
-        modalTextOperation(false)
-        setModalErrorRender(false)
-      }, [5000])
+      errorHandler(<p>Something went wrong trying to delete vehicle. Try again later!</p>)
     }
     
   }
