@@ -225,7 +225,7 @@ const logVehicleTwo = [
   },
   {
     current_odo: 4703,
-    fuel_added: 125,
+    fuel_added: 123,
     user_id: arrayUsers[2],
     vehicle_id: insertedVehicles[1],
     date: new Date('2023-07-28')
@@ -265,7 +265,7 @@ const logVehicleThree = [
     current_odo: 9402,
     fuel_added: 125,
     user_id: arrayUsers[1],
-    vehicle_id: insertedVehicles[1],
+    vehicle_id: insertedVehicles[2],
     date: new Date('2023-06-10')
   },
   {
