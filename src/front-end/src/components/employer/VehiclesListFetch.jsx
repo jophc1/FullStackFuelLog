@@ -71,7 +71,7 @@ const VehiclesListFetch = () => {
     <FetchHeader>
         <CompanyButton onClick={handleNewVehicle}><span className='fa fa-plus'></span> Add Vehicle</CompanyButton>
         <form className='search' onSubmit={handleSearchSubmit}>
-          <input type="text" placeholder='Search by AssetID' value={assetId} onChange={event => setAssetId(event.target.value)} />
+          <input type="text" placeholder='Search by Asset ID' value={assetId} onChange={event => setAssetId(event.target.value)} />
           <span className='fa fa-search'></span>
         </form>
     </FetchHeader>

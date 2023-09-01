@@ -57,6 +57,24 @@ h3 {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+/* Pagination */
+
+.currentPage {
+  border: 1px solid #AAAAAA;
+  cursor: default;
+}
+
+.pageNumber, .currentPage {
+  margin: 0 1rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 5px;
+}
+
+.pageNumber {
+  background-color: #001f3f;
+  color: #fff;
+}
+
 /* /////////////////////////////////////// EMPLOYEE ////////////////////////////////////// */
 
 /* Vehicle Details component */
@@ -361,7 +379,7 @@ h3 {
   max-width: 1350px;
   margin: 2rem auto 0 auto;
   padding-bottom: 0.5rem;
-  overflow: hidden;
+  /* overflow-x: scroll; */
 }
 
 /* Navbar */
@@ -459,7 +477,7 @@ h3 {
 
 .allLogs {
   text-decoration: underline;
-  width: 100%;
+  width: 98%;
   position: relative;
   overflow: auto;
   white-space: nowrap;
