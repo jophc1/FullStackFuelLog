@@ -6,7 +6,13 @@ import Pagination from '../Pagination.jsx'
 
 const LogsFetchList = () => {
 
-  const { getAllLogs, allLogs, deleteLog, paginationInfo } = useContext(EmployerContext)
+  const { getAllLogs,
+          allLogs,
+          deleteLog,
+          paginationInfo,
+          errorMessage,
+          modalErrorRender,
+          setModalErrorRender } = useContext(EmployerContext)
   const { modalTextOperation } = useContext(FuelLogContext)
   const [renderModal, setRenderModal] = useState(false)
   const [modalDeleteRender, setModalDeleteRender] = useState(false)
@@ -97,6 +103,10 @@ const LogsFetchList = () => {
                 <td onClick={handleLogClick} value={log._id}>{(allLogs.totalDocs - allLogs.limit * (allLogs.page - 1)) - index }</td>
                 <td onClick={handleLogClick} value={log._id}>Log Date:</td>
                 <td onClick={handleLogClick} value={log._id}>{log.date}</td>
+                <td onClick={handleLogClick} value={log._id}>Asset ID:</td>
+                <td onClick={handleLogClick} value={log._id}>{log.vehicle_id.asset_id}</td>
+                <td onClick={handleLogClick} value={log._id}>Employee ID:</td>
+                <td onClick={handleLogClick} value={log._id}>{log.user_id.username_id}</td>
               </tr>
             ))}
           </tbody>
@@ -146,6 +156,13 @@ const LogsFetchList = () => {
             <CompanyButton onClick={handleCompanyButtonClick} value={logID.current}>Confirm</CompanyButton>
           </ModalText>
       }
+      { modalErrorRender &&
+      <ModalText setRenderModal={setModalErrorRender} style={'notification'}>
+          <div>
+          { errorMessage }
+          </div>
+      </ModalText>
+    }
     </>
 }
 

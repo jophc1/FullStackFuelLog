@@ -101,17 +101,19 @@ const EmployerDashboard = ({ children }) => {
    let newAllLogs
    let allLogsUpdate = {}
     const res = await fetchMod('DELETE', `logs/${logID}`, '')
-    if (allLogs.docs != []) {
-      newAllLogs = allLogs.docs.filter(log => {return log._id != logID})
-      allLogsUpdate = {...allLogs, docs: newAllLogs}
+    if (res == 'OK') {
+      if (allLogs.docs != []) {
+        newAllLogs = allLogs.docs.filter(log => {return log._id != logID})
+        allLogsUpdate = {...allLogs, docs: newAllLogs}
+      }
+      dispatch({
+        type: 'allLogs',
+        allLogs: allLogsUpdate,
+        paginationInfo: {...paginationInfo}
+      })
+    } else {
+      errorHandler(<p>Something went wrong trying to delete log. Try again later!</p>)
     }
-    console.log(allLogsUpdate, paginationInfo)
-    dispatch({
-      type: 'allLogs',
-      allLogs: allLogsUpdate,
-      paginationInfo: {...paginationInfo}
-    })
-    // TODO: return response and render
   }
 
   // REPORTS
