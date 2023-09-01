@@ -52,7 +52,8 @@ function reducer (currentState, action) {
         ...currentState,
         currentVehicle: action.currentVehicle,
         displayVehicleInfo: action.displayVehicleInfo,
-        displayPlaceholderVehicleInfo: action.displayPlaceholderVehicleInfo
+        displayPlaceholderVehicleInfo: action.displayPlaceholderVehicleInfo,
+        newLogCreated: action.newLogCreated
       }
     case 'popUpField':
       return {

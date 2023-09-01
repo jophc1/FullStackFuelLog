@@ -61,8 +61,11 @@ function App() {
         userId: res.returnedData.usernameId
       })
       // TODO: set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login
-      res.returnedData.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home') // TODO chnage route back to /employee/dashboard/home
-    } else {
+      res.returnedData.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home')
+    } else if (res.status === 204) {
+      errorHandler(<p>Server not responding. Try again later.</p>)
+    }
+    else {
       errorHandler(<p>Invalid username or password.</p>)
     }
   }
@@ -139,7 +142,8 @@ function App() {
       type: 'backButton',
       currentVehicle: {},
       displayVehicleInfo: false,
-      displayPlaceholderVehicleInfo: true
+      displayPlaceholderVehicleInfo: true,
+      newLogCreated: false
     })
     navigate(path)
   }
@@ -252,7 +256,7 @@ function App() {
   return <>
     <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, loaderGif, renderLoadingGif, setRenderLoadingGif, allVehicles, getAllVehicles, 
       currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, 
-      modalTextOperation, showModalField, modalFieldOperation, navigate, editVehicle, deleteVehicle, 
+      modalTextOperation, showModalField, modalFieldOperation, navigate, editVehicle, deleteVehicle,
       postLogEntry, newLogCreated, newLogRequest, userId, postUpdateEmployee, errorMessage, modalErrorRender, setModalErrorRender,  errorHandler}}>
         <Routes>
           <Route path='/' element={<Login />} />

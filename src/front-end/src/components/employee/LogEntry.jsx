@@ -8,13 +8,21 @@ import placeHolderImage from '../../assets/no-image.png'
 
 const LogEntry = () => {
 
-  const [vehicleID, setVehicleID] = useState({})
   const [fuel, setFuel] = useState(0)
   const [odometer, setOdometer] = useState(0)
 
   const emptyVehicleProfile = { make: '', model: '', year: '', asset_id: '', registration: '', vehicleImage_URL: placeHolderImage }
 
-  const { postLogEntry, allVehicles, currentVehicleDetails, currentVehicle, authorised, backButton, displayVehicleInfo, displayPlaceholderVehicleInfo } = useContext(FuelLogContext)
+  const { postLogEntry,
+          allVehicles,
+          currentVehicleDetails,
+          currentVehicle,
+          authorised,
+          backButton,
+          displayVehicleInfo,
+          displayPlaceholderVehicleInfo,
+          setComponentMount,
+          newLogCreated } = useContext(FuelLogContext)
 
   let isVehicleImageReady = false
   let isPlaceHolderImageReady = false

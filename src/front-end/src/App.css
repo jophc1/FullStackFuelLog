@@ -52,6 +52,10 @@ h3 {
   color: #FF0000;
 }
 
+.notification {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
 /* /////////////////////////////////////// EMPLOYEE ////////////////////////////////////// */
 
 /* Vehicle Details component */
@@ -914,8 +918,7 @@ form input{
 }
 
 /* /////// Error Modal ////////*/
-.error {
-
+.error, .notification {
   background: transparent;
   bottom: 0%;
   left: 50%;
@@ -928,7 +931,7 @@ form input{
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.error .modal-content > :not(span) {
+.error .modal-content > :not(span), .notification .modal-content > :not(span) {
   padding: 0.5rem;
   line-height: 0;
   margin-bottom: 1rem;
