@@ -46,13 +46,12 @@ const EmployerDashboard = ({ children }) => {
     if (res.status == 201 || res.status == 200) {
       navigate('/employer/dashboard/all/vehicles/') // TODO: show new vehicle details
     } else {
-      console.log(new RegExp('(?=.*registration)(?=.*dup)', 'i').test(res.body.error))
       if (new RegExp('(?=.*asset_id)(?=.*dup)', 'i').test(res.body.error)) {
-        errorHandler('Asset ID already exists.')
+        errorHandler(<p>Asset ID already exists.</p>)
       } else if (new RegExp('(?=.*registration)(?=.*dup)', 'i').test(res.body.error)) {
-        errorHandler('Registration already exists.')
+        errorHandler(<p>Registration already exists.</p>)
       } else {
-        errorHandler('Required fields must be filled in.')
+        errorHandler(<p>Required fields <span className='required'>*</span>  must be filled in.</p>)
       }
     }
   }

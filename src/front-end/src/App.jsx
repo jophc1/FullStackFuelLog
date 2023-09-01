@@ -65,7 +65,7 @@ function App() {
     } else {
       dispatch({
         type: 'errMsg',
-        errMsg: 'Invalid username or password.',
+        errMsg: <p>Invalid username or password.</p>,
         showModalText: true
       })
       modalTextOperation(true)
@@ -96,10 +96,19 @@ function App() {
     } 
     
     const res = await fetchMod(method, path, userObject)
-   
+    console.log(res)
     if (res.status === 500){
-      console.log("error with post or put on postUpdateEmployee") // TODO: error message popup when error occurs
-    } 
+      if (new RegExp('(?=.*username_id)(?=.*dup)', 'i').test(res.body.error)) {
+        errorHandler(<p>Employee ID already exists.</p>)
+      } else if (new RegExp('(?=.*name)(?=.*validation)', 'i').test(res.body.error)) {
+        errorHandler(<p>Employee name needs to be capitalised full name <span>e.g. John Smith</span></p>)
+      } else if (new RegExp('(?=.*password)(?=.*characters)', 'i').test(res.body.error)) {
+        errorHandler(<p>Password needs to be 8 characters or more.</p>)
+      } else {
+        errorHandler(<p>Required fields <span className='required'>*</span>  must be filled in.</p>)
+      }
+    }
+    return res
   }
 
   async function postLogEntry (data) {

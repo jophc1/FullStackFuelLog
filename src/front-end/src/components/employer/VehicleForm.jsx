@@ -47,23 +47,23 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
       <h3>{heading}</h3>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Car Make</label>
+          <label>Car Make <span className='required'>*</span></label>
           <input type="text" value={make} onChange={event => setMake(event.target.value)} />     
         </div>
         <div>
-          <label>Model</label>
+          <label>Model  <span className='required'>*</span></label>
           <input type="text" value={model} onChange={event => setModel(event.target.value)} />
         </div>
         <div>
-          <label>Year</label>
+          <label>Year  <span className='required'>*</span></label>
           <input type="text" value={year} onChange={event => setYear(event.target.value)} />
         </div>
         <div>
-          <label>Asset ID</label>
+          <label>Asset ID  <span className='required'>*</span></label>
           <input type="text" value={assetId} onChange={event => setAssetId(event.target.value)} />
         </div>
         <div>
-          <label>Registration</label>
+          <label>Registration  <span className='required'>*</span></label>
           <input type="text" value={rego} onChange={event => setRego(event.target.value)} />
         </div>
         <div>
@@ -82,7 +82,9 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
       </form>
       { modalErrorRender &&
       <ModalText setRenderModal={setModalErrorRender} style={'error'}>
-          <p>{ errorMessage }</p>
+          <div>
+            { errorMessage }
+          </div>
       </ModalText>
       }
     </div>

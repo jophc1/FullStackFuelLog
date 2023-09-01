@@ -47,7 +47,9 @@ const Login = () => {
     </div>
     { modalErrorRender &&
       <ModalText setRenderModal={setModalErrorRender} style={'error'}>
-          <p>{ errorMessage }</p>
+          <div>
+          { errorMessage }
+          </div>
       </ModalText>
     }
   </>

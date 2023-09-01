@@ -33,10 +33,10 @@ h3 {
 }
 
 #loading {
-  width: 50%;
-  position: absolute;
-  bottom: 1%;
-  right: -1%;
+  width: calc(375px * 0.5);
+  position: fixed;
+  bottom: calc(667px * 0.01);
+  right: calc(375px * -0.1);
 }
 
 #logo {
@@ -50,6 +50,11 @@ h3 {
 
 .hide {
   display: none;
+}
+
+/* Required form fields */
+.required {
+  color: #FF0000;
 }
 
 /* /////////////////////////////////////// EMPLOYEE ////////////////////////////////////// */
@@ -805,7 +810,7 @@ form input{
   line-height: 1.5rem;
 }
 
-.modal-content span {
+.modal-content > span {
   float: right;
   color: #e6101083;
 }
