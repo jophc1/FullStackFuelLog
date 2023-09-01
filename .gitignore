@@ -7,3 +7,5 @@ src/back-end/.env
 **/.env.development
 **/.env.production
 **/coverage
+
+**/dist
