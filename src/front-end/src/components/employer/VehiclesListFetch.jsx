@@ -110,7 +110,7 @@ const VehiclesListFetch = () => {
       </ModalText>
     }
     { vehicleDetailsModal &&
-       <ModalText setRenderModal={setVehicleDetailsModal}>
+       <ModalText setRenderModal={setVehicleDetailsModal} styleSpecial='vehicleModal'>
           <h4>Selected Vehicle</h4>
           {<VehicleDetails style={'employer'}  displayDetails={displayVehicleInfo} data={currentVehicle} />}
        </ModalText>

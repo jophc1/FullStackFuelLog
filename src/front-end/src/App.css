@@ -517,6 +517,11 @@ h3 {
   background-color: #53f50dc6 !important;
 }
 
+.allLogs td:nth-of-type(even) {
+  font-weight: bold;
+  padding-left: 3rem;
+}
+
 .allRequests span {
   font-size: 1.2rem;
 }
@@ -595,6 +600,8 @@ h3 {
   position: relative;
   overflow: auto;
   white-space: nowrap;
+  margin: 1rem 0 1rem 0.25rem;
+  padding: 1rem;
 }
 
 .allVehiclesEmployesLogs table {
@@ -898,7 +905,7 @@ form input{
   display: block;
   background: white;
   color: #000;
-  width: 19rem;
+  width: calc(375px * 0.87);
   height: auto;
   top: 50%;
   left: 50%;
@@ -907,28 +914,62 @@ form input{
   text-align: center;
 }
 
+.special-modal {
+  width: 81%;
+}
+
+.special-modal form {
+  flex-direction: column;
+}
+
+.special-modal form button {
+  width: calc(375px * 0.45)
+}
+
+
 .modal-content > :not(span) {
-  padding: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin: 1.5rem;
   line-height: 1.5rem;
 }
 
-.modal-content > span {
+.modal-content div > span, .modal-content > span {
   float: right;
   color: #e6101083;
 }
 
+.modal-content > div:nth-of-type(1) {
+  display: block;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
 .modal-content h5 {
   padding: 0;
+  width: max-content;
 }
 
 .modal-content form {
   text-align: left;
+  overflow-x: scroll;
+  width: fit-content;
+}
+
+.modal-content form div {
+  flex-direction: column;
+  align-items: center;
 }
 
 .modal-content label, .modal-content input {
   margin-bottom: 0.8rem;
   text-align: center;
+}
+
+.modal-content label {
+  width: max-content;
+}
+
+.modal-content input {
+  padding: 0.25rem 0.5rem;
   width: 100%;
 }
 
@@ -966,6 +1007,38 @@ form input{
   width: 50%;
   padding: 0;
 
+}
+
+.vehicleModal {
+  width: 81%;
+}
+
+@media only screen and (min-width: 950px) {
+  .special-modal form {
+    flex-direction: column;
+    width: 120%;
+  }
+
+  .special-modal form > div {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .special-modal input {
+    width: calc(375px * 0.84);
+  }
+}
+
+@media only screen and (min-width: 1010px) {
+  .special-modal form {
+    width: calc(1010px * 0.85);
+  }
+}
+
+@media only screen and (min-width: 1140px) {
+  .special-modal form {
+    width: calc(1140px * 0.75);
+  }
 }
 
 /* /////// Error Modal ////////*/

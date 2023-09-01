@@ -77,7 +77,8 @@ const EmployeeListFetch = () => {
       fieldLabelTwo: 'Employee ID (Number only, greater than 10000)',
       fieldLabelThree: 'Password (min 8 characters)', 
       heading: 'Add Employee', 
-      setShowForm: setShowForm
+      setShowForm: setShowForm,
+      styleSpecial: 'special-modal'
     })
 
     modalFieldOperation(true)
@@ -120,7 +121,7 @@ const EmployeeListFetch = () => {
       
     
    
-    {showForm && <ModalFields {...modalFieldProps} employeeForm={true} />}
+    {showForm && <ModalFields {...modalFieldProps} styleSpecial='special-modal' employeeForm={true} />}
   </>
 }
 
