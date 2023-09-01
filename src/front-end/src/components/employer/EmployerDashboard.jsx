@@ -83,7 +83,6 @@ const EmployerDashboard = ({ children }) => {
 
     const paginationLogs = res.body
     const LogsDateFormatted = paginationLogs.docs.map(log => log.date = new Date(log.date).toISOString().split('T')[0])
-    console.log(paginationLogs.docs)
     dispatch({
       type: 'allLogs',
       allLogs: paginationLogs.docs,

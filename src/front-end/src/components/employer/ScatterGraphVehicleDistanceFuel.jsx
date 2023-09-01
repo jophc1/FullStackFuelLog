@@ -32,7 +32,7 @@ const ScatterGraphVehicleDistanceFuel = () => {
         {allVehicles && allVehicles.map(vehicle => <option key={vehicle.asset_id} value={vehicle._id}>{vehicle.asset_id}</option>)}
       </select>
     </div>
-    <div id='scatterContainer' className='scatterContainer'>
+      <div id='scatterContainer' className='scatterContainer'>
         {scatterData && 
         <div className='graphThreeDataPlot'>
           <ResponsiveContainer width="100%" height={400}>
@@ -53,7 +53,8 @@ const ScatterGraphVehicleDistanceFuel = () => {
           </ResponsiveContainer>
         </div>
         }
-      </div>   
+      </div>
+      <p id='scatterInfo'>Scatter graph shows the distance between fuel refills verse fuel added for a specified company asset</p>   
   </>
     
   

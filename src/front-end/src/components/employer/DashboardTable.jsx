@@ -72,8 +72,8 @@ const DashboardTable = () => {
           <input type="date" name='from-date' onChange={handleEmployerTableDate} />
           <input type="date" name='to-date' onChange={handleEmployerTableDate} />
         </div>
-      </div>
-    <div>
+    </div>
+    <div className='dashboard-table-vehicle'>
       <label>Select Vehicle:</label>
       {renderReset && <select onChange={selectedVehicle} defaultValue={'default'}>
         <option value='default' disabled>No car selected</option>

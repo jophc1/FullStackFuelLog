@@ -68,6 +68,7 @@ const DonutGraphVehicleUsage = () => {
           </ResponsiveContainer>
         </div>
       </div>
+      <p>Graph is showing the total fuel usage of all company assets in percentage and litres</p>
     </div>
   )
 }

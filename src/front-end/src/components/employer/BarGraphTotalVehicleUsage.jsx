@@ -16,10 +16,10 @@ const BarGraphTotalVehicleUsage = () => {
     })()
   }, [])
 
-  
-  return (
-    barData && <div className='barContainer'>
-      <h4>All Vehicle usage past 6 months</h4>
+
+  return (<>
+  <h4 id='barTitle'>All Vehicle usage past 6 months</h4>
+  {barData && <div className='barContainer'>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           width={500}
@@ -41,7 +41,8 @@ const BarGraphTotalVehicleUsage = () => {
           <Bar name="Total fuel consumed (litres)" dataKey="totalMonthlyUsage" fill="#82ca9d" />
         </BarChart>
       </ResponsiveContainer>
-    </div>
+    </div>}
+  </>
   )
 }
 
