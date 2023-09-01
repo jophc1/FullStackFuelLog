@@ -2,11 +2,12 @@ import React, { useState, useContext } from 'react'
 import { EmployerContext, FuelLogContext } from '../../context.js'
 import CompanyButton from '../styled/CompanyButton.jsx'
 import placeholderImage from '../../assets/no-image.png'
+import ModalText from '../ModalText.jsx'
 
 const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit = '', regoInit = '', previewImageInit = placeholderImage, method = 'POST', urlSuffix = 'vehicles', heading = 'Add Vehicle'  }) => {
 
   const { postUpdateVehicle } = useContext(EmployerContext)
-  const { backButton } = useContext(FuelLogContext)
+  const { backButton, errorMessage, modalErrorRender, setModalErrorRender } = useContext(FuelLogContext)
 
   const [make, setMake] = useState(makeInit)
   const [model, setModel] = useState(modelInit)
@@ -46,23 +47,23 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
       <h3>{heading}</h3>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Car Make</label>
+          <label>Car Make <span className='required'>*</span></label>
           <input type="text" value={make} onChange={event => setMake(event.target.value)} />     
         </div>
         <div>
-          <label>Model</label>
+          <label>Model  <span className='required'>*</span></label>
           <input type="text" value={model} onChange={event => setModel(event.target.value)} />
         </div>
         <div>
-          <label>Year</label>
+          <label>Year  <span className='required'>*</span></label>
           <input type="text" value={year} onChange={event => setYear(event.target.value)} />
         </div>
         <div>
-          <label>Asset ID</label>
+          <label>Asset ID  <span className='required'>*</span></label>
           <input type="text" value={assetId} onChange={event => setAssetId(event.target.value)} />
         </div>
         <div>
-          <label>Registration</label>
+          <label>Registration  <span className='required'>*</span></label>
           <input type="text" value={rego} onChange={event => setRego(event.target.value)} />
         </div>
         <div>
@@ -79,6 +80,13 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
           <CompanyButton>Submit</CompanyButton>
         </div>
       </form>
+      { modalErrorRender &&
+      <ModalText setRenderModal={setModalErrorRender} style={'error'}>
+          <div>
+            { errorMessage }
+          </div>
+      </ModalText>
+      }
     </div>
   </>
 }

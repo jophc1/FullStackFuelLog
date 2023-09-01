@@ -20,6 +20,7 @@ import EmployeeListFetch from './components/employer/EmployeeListFetch.jsx'
 import EmployeeContextLayout from './components/employee/EmployeeContextLayout.jsx'
 import LogsFetchList from './components/employer/LogsFetchList.jsx'
 import ReviewsFetchList from './components/employer/ReviewsFetchList.jsx'
+import loaderGif from './assets/loader.gif'
 
 
 
@@ -42,11 +43,13 @@ function App() {
   
   const navigate = useNavigate()
   const [modalErrorRender, setModalErrorRender] = useState(false)
+  const [renderLoadingGif, setRenderLoadingGif] = useState(false)
 
   // USER ACCESS
 
   async function loginAccess (username, password) {
     const res = await basicAuthFetch(username, password)
+    setRenderLoadingGif(false)
     if (res.status === 200) {
     const initialVehicles = await fetchMod('GET', 'vehicles', '')
       dispatch({
@@ -62,7 +65,7 @@ function App() {
     } else {
       dispatch({
         type: 'errMsg',
-        errMsg: 'Invalid username or password.',
+        errMsg: <p>Invalid username or password.</p>,
         showModalText: true
       })
       modalTextOperation(true)
@@ -93,10 +96,19 @@ function App() {
     } 
     
     const res = await fetchMod(method, path, userObject)
-   
+    console.log(res)
     if (res.status === 500){
-      console.log("error with post or put on postUpdateEmployee") // TODO: error message popup when error occurs
-    } 
+      if (new RegExp('(?=.*username_id)(?=.*dup)', 'i').test(res.body.error)) {
+        errorHandler(<p>Employee ID already exists.</p>)
+      } else if (new RegExp('(?=.*name)(?=.*validation)', 'i').test(res.body.error)) {
+        errorHandler(<p>Employee name needs to be capitalised full name <span>e.g. John Smith</span></p>)
+      } else if (new RegExp('(?=.*password)(?=.*characters)', 'i').test(res.body.error)) {
+        errorHandler(<p>Password needs to be 8 characters or more.</p>)
+      } else {
+        errorHandler(<p>Required fields <span className='required'>*</span>  must be filled in.</p>)
+      }
+    }
+    return res
   }
 
   async function postLogEntry (data) {
@@ -188,11 +200,16 @@ function App() {
 
   async function deleteVehicle (assetID) {  
     const res = await fetchMod('DELETE', `vehicles/${assetID}`, '')
-    const newAllVehicles = allVehicles.filter(vehicle => {return vehicle.asset_id != assetID})
-    dispatch({
-      type: 'allVehicles',
-      allVehicles: newAllVehicles
-    })
+    if (res === 'OK') {
+      const newAllVehicles = allVehicles.filter(vehicle => {return vehicle.asset_id != assetID})
+      dispatch({
+        type: 'allVehicles',
+        allVehicles: newAllVehicles
+      })
+    } else {
+
+    }
+    
   }
 
   // MODALS
@@ -201,7 +218,6 @@ function App() {
     dispatch({
       type: 'popUpText',
       toggleModal: toggle,
-      // allVehicles: [...allVehicles]
     })
   }
 
@@ -244,16 +260,15 @@ function App() {
   }
 
   return <>
-    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, allVehicles, getAllVehicles, 
+    <FuelLogContext.Provider value={{loginAccess, userAccess, authorised, userName, userLogout, loaderGif, renderLoadingGif, setRenderLoadingGif, allVehicles, getAllVehicles, 
       currentVehicleDetails, currentVehicle, displayVehicleInfo, displayPlaceholderVehicleInfo, backButton, showModalText, 
       modalTextOperation, showModalField, modalFieldOperation, navigate, editVehicle, deleteVehicle, 
       postLogEntry, newLogCreated, newLogRequest, userId, postUpdateEmployee, errorMessage, modalErrorRender, setModalErrorRender,  errorHandler}}>
         <Routes>
           <Route path='/' element={<Login />} />
-          {/* <Route path='/employer'></Route> */}
           <Route path='/employee' >
               <Route path='dashboard/home' element={<EmployeeHome />} />
-              <Route path='dashboard/new/log' element={<LogEntry />} />
+              <Route path='dashboard/new/log/all' element={<LogEntry />} />
           </Route>
           <Route path='/employer'>
             <Route path='dashboard/home' element={<HomeReportWrapper />} />

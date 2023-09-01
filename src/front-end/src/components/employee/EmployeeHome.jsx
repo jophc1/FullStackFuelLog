@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import Header from './Header.jsx'
-import { EmployeeContext, FuelLogContext } from '../../context.js'
+import { FuelLogContext } from '../../context.js'
 import SquareButton from '../styled/EmployeeButton.jsx'
 import Row from '../styled/Row.jsx'
 import logoutIcon from '../../assets/logout.png'
@@ -13,7 +13,7 @@ import ModalFields from '../ModalField.jsx'
 
 const EmployeeHome = ({ children }) => {
 
-const { authorised, userLogout, userAccess, navigate, newLogCreated, userId, postUpdateEmployer, modalFieldOperation, userName } = useContext(FuelLogContext)
+const { authorised, userLogout, userAccess, navigate, newLogCreated, userId, modalFieldOperation, userName } = useContext(FuelLogContext)
 const [modalFieldProps, setModalFieldProps] = useState({})
 const [showForm, setShowForm] = useState(false)
 
@@ -34,6 +34,11 @@ const [showForm, setShowForm] = useState(false)
     })
     setShowForm(true)
     modalFieldOperation(true)
+  }
+
+  const handleLogButtonClick = event => {
+    event.preventDefault()
+    navigate('/employee/dashboard/new/log/all')
   }
   
   // IMAGES 
@@ -57,7 +62,7 @@ const [showForm, setShowForm] = useState(false)
       {newLogCreated ? <RequestDelete /> : <EmployeeProfile />}
       {isLogImgReady && isPasswordImgReady && isLogoutImgReady ? <></> :  
       <Row className='employeeDashButtons'>
-        <SquareButton onClick={() => navigate('/employee/dashboard/new/log')}>
+        <SquareButton onClick={handleLogButtonClick}>
           <img src={logIcon} alt="logout icon" className='employeeButton' />
           <p>New Log Entry</p>
         </SquareButton>

@@ -42,9 +42,17 @@ const EmployerDashboard = ({ children }) => {
     formData.append('registration', registration) 
     formData.append('image', image)
     const res = await fetchFiles(method, urlSuffix, formData)
-    console.log(formData) // TODO: gather response data and render a succeful component display
+     // TODO: gather response data and render a succeful component display
     if (res.status == 201 || res.status == 200) {
       navigate('/employer/dashboard/all/vehicles/') // TODO: show new vehicle details
+    } else {
+      if (new RegExp('(?=.*asset_id)(?=.*dup)', 'i').test(res.body.error)) {
+        errorHandler(<p>Asset ID already exists.</p>)
+      } else if (new RegExp('(?=.*registration)(?=.*dup)', 'i').test(res.body.error)) {
+        errorHandler(<p>Registration already exists.</p>)
+      } else {
+        errorHandler(<p>Required fields <span className='required'>*</span>  must be filled in.</p>)
+      }
     }
   }
 
@@ -93,10 +101,11 @@ const EmployerDashboard = ({ children }) => {
    let newAllLogs
    let allLogsUpdate = {}
     const res = await fetchMod('DELETE', `logs/${logID}`, '')
-    if (!allLogs == {}) {
+    if (allLogs.docs != []) {
       newAllLogs = allLogs.docs.filter(log => {return log._id != logID})
       allLogsUpdate = {...allLogs, docs: newAllLogs}
     }
+    console.log(allLogsUpdate, paginationInfo)
     dispatch({
       type: 'allLogs',
       allLogs: allLogsUpdate,

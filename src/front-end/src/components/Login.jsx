@@ -7,7 +7,13 @@ import ModalText from './ModalText.jsx'
 const Login = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const { loginAccess, errorMessage,  modalErrorRender, setModalErrorRender } = useContext(FuelLogContext)
+  const { loginAccess,
+          errorMessage,
+          modalErrorRender,
+          setModalErrorRender,
+          renderLoadingGif,
+          setRenderLoadingGif,
+          loaderGif } = useContext(FuelLogContext)
 
   let isLogoImageReady = false
   const logo = new Image()
@@ -17,6 +23,7 @@ const Login = () => {
 
   const loginSubmit = (event) => {
     event.preventDefault()
+    setRenderLoadingGif(!renderLoadingGif)
     loginAccess(username, password)
   }
 
@@ -39,13 +46,16 @@ const Login = () => {
             onChange={event => setPassword(event.target.value)}
           />
           <input id='loginButton' type="submit" value='LOGIN' />
+          { renderLoadingGif && <img id='loading' src={loaderGif} alt="loading gif" />}
         </form>
       </Card>
       <footer>&copy; Freight Forwarding Service Trucking 2023</footer>
     </div>
     { modalErrorRender &&
       <ModalText setRenderModal={setModalErrorRender} style={'error'}>
-          <p>{ errorMessage }</p>
+          <div>
+          { errorMessage }
+          </div>
       </ModalText>
     }
   </>

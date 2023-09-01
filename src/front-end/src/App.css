@@ -32,6 +32,12 @@ h3 {
   padding: 1rem 0.5rem 0.5rem 0.5rem;
 }
 
+#loading {
+  width: calc(375px * 0.5);
+  position: fixed;
+  bottom: calc(667px * 0.01);
+  right: calc(375px * -0.1);
+}
 
 .show {
   display: block;
@@ -41,9 +47,24 @@ h3 {
   display: none;
 }
 
+/* Required form fields */
+.required {
+  color: #FF0000;
+}
+
 /* /////////////////////////////////////// EMPLOYEE ////////////////////////////////////// */
 
 /* Vehicle Details component */
+
+.vehicleDetailTable {
+  position: relative;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.colorVD {
+  background: #fff;
+}
 
 .logEntryComponent > * {
   margin: 0 auto;
@@ -101,7 +122,6 @@ h3 {
   display: flex;
   width: 100%;
   min-width: calc(375px * 0.9);
-  /* justify-content: space-between; */
   align-items: center;
   
   padding-right: 0.5rem;
@@ -438,10 +458,11 @@ h3 {
 
 .fixedColumn {
   position: sticky;
-  background-color: #f8f9fa;
+  background-color: #fff;
   width: 5em;
   min-width: 2.5em;
   left: 0;
+  padding-left: 0.5rem;
   text-align: center;
 }
 
@@ -837,7 +858,7 @@ form input{
   line-height: 1.5rem;
 }
 
-.modal-content span {
+.modal-content > span {
   float: right;
   color: #e6101083;
 }

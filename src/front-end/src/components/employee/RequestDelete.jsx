@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import Card from '../styled/ProfileCard'
 import CompanyButton from '../styled/CompanyButton'
-import { EmployeeContext, FuelLogContext } from '../../context'
+import { FuelLogContext } from '../../context'
 
 const RequestDelete = () => {
   const { newLogRequest } = useContext(FuelLogContext)

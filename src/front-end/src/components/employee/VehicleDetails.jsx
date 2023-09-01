@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import Card from '../styled/ProfileCard'
 import { FuelLogContext } from '../../context.js'
 import Row from '../styled/Row'
@@ -9,17 +9,6 @@ const VehicleDetails = ({ displayDetails, data }) => {
 
   let isVehicleImageReady = false
 
-  // import placeHolderImage from '../../assets/no-image.png'
-
-  // let isPlaceHolderImageReady = false
-
-  // const noImage = new Image()
-  // noImage.src = placeHolderImage
-  // noImage.onload = () => isPlaceHolderImageReady = true
-  // console.log(data.vehicleImage_URL === '/src/assets/no-image.png')
-
-
-
   if (currentVehicle.vehicleImage_URL) {
     const vehicleImage = new Image()
     vehicleImage.src = currentVehicle.vehicleImage_URL
@@ -29,27 +18,27 @@ const VehicleDetails = ({ displayDetails, data }) => {
   return displayDetails &&
     <Card className='vehicleCard'>
       <Row className='vehicleRow'>
-        <div>
+        <div className='vehicleDetailTable'>
           <table>
             <tbody>
             <tr>
-              <td>Asset ID:</td>
+              <th className='fixedColumn colorVD'>Asset ID:</th>
               <td>{isVehicleImageReady ? <></> : data.asset_id}</td>
             </tr>
             <tr>
-              <td>Reg No:</td>
+              <th className='fixedColumn colorVD'>Reg No:</th>
               <td>{isVehicleImageReady ? <></> : data.registration}</td>
             </tr>
             <tr>
-              <td>Make:</td>
+              <th className='fixedColumn colorVD'>Make:</th>
               <td>{isVehicleImageReady ? <></> : data.make}</td>
             </tr>
             <tr>
-              <td>Model:</td>
+              <th className='fixedColumn colorVD'>Model:</th>
               <td>{isVehicleImageReady ? <></> : data.model}</td>
             </tr>
             <tr>
-              <td>Year:</td>
+              <th className='fixedColumn colorVD'>Year:</th>
               <td>{isVehicleImageReady ? <></> : data.year}</td>
             </tr>
             </tbody>
