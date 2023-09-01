@@ -126,15 +126,15 @@ const LogsFetchList = () => {
                 </tr>
                 <tr>
                   <td>Asset ID:</td>
-                  <td>&rarr; {selectedLog.current.vehicle_id.asset_id}</td>
+                  <td>&rarr; {selectedLog.current.vehicle_id ? selectedLog.current.vehicle_id.asset_id : <></>}</td>
                 </tr>
                 <tr>
                   <td>Employee:</td>
-                  <td>&rarr; {selectedLog.current.user_id.name}</td>
+                  <td>&rarr; {selectedLog.current.user_id ? selectedLog.current.user_id.name : <></>}</td>
                 </tr>
                 <tr>
                   <td>Employee ID:</td>
-                  <td>&rarr; {selectedLog.current.user_id.username_id}</td>
+                  <td>&rarr; {selectedLog.current.user_id ? selectedLog.current.user_id.username_id : <></>}</td>
                 </tr>
               </tbody>
             </table>

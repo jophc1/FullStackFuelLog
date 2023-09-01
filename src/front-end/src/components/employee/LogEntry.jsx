@@ -75,7 +75,7 @@ const LogEntry = () => {
           <label>Added Fuel (L):</label>
           <input onChange={evt => setFuel(evt.target.value)} />
         </div>
-        <div className='logEntryButtons'>
+        <div>
           <CompanyButton onClick={handleLogEntryBackButton}>Back</CompanyButton>
           <CompanyButton>Submit log</CompanyButton>
         </div>

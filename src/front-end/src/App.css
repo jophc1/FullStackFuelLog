@@ -32,10 +32,6 @@ h3 {
   padding: 1rem 0.5rem 0.5rem 0.5rem;
 }
 
-#logo {
-  width: 30%;
-  margin: 1rem 0 1rem 1rem;
-}
 
 .show {
   display: block;
@@ -125,6 +121,10 @@ h3 {
   width: 100%;
 }
 
+.logEntryForm div:nth-child(3) {
+    max-width: calc(375px * 0.9);
+}
+
 .logEntryForm > div > label {
   flex: 2;
 }
@@ -132,6 +132,29 @@ h3 {
 .logEntryForm > div > input {
   flex: 2;
   text-align: center;
+}
+
+
+@media only screen and (min-width: 650px) {
+
+  .vehicleImg {
+    width: 40%;
+    max-width: 400px;
+  }
+
+  .vehicleRow td {
+    font-size: 1.2rem;
+  }
+
+  .logEntryForm :not(div:nth-child(3), button) {
+    width: 500px;
+  }
+
+  /* .logEntryForm div:nth-child(3) {
+    width: 50%;
+    max-width: 500px;
+  } */
+
 }
 
 /* ////////////////////////////////////////// */
@@ -154,7 +177,7 @@ h3 {
 
 .employeeProfile {
   width: 90%;
-  margin: 0 auto;
+  margin: 0 auto 1rem auto;
   padding: 2rem;
   text-align: center;
   border-radius: 20px !important;
@@ -209,6 +232,32 @@ h3 {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+}
+
+#logo {
+  width: 30%;
+  margin: 1rem 0 2rem 1rem;
+}
+
+@media only screen and (min-width: 750px) {
+  .requestDelete, .employeeProfile, .employeeDashButtons {
+    max-width: 800px;
+  }
+
+  .employeeProfile {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .employeeDashButtons {
+    justify-content: space-between;
+    margin-top: 2rem;
+  }
+
+  #logo {
+    width: 150px;
+  }
 }
 
 /* /////////////////////// */

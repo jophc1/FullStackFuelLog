@@ -70,9 +70,9 @@ const ReviewsFetchList = () => {
               <tr key={review._id} onClick={handleReviewClick} value={review._id}>
                 <th className='fixedColumn'><span className='fa fa-exclamation-circle' ></span></th>
                 <td className='long'>Vehicle ID:</td>
-                <td className='long'>{review.log_id && review.log_id.vehicle_id.asset_id}</td>
+                <td className='long'>{review.log_id && review.log_id.vehicle_id ? review.log_id.vehicle_id.asset_id : <></>}</td>
                 <td className='long'>Employee ID:</td>
-                <td className='long'>{review.employee_id && review.employee_id.username_id}</td>
+                <td className='long'>{review.employee_id ? review.employee_id.username_id : <></>}</td>
                 <td className='long'>Date:</td>
                 <td className='long'>{review.date = new Date(review.date).toISOString().split('T')[0]}</td>
               </tr>
@@ -93,7 +93,7 @@ const ReviewsFetchList = () => {
               <tbody>
                 <tr>
                   <td>Employee ID:</td>
-                  <td>{selectedReview.current.employee_id && selectedReview.current.employee_id.username_id}</td>
+                  <td>{selectedReview.current.employee_id ? selectedReview.current.employee_id.username_id : <></>}</td>
                 </tr>
                 <tr>
                   <td>Date Added:</td>
@@ -101,15 +101,15 @@ const ReviewsFetchList = () => {
                 </tr>
                 <tr>
                   <td>Vehicle ID:</td>
-                  <td>{selectedReview.current.log_id && selectedReview.current.log_id.vehicle_id.asset_id}</td>
+                  <td>{selectedReview.current.log_id.vehicle_id ? selectedReview.current.log_id.vehicle_id.asset_id : <></>}</td>
                 </tr>
                 <tr>
                   <td>Current ODO (km):</td>
-                  <td>{selectedReview.current.log_id && selectedReview.current.log_id.current_odo}</td>
+                  <td>{selectedReview.current.log_id ? selectedReview.current.log_id.current_odo : <></>}</td>
                 </tr>
                 <tr>
                   <td>Fuel Added (L):</td>
-                  <td>{selectedReview.current.log_id && selectedReview.current.log_id.fuel_added}</td>
+                  <td>{selectedReview.current.log_id ? selectedReview.current.log_id.fuel_added : <></>}</td>
                 </tr>
               </tbody>
             </table>
