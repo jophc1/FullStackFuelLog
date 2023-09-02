@@ -119,10 +119,6 @@ const LogsFetchList = () => {
             <table id='logModalDetails'>
               <tbody>
                 <tr>
-                  <td>Log ID:</td>
-                  <td>&rarr; {logID.current}</td>
-                </tr>
-                <tr>
                   <td>Date Added:</td>
                   <td>&rarr; {new Date(selectedLog.current.date).toISOString().split('T')[0]}</td>
                 </tr>

@@ -38,3 +38,9 @@ body {
   padding: 0px;
   width: 100%;
 }
+
+[data-lastpass-icon-root] {
+
+  display: none !important;
+  
+  }
