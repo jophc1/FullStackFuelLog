@@ -56,7 +56,7 @@ router.put('/:asset_id', verifyAdmin, postToS3, async (req, res) => {
     // if asset_id has changed and image has not been updated, keep the old asset id to use for image key in S3 bucket
     const oldVehicleData = await VehicleModel.findOne({ asset_id: req.params.asset_id }).exec()
     oldVehicleData.asset_id !== req.body.asset_id && !req.files
-      ? url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${oldVehicleData.asset_id}.png`
+      ? url = oldVehicleData.vehicleImage_URL
       : url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.key}`
 
     const vehicleUpdated = {
