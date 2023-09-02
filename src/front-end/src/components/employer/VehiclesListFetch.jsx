@@ -4,6 +4,8 @@ import { EmployerContext, FuelLogContext } from '../../context.js'
 import FetchHeader from './FetchHeader.jsx'
 import ModalText from '../ModalText.jsx'
 import VehicleDetails from '../employee/VehicleDetails.jsx'
+import noRequest from '../../assets/request.png'
+import Card from '../styled/ProfileCard.jsx'
 
 const VehiclesListFetch = () => {
   const { allVehicles, 
@@ -75,7 +77,7 @@ const VehiclesListFetch = () => {
           <span className='fa fa-search'></span>
         </form>
     </FetchHeader>
-    {allVehicles && 
+    {allVehicles ?
       <div className='allVehiclesEmployesLogs'>
             <table>
               <tbody>
@@ -96,6 +98,11 @@ const VehiclesListFetch = () => {
               </tbody>
             </table>
           </div>
+          :
+          <Card id="request">
+            <p>No vehicles added. Add a new vehicle to see in this list</p>
+            <img src={noRequest} alt='company logo' />
+          </Card>
     }
     { modalRender &&
     <ModalText setRenderModal={setModalRender}>
