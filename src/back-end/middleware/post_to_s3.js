@@ -14,7 +14,7 @@ async function postToS3 (req, res, next) {
     }
 
     if (!req.testRoute && checkImage) { // testRoute is for test routes so a image isnt created with a post vehicle, sorry jordan if this breaks your images
-      const KEY = `${req.body.asset_id}`
+      const KEY = `${req.body.asset_id}.png`
 
       req.key = KEY
       const client = new S3Client({
