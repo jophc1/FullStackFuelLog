@@ -102,7 +102,7 @@ describe('App Tests', () => {
         request(app)
           .put('/employed/' + testEmployeeID)
           .set('Cookie', cookie)
-          .send({ name: 'Update Employee' })
+          .send({ name: 'John Smith' })
         expect(res.body.modifiedCount).toBe(1)
       })
 
@@ -198,16 +198,16 @@ describe('App Tests', () => {
           .expect(200)
       })
 
-      test('should be able to remove the log review (Employer access)', async () => {
+      test('should not be able to remove the log review after it has been delete (Employer access)', async () => {
         cookie = await loginUser('10001', 'test password', true)
         const recentLogReviewIdString = recentLogReview[0]._id.toString()
         const deleteLogReview = await
         request(app)
           .delete('/logs/reviews/' + recentLogReviewIdString)
           .set('Cookie', cookie)
-          .expect(200)
+          .expect(400)
         // Check that deleted log is in response with 200 status
-        expect(deleteLogReview.text).toStrictEqual('OK')
+        expect(deleteLogReview.body.error).toBe('Review not found')
       })
     })
   })
@@ -293,10 +293,21 @@ describe('App Tests', () => {
   })
 
   describe('DB Connect', () => {
+    const OLD_ENV = process.env.ENV
     beforeAll(async () => {
       await dbClose()
+       // clear the cache
+       jest.resetModules()
+       // make a copy
+       process.env.ENV = OLD_ENV
     })
+
+    afterAll(() => {
+      process.env.ENV = OLD_ENV
+    })
+
     test('should connect to DB and console log connection success', async () => {
+      process.env.ENV = 'dev'
       const logSpy = jest.spyOn(global.console, 'log')
 
       await dbConnect()

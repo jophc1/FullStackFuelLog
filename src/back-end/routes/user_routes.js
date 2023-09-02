@@ -11,7 +11,7 @@ router.use(authAccess)
 // Update an employee route
 router.put('/:username_id', async (req, res) => {
   try {
-    if (req.body.password.length < 8) {
+    if (req.body.password && req.body.password.length < 8) {
       res.status(500).send({ error: 'Password must be 8 characters or more' })
     } else {
       if (req.jwtIdentity.isAdmin || req.jwtIdentity.username_id === req.params.username_id) {
