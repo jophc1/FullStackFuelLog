@@ -172,6 +172,16 @@ describe('App Tests', () => {
         expect(recentLog[0].vehicle_id).toStrictEqual(vehicle._id)
       })
 
+      test('should input ODO greater than previous ODO', async () => {
+        const res = await
+        request(app)
+          .post('/logs')
+          .set('Cookie', cookie)
+          .send({ fuel_added: 200, current_odo: latestVehicleOdometer - 100, user_id: userID, vehicle_id: vehicleIDString })
+          .expect(500)
+        expect(res.body.error).toMatch(/greater than/)
+      })
+
       test('should be able to request a log review', async () => {
         const res = await
         request(app)
@@ -183,6 +193,20 @@ describe('App Tests', () => {
         recentLogReview = await LogReviewModel.find({ employee_id: recentLog[0].user_id }).sort({ date: -1 })
         expect(res.body.log_id).toBeDefined()
         expect(res.body.employee_id).toBe(recentLog[0].user_id.toString())
+      })
+
+      test('should be able to find the newly created log (Employer access)', async () => {
+        // login as admin/employer and return cookie
+        cookie = await loginUser('10001', 'test password', true)
+        // query db for log based on log ID (from test above)
+        const recentLogIdString = recentLog[0]._id.toString()
+        const getLog = await
+        request(app)
+          .get('/logs/' + recentLogIdString)
+          .set('Cookie', cookie)
+          .expect(200)
+        // Check that deleted log is in response with 200 status
+        expect(getLog.body._id).toBe(recentLogIdString)
       })
 
       test('should be able to remove the newly created log (Employer access)', async () => {
@@ -207,7 +231,7 @@ describe('App Tests', () => {
           .expect(200)
       })
 
-      test('should not be able to remove the log review after it has been delete (Employer access)', async () => {
+      test('should not be able to remove the log review after it has been deleted (Employer access)', async () => {
         cookie = await loginUser('10001', 'test password', true)
         const recentLogReviewIdString = recentLogReview[0]._id.toString()
         const deleteLogReview = await
@@ -223,7 +247,23 @@ describe('App Tests', () => {
 
   describe('Log routes', () => {
     describe('Employer routes', () => {
+      let cookie
 
+      beforeAll(async () => {
+        cookie = await loginUser('10001', 'test password', true)
+      })
+
+      test('should get object containing "docs" property with 20 log results for page 1', async () => {
+        const res = await
+          request(app)
+            .get('/logs?page=1&limit=20')
+            .set('Cookie', cookie)
+            .expect(200)
+          expect(res.body).toBeInstanceOf(Object)
+          expect(res.body.docs).toBeDefined()
+          expect(res.body.docs).toBeInstanceOf(Array)
+          expect(res.body.docs).toHaveLength(20)
+      })
     })
   })
 
