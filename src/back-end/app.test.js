@@ -9,11 +9,11 @@ import { dbConnect, dbClose } from './db/db.js'
 import { jest } from '@jest/globals'
 
 // If returnCookie is set to true, return a cookie instead of returning a response
-async function loginUser(userID, password, returnCookie) {
+async function loginUser (userID, password, returnCookie) {
   const login = await
-      request(app)
-        .get('/auth/login')
-        .auth(userID, password)
+  request(app)
+    .get('/auth/login')
+    .auth(userID, password)
   if (returnCookie) {
     const cookie = login.headers['set-cookie']
     return cookie
@@ -165,11 +165,11 @@ describe('App Tests', () => {
 
       test('should be able to request a log review', async () => {
         const res = await
-          request(app)
-            .post('/logs/reviews')
-            .set('Cookie', cookie)
-            .send({ log_id: recentLog[0]._id })
-            .expect(201)
+        request(app)
+          .post('/logs/reviews')
+          .set('Cookie', cookie)
+          .send({ log_id: recentLog[0]._id })
+          .expect(201)
 
         recentLogReview = await LogReviewModel.find({ employee_id: recentLog[0].user_id }).sort({ date: -1 })
         expect(res.body.log_id).toBeDefined()
@@ -182,33 +182,33 @@ describe('App Tests', () => {
         // query db for log based on log ID (from test above)
         const recentLogIdString = recentLog[0]._id.toString()
         const deleteLog = await
-          request(app)
-            .delete('/logs/' + recentLogIdString)
-            .set('Cookie', cookie)
-            .expect(200)
+        request(app)
+          .delete('/logs/' + recentLogIdString)
+          .set('Cookie', cookie)
+          .expect(200)
         // Check that deleted log is in response with 200 status
         expect(deleteLog.body).toStrictEqual({})
       })
 
       test('should be able to get all log reviews (Employer access)', async () => {
         const res = await
-          request(app)
-            .get('/logs/reviews')
-            .set('Cookie', cookie)
-            .expect(200)
-       })
+        request(app)
+          .get('/logs/reviews')
+          .set('Cookie', cookie)
+          .expect(200)
+      })
 
       test('should be able to remove the log review (Employer access)', async () => {
         cookie = await loginUser('10001', 'test password', true)
         const recentLogReviewIdString = recentLogReview[0]._id.toString()
         const deleteLogReview = await
-          request(app)
-            .delete('/logs/reviews/' + recentLogReviewIdString)
-            .set('Cookie', cookie)
-            .expect(200)
+        request(app)
+          .delete('/logs/reviews/' + recentLogReviewIdString)
+          .set('Cookie', cookie)
+          .expect(200)
         // Check that deleted log is in response with 200 status
         expect(deleteLogReview.text).toStrictEqual('OK')
-       })
+      })
     })
   })
 
@@ -219,49 +219,46 @@ describe('App Tests', () => {
   })
 
   describe('Vechicle routes', () => {
-
     describe('Employer routes', () => {
-
       let cookie
-      let testAssetID = 'TESTID'
+      const testAssetID = 'TESTID'
 
-        beforeAll(async () => {
-          cookie = await loginUser('10001', 'test password', true)
-        })
+      beforeAll(async () => {
+        cookie = await loginUser('10001', 'test password', true)
+      })
 
       test('should be able to post a new vehicle (no image provided in test)', async () => {
         const res = await
-          request(app)
-            .post('/vehicles')
-            .set('Cookie', cookie)
-            .send({ asset_id: testAssetID, registration: 'TESTREGO', make: 'GENERIC', model: 'GENERIC', year: 2023 })
-            .expect(201)
-          expect(res.body.asset_id).toBeDefined()
-       })
+        request(app)
+          .post('/vehicles')
+          .set('Cookie', cookie)
+          .send({ asset_id: testAssetID, registration: 'TESTREGO', make: 'GENERIC', model: 'GENERIC', year: 2023 })
+          .expect(201)
+        expect(res.body.asset_id).toBeDefined()
+      })
 
-       test('should be able to update vehicle details', async () => {
+      test('should be able to update vehicle details', async () => {
         const res = await
-          request(app)
-            .put('/vehicles/' + testAssetID)
-            .set('Cookie', cookie)
-            .send({ asset_id: testAssetID, registration: 'CHANGEDREGO', year: 2022 })
-            .expect(200)
-          expect(res.body.registration).toBe('CHANGEDREGO')
-          expect(res.body.year).toBe(2022)
-       })
+        request(app)
+          .put('/vehicles/' + testAssetID)
+          .set('Cookie', cookie)
+          .send({ asset_id: testAssetID, registration: 'CHANGEDREGO', year: 2022 })
+          .expect(200)
+        expect(res.body.registration).toBe('CHANGEDREGO')
+        expect(res.body.year).toBe(2022)
+      })
 
-       test('should delete the newly created test vehicle', async () => {
+      test('should delete the newly created test vehicle', async () => {
         const res = await
-          request(app)
-            .delete('/vehicles/' + testAssetID)
-            .set('Cookie', cookie)
-            .expect(200)
-          expect(res.body).toStrictEqual({})
-       })
+        request(app)
+          .delete('/vehicles/' + testAssetID)
+          .set('Cookie', cookie)
+          .expect(200)
+        expect(res.body).toStrictEqual({})
+      })
     })
 
     describe('Employee routes', () => {
-      
       let cookie
       // let testAssetID = 'TESTID'
 
@@ -276,19 +273,17 @@ describe('App Tests', () => {
           .set('Cookie', cookie)
           .expect(200)
         expect(res.body.length).toBeGreaterThan(0)
-       })
+      })
 
-       test('should be able to get a vehicle by asset_id', async () => {
+      test('should be able to get a vehicle by asset_id', async () => {
         const res = await
-          request(app)
+        request(app)
           .get('/vehicles/HRT4')
           .set('Cookie', cookie)
           .expect(200)
-        expect(res.body.asset_id).toBe('HRT4')        
-       })
-
+        expect(res.body.asset_id).toBe('HRT4')
+      })
     })
-
   })
 
   describe('Analytical routes', () => {
@@ -336,11 +331,10 @@ describe('App Tests', () => {
       expect(logSpy).toHaveBeenCalled()
       expect(logSpy).toHaveBeenCalledWith('PRODUCTION: Mongoose connected')
     })
-    
   })
 
   describe('DB Disconnect', () => {
-    test('should close the connection to the DB', async () => { 
+    test('should close the connection to the DB', async () => {
       const logSpy = jest.spyOn(global.console, 'log')
 
       await dbClose()

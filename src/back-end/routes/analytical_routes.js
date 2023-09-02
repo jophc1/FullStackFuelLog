@@ -188,7 +188,7 @@ router.get('/graph/bar/vehicles/usage/past/6/months', async (req, res) => {
           _id: { vehicle: '$vehicle_id', month: { $month: '$date' } },
           totalMonthlyUsage: { $sum: '$fuel_added' },
           odoMin: { $min: '$current_odo' },
-          odoMax: { $max: '$current_odo' },
+          odoMax: { $max: '$current_odo' }
         }
       },
       {
@@ -209,20 +209,20 @@ router.get('/graph/bar/vehicles/usage/past/6/months', async (req, res) => {
     ])
 
     const objArrOne = Array.from(vehicles.reduce(
-      (m, {month, totalMonthlyUsage}) => m.set(month, (m.get(month) || 0) + totalMonthlyUsage), new Map
-    ), ([month, totalMonthlyUsage]) => ({month, totalMonthlyUsage}))
+      (m, { month, totalMonthlyUsage }) => m.set(month, (m.get(month) || 0) + totalMonthlyUsage), new Map()
+    ), ([month, totalMonthlyUsage]) => ({ month, totalMonthlyUsage }))
 
     const objArrTwo = Array.from(vehicles.reduce(
-      (m, {month, totalMonthlyDistance}) => m.set(month, (m.get(month) || 0) + totalMonthlyDistance), new Map
-    ), ([month, totalMonthlyDistance]) => ({month, totalMonthlyDistance}))
+      (m, { month, totalMonthlyDistance }) => m.set(month, (m.get(month) || 0) + totalMonthlyDistance), new Map()
+    ), ([month, totalMonthlyDistance]) => ({ month, totalMonthlyDistance }))
 
-    let respObj = []
+    const respObj = []
 
-    const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+    const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
     objArrOne.map((report, index) => {
       if (report.month === objArrTwo[index].month) {
-        respObj.push({...report, ...objArrTwo[index], monthName: month[report.month - 1] })
+        respObj.push({ ...report, ...objArrTwo[index], monthName: month[report.month - 1] })
       }
     })
 

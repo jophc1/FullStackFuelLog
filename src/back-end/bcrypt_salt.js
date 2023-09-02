@@ -15,7 +15,6 @@ fs.readFile(pathToEnvFile, 'utf8', function (err, data) {
   const result = parse(data)
   // this adds a new key to the .env file
   result.SALT_ADD = saltAdding
-  console.log(result)
 
   fs.writeFile(pathToEnvFile, stringify(result), function (err) {
     if (err) {

@@ -12,18 +12,17 @@ import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 
 // Cors options and whitelisting
-// TODO: NEED TO ADD WHITELIST FOR DEPLOYED REACT APP SERVER IP ADDRESS
-const whitelist = ['http://localhost:5173', 'http://127.0.0.1:5173', 'https://fuel-log.onrender.com', 'https://fuel-log-node.onrender.com'] 
+const whitelist = ['http://localhost:5173', 'http://127.0.0.1:5173', 'https://fuel-log.onrender.com', 'https://fuel-log-node.onrender.com']
 const corsOptions = {
   credentials: true,
-  origin: function(origin, callback) {
-    if (!origin || whitelist.indexOf(origin) !== -1){
-       callback(null, true)
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
     } else {
       callback(new Error('Blocked by CORS'))
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'PATCH' , 'DELETE', 'OPTIONS']
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
 }
 
 dotenv.config()

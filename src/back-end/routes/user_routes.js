@@ -16,7 +16,7 @@ router.put('/:username_id', async (req, res) => {
     } else {
       if (req.jwtIdentity.isAdmin || req.jwtIdentity.username_id === req.params.username_id) {
         if (req.body.password) {
-          req.body.password = await bcrypt.hash(req.body.password, process.env.SALT_ADD) 
+          req.body.password = await bcrypt.hash(req.body.password, process.env.SALT_ADD)
         }
         const targetEmployee = await UserModel.updateOne({ username_id: req.params.username_id }, req.body, { new: true, runValidators: true })
         targetEmployee.acknowledged && targetEmployee.matchedCount ? res.status(201).send(targetEmployee) : res.status(202).send({ message: 'no updates made' })
@@ -74,10 +74,9 @@ router.delete('/:username_id', async (req, res) => {
   const employeeDetails = await UserModel.findOne({ username_id: req.params.username_id })
   const targetEmployee = await UserModel.deleteOne({ username_id: req.params.username_id })
 
-  const targetReview = await LogReviewModel.deleteOne({ employee_id: employeeDetails._id })
+  await LogReviewModel.deleteOne({ employee_id: employeeDetails._id })
 
   targetEmployee.acknowledged && targetEmployee.deletedCount ? res.status(201).send(targetEmployee) : res.status(202).send({ message: 'No employee deleted' })
-
 })
 
 router.use(errorAuth)

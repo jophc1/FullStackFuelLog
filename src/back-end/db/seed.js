@@ -429,7 +429,7 @@ const logVehicleFour = [
 
 await LogModel.deleteMany()
 console.log('Logs deleted')
-const insertedLogs = await LogModel.insertMany([...logVehicleOne, ...logVehicleTwo, ...logVehicleThree, ...logVehicleFour])
+await LogModel.insertMany([...logVehicleOne, ...logVehicleTwo, ...logVehicleThree, ...logVehicleFour])
 console.log('Logs inserted')
 
 dbClose()

@@ -10,7 +10,7 @@ router.use(authAccess)
 router.post('/', async (req, res) => {
   try {
     const employeeId = new mongoose.Types.ObjectId(req.jwtIdentity.id)
-    const reviewBody = {...req.body, employee_id: employeeId} 
+    const reviewBody = { ...req.body, employee_id: employeeId }
     const review = await LogReviewModel.create(reviewBody)
     res.status(201).send(review)
   } catch (err) {
@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
 router.use(verifyAdmin)
 
 router.get('/', async (req, res) => {
-  const allLogReviews = await LogReviewModel.find().populate('employee_id', '-_id username_id').populate({path: 'log_id', populate: {path: 'vehicle_id'}}).exec()
+  const allLogReviews = await LogReviewModel.find().populate('employee_id', '-_id username_id').populate({ path: 'log_id', populate: { path: 'vehicle_id' } }).exec()
   allLogReviews ? res.send(allLogReviews) : res.status(200).send({ LogReviews: 'No log reviews found' })
 })
 
