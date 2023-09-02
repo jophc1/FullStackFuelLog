@@ -36,15 +36,16 @@ describe ('App Component', () => {
   })
 })
 
-describe ('Employee Home Component', () => {
+describe ('Login Component', () => {
   let container
   beforeEach(() => {
     const fuelContxt = {
       loginAccess: vi.fn(),
+      setRenderLoadingGif: vi.fn()
     }
 
     container = render(
-      <FuelLogContext.Provider value={fuelContxt.loginAccess}>
+      <FuelLogContext.Provider value={fuelContxt}>
       <BrowserRouter>
         <Login />
       </BrowserRouter>
@@ -57,9 +58,13 @@ describe ('Employee Home Component', () => {
     expect(container.querySelector('h3')).toHaveTextContent('Company Fuel Log')
   })
 
-  it ('tries to login', () => {
+  it ('tries to login without any input in the fields, error modal should render', async () => {
     expect(container.querySelector('input')).not.toBeNull()
     expect(container.querySelector('#loginButton')).toHaveValue('LOGIN')
+
+    await userEvent.click(screen.getByText('LOGIN'))
+
+    expect(container.querySelector('.error'))
   })
 })
 
