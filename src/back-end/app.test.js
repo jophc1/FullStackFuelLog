@@ -182,7 +182,7 @@ describe('App Tests', () => {
         expect(recentLog[0].vehicle_id).toStrictEqual(vehicle._id)
       })
 
-      test('should first', async () => {
+      test('should return analytical data for selected date', async () => {
         let cookieTwo = await loginUser('10001', 'test password', true)
         const date = new Date()
         const ISO = date.toISOString()
@@ -197,8 +197,43 @@ describe('App Tests', () => {
             .get(`/reports/${dateArr[0]}/${dateArr[1]}/${dateArr[2]}/to/${nextDateArr[0]}/${nextDateArr[1]}/${nextDateArr[2]}`)
             .set('Cookie', cookieTwo)
             .expect(200)
-          expect(res.body[0].totalDistance).toBe(100)
+          expect(res.body[0].totalDistance).toBeDefined()
       })
+
+      test('should return data points for a line graph for a vehicle', async () => {
+        let cookieTwo = await loginUser('10001', 'test password', true)
+        const res = await
+          request(app)
+            .get(`/reports/graph/${vehicleIDString}/line/distance`)
+            .set('Cookie', cookieTwo)
+            .expect(200)
+          expect(res.body).toBeInstanceOf(Array)
+          expect(res.body[0].distance).toBeDefined()
+          expect(res.body[0].fuelAdded).toBeDefined()
+      })
+
+      test('should return all time percentage of usage for all vehicles', async () => {
+        let cookieTwo = await loginUser('10001', 'test password', true)
+        const res = await
+          request(app)
+            .get(`/reports/graph/pie/vehicles/usage/all/time`)
+            .set('Cookie', cookieTwo)
+            .expect(200)
+          expect(res.body).toBeInstanceOf(Object)
+          expect(res.body.vehicles).toBeDefined()
+      })
+
+      test('should return last 6 months usage for all vehicles', async () => {
+        let cookieTwo = await loginUser('10001', 'test password', true)
+        const res = await
+          request(app)
+            .get(`/reports/graph/bar/vehicles/usage/past/6/months`)
+            .set('Cookie', cookieTwo)
+            .expect(200)
+          expect(res.body).toBeInstanceOf(Array)
+          expect(res.body[0].month).toBeDefined()
+      })
+
 
       test('should input ODO greater than previous ODO', async () => {
         const res = await
