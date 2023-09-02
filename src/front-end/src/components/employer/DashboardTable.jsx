@@ -80,6 +80,7 @@ const DashboardTable = () => {
         {reportArray.map(report => (report.vehicle.length > 0 && <option key={report._id.vehicle} value={report._id.vehicle}>{report.vehicle[0].asset_id}</option>))}
       </select>}
     </div>
+    <div className='employerDashboardTable'>
     <table className='employer-table'>
         <tbody>
           <tr>
@@ -91,11 +92,12 @@ const DashboardTable = () => {
           <td>{tableData && tableData.totalFuel} L</td>
         </tr>
         <tr>
-          <th className='fixedColumn'>Total distance travelled:</th>
+          <th className='fixedColumn'>Total distance travelled between trips:</th>
           <td>{tableData && tableData.totalDistance} km</td>
         </tr>
         </tbody>
       </table>
+    </div>
   </div>
   { modalErrorRender &&
         <ModalText setRenderModal={setModalErrorRender} style={'error'}>

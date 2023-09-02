@@ -679,6 +679,15 @@ form input{
   width: 50%;
 }
 
+.employerDashboardTable {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.employer-table {
+  width: 150%;
+}
+
 .dashboardTitle {
   position: sticky;
   top: 0;
