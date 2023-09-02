@@ -106,6 +106,16 @@ describe('App Tests', () => {
           expect(res.body.username_id).toBe(testEmployeeID)
       })
 
+      test('should get all employees', async () => {
+        const res = await
+          request(app)
+            .get('/employed/')
+            .set('Cookie', cookie)
+            .expect(200)
+          expect(res.body).toBeInstanceOf(Array)
+          expect(res.body[0].username_id).toBeGreaterThan(10001)
+      })
+
       test('should update newly created employee', async () => {
         const res = await
         request(app)
@@ -172,6 +182,24 @@ describe('App Tests', () => {
         expect(recentLog[0].vehicle_id).toStrictEqual(vehicle._id)
       })
 
+      test('should first', async () => {
+        let cookieTwo = await loginUser('10001', 'test password', true)
+        const date = new Date()
+        const ISO = date.toISOString()
+        const dateISOArr = ISO.split('T')
+        const dateArr = dateISOArr[0].split('-')
+        const nextDay =  new Date(date.getTime() + 86400000)
+        const nextISO = nextDay.toISOString()
+        const nextDateISOArr = nextISO.split('T')
+        const nextDateArr = nextDateISOArr[0].split('-')
+        const res = await
+          request(app)
+            .get(`/reports/${dateArr[0]}/${dateArr[1]}/${dateArr[2]}/to/${nextDateArr[0]}/${nextDateArr[1]}/${nextDateArr[2]}`)
+            .set('Cookie', cookieTwo)
+            .expect(200)
+          expect(res.body[0].totalDistance).toBe(100)
+      })
+
       test('should input ODO greater than previous ODO', async () => {
         const res = await
         request(app)
@@ -193,6 +221,27 @@ describe('App Tests', () => {
         recentLogReview = await LogReviewModel.find({ employee_id: recentLog[0].user_id }).sort({ date: -1 })
         expect(res.body.log_id).toBeDefined()
         expect(res.body.employee_id).toBe(recentLog[0].user_id.toString())
+      })
+
+      test('should not be able to update other employee details', async () => {
+        const res = await
+          request(app)
+            .put('/employed/' + '10003')
+            .set('Cookie', cookie)
+            .send({ name: 'John Smith' })
+          expect(res.body.error).toBe('Not authorised')
+      })
+
+      test('should not be able to get the log review (Employer access)', async () => {
+        cookie = await loginUser('10001', 'test password', true)
+        const recentLogReviewIdString = recentLogReview[0]._id.toString()
+        const getLogReview = await
+        request(app)
+          .get('/logs/reviews/' + recentLogReviewIdString)
+          .set('Cookie', cookie)
+          .expect(200)
+        // Check that deleted log is in response with 200 status
+        expect(getLogReview.body._id).toBe(recentLogReviewIdString)
       })
 
       test('should be able to find the newly created log (Employer access)', async () => {
@@ -335,9 +384,11 @@ describe('App Tests', () => {
     })
   })
 
-  describe('Analytical routes', () => {
-    describe('Employer routes', () => {
 
+  describe('Analytical routes', () => {
+    describe('Employee routes', () => {
+      
+     
     })
   })
 
