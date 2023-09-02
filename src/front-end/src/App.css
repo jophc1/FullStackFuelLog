@@ -1066,13 +1066,17 @@ text-align: center;
 
 #reviewModalButtons button {
   width: 45%;
-  margin: 0;
+  margin: 1.5rem 0 0 0;
 }
 
 #reviewModalButtons {
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+.modalReview {
+  width: calc(375px * 0.90)
 }
 
 

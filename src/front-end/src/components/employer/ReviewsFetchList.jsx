@@ -81,36 +81,39 @@ const ReviewsFetchList = () => {
       </Card>
       }
       {renderModal &&
-      <ModalText setRenderModal={setRenderModal}>
+      <ModalText setRenderModal={setRenderModal} styleSpecial='modalReview'>
             <h5>Log Deletion Request Details</h5>
-            <table id='reviewModalDetails'>
-              <tbody>
-                <tr>
-                  <td>Employee ID:</td>
-                  <td>{selectedReview.current.employee_id ? selectedReview.current.employee_id.username_id : <></>}</td>
-                </tr>
-                <tr>
-                  <td>Date Added:</td>
-                  <td>{selectedReview.current.date}</td>
-                </tr>
-                <tr>
-                  <td>Vehicle ID:</td>
-                  <td>{selectedReview.current.log_id.vehicle_id ? selectedReview.current.log_id.vehicle_id.asset_id : <></>}</td>
-                </tr>
-                <tr>
-                  <td>Current ODO (km):</td>
-                  <td>{selectedReview.current.log_id ? selectedReview.current.log_id.current_odo : <></>}</td>
-                </tr>
-                <tr>
-                  <td>Fuel Added (L):</td>
-                  <td>{selectedReview.current.log_id ? selectedReview.current.log_id.fuel_added : <></>}</td>
-                </tr>
-              </tbody>
-            </table>
-            <div id='reviewModalButtons'>
-              <CompanyButton onClick={handleDeleteButtonClick} name='delete' >Delete Log</CompanyButton>
-              <CompanyButton onClick={handleDeleteButtonClick} name='keep' >Keep Log</CompanyButton> 
-            </div> 
+            <div id='reviewModalDetails'>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Employee ID:</td>
+                    <td>{selectedReview.current.employee_id ? selectedReview.current.employee_id.username_id : <></>}</td>
+                  </tr>
+                  <tr>
+                    <td>Date Added:</td>
+                    <td>{selectedReview.current.date}</td>
+                  </tr>
+                  <tr>
+                    <td>Vehicle ID:</td>
+                    <td>{selectedReview.current.log_id.vehicle_id ? selectedReview.current.log_id.vehicle_id.asset_id : <></>}</td>
+                  </tr>
+                  <tr>
+                    <td>Current ODO (km):</td>
+                    <td>{selectedReview.current.log_id ? selectedReview.current.log_id.current_odo : <></>}</td>
+                  </tr>
+                  <tr>
+                    <td>Fuel Added (L):</td>
+                    <td>{selectedReview.current.log_id ? selectedReview.current.log_id.fuel_added : <></>}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div id='reviewModalButtons'>
+                <CompanyButton onClick={handleDeleteButtonClick} name='delete' >Delete Log</CompanyButton>
+                <CompanyButton onClick={handleDeleteButtonClick} name='keep' >Keep Log</CompanyButton> 
+              </div> 
+            </div>
+            
       </ModalText>
       }
       { modalErrorRender &&
