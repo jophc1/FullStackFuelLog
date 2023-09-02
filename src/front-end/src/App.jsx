@@ -75,7 +75,7 @@ function App() {
     dispatch({
       type: 'logout',
     })
-    res === 'OK' ? navigate('/') : console.log('logout failed')
+    res === 'OK' ? navigate('/') : console.log('logout failed') // TODO: put in error handler message here for logout
   }
 
   // Employee components
