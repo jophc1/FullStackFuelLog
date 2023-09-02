@@ -9,7 +9,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest",
-    "serve": "node server.js"
+    "serve": "node ./front-end-server/server.js"
   },
   "dependencies": {
     "base-64": "^1.0.0",
