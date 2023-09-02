@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from 'react'
 import { reducer, initialState } from './reducer.js'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import Login from './components/Login.jsx'
 import EmployeeHome from './components/employee/EmployeeHome.jsx'
 import LogEntry from './components/employee/LogEntry.jsx'
@@ -44,6 +44,7 @@ function App() {
   const navigate = useNavigate()
   const [modalErrorRender, setModalErrorRender] = useState(false)
   const [renderLoadingGif, setRenderLoadingGif] = useState(false)
+  const location = useLocation()
 
   // USER ACCESS
 
@@ -53,9 +54,14 @@ function App() {
     if (sessionStorage.getItem('user')) {
       const userObj = JSON.parse(sessionStorage.user)
       dispatch({ type: 'userAccess', ...userObj })
-      // userObj.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home') . TODO
+      navigate(location)
     }
   }, [])
+
+  // get the curent location and store it
+  useEffect(() => {
+    sessionStorage.setItem('location', location.pathname)
+  }, [location])
 
   async function loginAccess (username, password) {
     const res = await basicAuthFetch(username, password)
