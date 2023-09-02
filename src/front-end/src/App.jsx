@@ -1,6 +1,6 @@
-import { useReducer, useState } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import { reducer, initialState } from './reducer.js'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import Login from './components/Login.jsx'
 import EmployeeHome from './components/employee/EmployeeHome.jsx'
 import LogEntry from './components/employee/LogEntry.jsx'
@@ -44,23 +44,41 @@ function App() {
   const navigate = useNavigate()
   const [modalErrorRender, setModalErrorRender] = useState(false)
   const [renderLoadingGif, setRenderLoadingGif] = useState(false)
+  const location = useLocation()
 
   // USER ACCESS
+
+   // Check if client already has user object in storage
+  // if client does, disptach to 'userAccess'. This persists user access on refresh
+  useEffect(() => {
+    if (sessionStorage.getItem('user')) {
+      const userObj = JSON.parse(sessionStorage.user)
+      dispatch({ type: 'userAccess', ...userObj })
+      navigate(location)
+    }
+  }, [])
+
+  // get the curent location and store it
+  useEffect(() => {
+    sessionStorage.setItem('location', location.pathname)
+  }, [location])
 
   async function loginAccess (username, password) {
     const res = await basicAuthFetch(username, password)
     setRenderLoadingGif(false)
     if (res.status === 200) {
     const initialVehicles = await fetchMod('GET', 'vehicles', '')
-      dispatch({
-        type: 'userAccess',
-        isAdmin: res.returnedData.isAdmin,
-        authorised: true,
-        userName: res.returnedData.name,
-        allVehicles: initialVehicles.body,
-        userId: res.returnedData.usernameId
-      })
-      // TODO: set up dummy cookie with same expiration date as accessToken and use to block access, redirect user to login
+    const initUserInfo = {
+      isAdmin: res.returnedData.isAdmin,
+      authorised: true,
+      userName: res.returnedData.name,
+      allVehicles: initialVehicles.body,
+      userId: res.returnedData.usernameId
+    }
+
+      dispatch({ type: 'userAccess', ...initUserInfo })
+      // store dispatch keys in session storage since cookies expire at close of session
+      sessionStorage.setItem('user', JSON.stringify(initUserInfo))
       res.returnedData.isAdmin ? navigate('/employer/dashboard/home') : navigate('/employee/dashboard/home')
     } else if (res.status === 204) {
       errorHandler(<p>Server not responding. Try again later.</p>)
@@ -172,7 +190,6 @@ function App() {
 
   async function currentVehicleDetails (vehicleID) {
     const currentVehicle = allVehicles.filter(vehicle => {return vehicle.asset_id === vehicleID})
-    console.log(currentVehicle)
     dispatch({
       type: 'selectVehicle',
       currentVehicle: currentVehicle[0],

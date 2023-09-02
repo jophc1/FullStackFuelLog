@@ -19,7 +19,6 @@ const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree, heading, i
     let updatedEmployeeDetails
     if (employeeForm) {
       updatedEmployeeDetails = {
-        name,
         username_id: employeeId,
         password: password.toString(),
         name: name

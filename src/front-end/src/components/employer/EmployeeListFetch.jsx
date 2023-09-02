@@ -54,7 +54,6 @@ const EmployeeListFetch = () => {
   async function handleDeleteButtonClick (event) {
     event.preventDefault()
     const deleteEmployeeResponse = await deleteEmployee(event.target.value)
-    console.log(deleteEmployeeResponse)
     setModalRender(false)
     modalTextOperation(false)
   }

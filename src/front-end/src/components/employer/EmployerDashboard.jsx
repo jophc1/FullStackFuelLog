@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from 'react'
+import React, { useContext, useEffect, useReducer } from 'react'
 import { reducer, initialState } from '../../reducer.js'
 import { FuelLogContext, EmployerContext } from '../../context.js'
 import NavBar from './NavBar'
@@ -155,7 +155,6 @@ const EmployerDashboard = ({ children }) => {
       errorHandler(<p>Something went wrong trying to delete log review request. Try again later!</p>)
     }
   }
-
 
   return userAccess && authorised ? 
   <>

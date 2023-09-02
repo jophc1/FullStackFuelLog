@@ -33,12 +33,10 @@ const ReviewsFetchList = () => {
 
     if (selectedReview.current.log_id && event.target.name === 'delete') {
       const deletionLogResponse = await deleteLog(selectedReview.current.log_id._id)
-      console.log(deletionLogResponse)
     }
 
     if (selectedReview.current.log_id && event.target.name === 'keep') {
       const deletionReviewResponse = await deleteReview(selectedReview.current._id)
-      console.log(deletionReviewResponse)
     }
     
     setReRender(!reRender)
