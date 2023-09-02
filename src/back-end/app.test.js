@@ -96,6 +96,15 @@ describe('App Tests', () => {
         expect(res.body.password).toBeUndefined()
         expect(res.body.name).toBe('Test Employee')
       })
+      
+      test('should get the target employee', async () => {
+        const res = await
+          request(app)
+            .get('/employed/' + testEmployeeID)
+            .set('Cookie', cookie)
+            .expect(200)
+          expect(res.body.username_id).toBe(testEmployeeID)
+      })
 
       test('should update newly created employee', async () => {
         const res = await
