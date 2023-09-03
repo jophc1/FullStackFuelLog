@@ -1,4 +1,4 @@
-import API_URL from '../env.js'
+import API_URL from '../config.js'
 
 const fetchMod = async (method, route, data, type = { headers: { "Content-Type": "application/json" } } ) => {
   try {

@@ -6,9 +6,11 @@ import ModalText from '../ModalText.jsx'
 
 const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit = '', regoInit = '', previewImageInit = placeholderImage, method = 'POST', urlSuffix = 'vehicles', heading = 'Add Vehicle'  }) => {
 
+  /* CONTEXTS */ 
   const { postUpdateVehicle } = useContext(EmployerContext)
   const { backButton, errorMessage, modalErrorRender, setModalErrorRender } = useContext(FuelLogContext)
-
+  /* ====================== */
+  /* STATES */
   const [make, setMake] = useState(makeInit)
   const [model, setModel] = useState(modelInit)
   const [year, setYear] = useState(yearInit)
@@ -16,9 +18,11 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
   const [rego, setRego] = useState(regoInit)
   const [selectedFile, setSelectedFile] = useState(null)
   const [previewImage, setPreviewImage] = useState(previewImageInit)
-
+  /* ====================== */
+  /* EVENT HANDLER FUNCTIONS */ 
   const handleSubmit = event => {
     event.preventDefault()
+    // pass form data to postUpdated function
     postUpdateVehicle({
       make: make,
       model: model,
@@ -33,14 +37,18 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
 
   const handleSelectedFile = event => {
     event.preventDefault()
+    // set states for the file and the preview Image
     setSelectedFile(event.target.files[0], 'image')
     setPreviewImage(URL.createObjectURL(event.target.files[0]))
   }
 
   const handleBackButtonClick = event => {
     event.preventDefault()
+    // call the backButton function
     backButton('/employer/dashboard/all/vehicles')
   }
+
+  /* =============================== */
 
   return <>
     <div className='vehicleForm'>
@@ -48,7 +56,7 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
       <form onSubmit={handleSubmit}>
         <div>
           <label>Car Make <span className='required'>*</span></label>
-          <input type="text" value={make} onChange={event => setMake(event.target.value)} />     
+          <input data-testid='make' type="text" value={make} onChange={event => setMake(event.target.value)} />     
         </div>
         <div>
           <label>Model  <span className='required'>*</span></label>
@@ -76,7 +84,7 @@ const VehicleForm = ({ makeInit = '', modelInit = '', yearInit = '', assetIdInit
         </div>
         }
         <div>
-          <CompanyButton onClick={handleBackButtonClick}>&larr; BACK</CompanyButton>
+          <CompanyButton onClick={handleBackButtonClick} data-testid='back' >&larr; BACK</CompanyButton>
           <CompanyButton>Submit</CompanyButton>
         </div>
       </form>

@@ -1,4 +1,4 @@
-import API_URL from '../env.js'
+import API_URL from '../config.js'
 
 const fetchFiles = async (method, route, data) => {
   try {

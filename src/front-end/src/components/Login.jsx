@@ -5,8 +5,7 @@ import Card from './styled/ProfileCard.jsx'
 import ModalText from './ModalText.jsx'
 
 const Login = () => {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  /* CONTEXTS */ 
   const { loginAccess,
           errorMessage,
           modalErrorRender,
@@ -14,33 +13,42 @@ const Login = () => {
           renderLoadingGif,
           setRenderLoadingGif,
           loaderGif } = useContext(FuelLogContext)
-
-  let isLogoImageReady = false
-  const logo = new Image()
-
-  logo.src = companyIcon
-  logo.onload = () => isLogoImageReady = true
-
+  /* ====================== */
+  /* STATES */
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  /* ====================== */
+  /* EVENT HANDLER FUNCTIONS */ 
   const loginSubmit = (event) => {
     event.preventDefault()
     setRenderLoadingGif(!renderLoadingGif)
+    // pass form data to loginAcces function
     loginAccess(username, password)
   }
+  /* ====================== */
+  /* STATES */
+  let isLogoImageReady = false
+  const logo = new Image()
+  logo.src = companyIcon
+  logo.onload = () => isLogoImageReady = true
+  /* ====================== */
 
   return <>
     <div className='loginPage'>
       {isLogoImageReady ? <></> : <img src={companyIcon} />}
       <h3>Company Fuel Log</h3>
       <Card id='loginCard'>
-        <form onSubmit={loginSubmit}>
-          <label>Username:</label>
+        <form role='form' onSubmit={loginSubmit}>
+          <label htmlFor='username' >Username:</label>
           <input
+            id='username'
             type="text"
             value={username}
             onChange={event => setUsername(event.target.value)}
           />
-          <label>Password:</label>
+          <label htmlFor='password'>Password:</label>
           <input
+            id='password'
             type="password"
             value={password}
             onChange={event => setPassword(event.target.value)}
