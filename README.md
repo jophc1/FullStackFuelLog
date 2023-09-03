@@ -289,7 +289,6 @@ npm install
 To run the back-end server:
 
 ```
-npm run salt
 npm run seed
 npm start
 ```
