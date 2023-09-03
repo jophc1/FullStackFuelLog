@@ -71,28 +71,8 @@ describe ('Vehicle form component', () => {
       const mockPostUpdateVehicle = vi.fn()
       container = render(<TestWrapper postUpdateVehicle={mockPostUpdateVehicle} />).container
 
-      // const returnObj = {
-      //   status: 500,
-      //   json: async () => nameNationalizeResponse,
-      // }
-    
-      // windowFetchSpy = vi.spyOn(window, 'fetch')
-      
-      // windowFetchSpy.mockReturnValue(returnObj)
-
-      // let onChnageValue = {
-      //   target: {
-      //     value: 'Test'
-      //   }
-      // }
-
       expect(container.querySelector('h3')).not.toBeNull()
       expect(container.querySelector('h3')).toHaveTextContent('Add Vehicle')
-  
-      // const input = screen.getByTestId('make')
-      // fireEvent.change(input, onChnageValue)
-      // await userEvent.type(input, 'Test')
-      // expect(input.value).toBe('Test')
 
       const button = screen.getByText('Submit')
       await userEvent.click(button)
