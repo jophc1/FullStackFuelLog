@@ -15,24 +15,24 @@ await LogModel.deleteMany().then(() => console.log('Seed: logs deleted'))
 await LogReviewModel.deleteMany()
 console.log('Seed: Reviews deleted')
 
-const salt = process.env.SALT_ADD
+const saltRounds = 10
 
 const users = [
   {
     name: 'Empolyer Admin',
     username_id: 10001,
-    password: await bcrypt.hash('test password', salt),
+    password: await bcrypt.hash('test password', saltRound),
     isAdmin: true
   },
   {
     name: 'John Smith',
     username_id: 10002,
-    password: await bcrypt.hash('johnSmith', salt)
+    password: await bcrypt.hash('johnSmith', saltRound)
   },
   {
     name: 'Dom Torretto',
     username_id: 10003,
-    password: await bcrypt.hash('FamilyIsTheBestFam', salt)
+    password: await bcrypt.hash('FamilyIsTheBestFam', saltRounds)
   }
 ]
 

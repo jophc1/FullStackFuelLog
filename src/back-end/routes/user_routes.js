@@ -13,12 +13,13 @@ router.use(authAccess)
 // Update an employee route
 router.put('/:username_id', async (req, res) => {
   try {
+    const saltRounds = 10
     if (req.body.password && req.body.password.length < 8) {
-      res.status(500).send({ error: 'Password must be 8 characters or more' })
+      res.status(400).send({ error: 'Password must be 8 characters or more' })
     } else {
       if (req.jwtIdentity.isAdmin || req.jwtIdentity.username_id === req.params.username_id) {
         if (req.body.password) {
-          req.body.password = await bcrypt.hash(req.body.password, process.env.SALT_ADD)
+          req.body.password = await bcrypt.hash(req.body.password, saltRounds)
         }
         const targetEmployee = await UserModel.updateOne({ username_id: req.params.username_id }, req.body, { new: true, runValidators: true })
         targetEmployee.acknowledged && targetEmployee.matchedCount ? res.status(201).send(targetEmployee) : res.status(202).send({ message: 'no updates made' })
@@ -46,13 +47,14 @@ router.get('/', async (req, res) => {
 // Create a employee route
 router.post('/', async (req, res) => {
   try {
+    const saltRounds = 10
     if (req.body.password.length < 8) {
       res.status(500).send({ error: 'Password must be 8 characters or more' })
     } else {
       const { _id } = await UserModel.create({
         name: req.body.name,
         username_id: req.body.username_id,
-        password: await bcrypt.hash(req.body.password, process.env.SALT_ADD)
+        password: await bcrypt.hash(req.body.password, saltRounds)
       })
       res.send(await UserModel.findById(_id, '-password -isAdmin'))
     }
