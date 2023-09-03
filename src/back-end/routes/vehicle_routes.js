@@ -10,10 +10,12 @@ router.use(fileUpload())
 
 router.use(authAccess)
 
+// Get all vehicle assets
 router.get('/', async (req, res) => {
   res.send(await VehicleModel.find())
 })
 
+// Get specific vehicle asset by asset ID (not the mongoDB generated _id)
 router.get('/:asset_id', async (req, res) => {
   try {
     const vehicle = await VehicleModel.findOne({ asset_id: `${req.params.asset_id}` })
@@ -23,10 +25,11 @@ router.get('/:asset_id', async (req, res) => {
   }
 })
 
+// Create a new vehicle, employer only
 router.post('/', verifyAdmin, postToS3, async (req, res) => {
   try {
     // save this in database with vehicle data to use to retrive img .png from S3 bucket
-    const url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.key}.png`
+    const url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.key}`
     // create new document
     const newVehicle = {
       ...req.body,
@@ -40,6 +43,7 @@ router.post('/', verifyAdmin, postToS3, async (req, res) => {
   }
 })
 
+// Delete a specific vehicle by asset ID, employer only
 router.delete('/:asset_id', verifyAdmin, deleteObjectS3, async (req, res) => {
   try {
     const targetVehicle = await VehicleModel.deleteOne({ asset_id: req.params.asset_id })
@@ -49,15 +53,16 @@ router.delete('/:asset_id', verifyAdmin, deleteObjectS3, async (req, res) => {
   }
 })
 
+// Update a specific vehicle by asset ID, employer only
 router.put('/:asset_id', verifyAdmin, postToS3, async (req, res) => {
   try {
     let url
     // check if asset_id has changed
     // if asset_id has changed and image has not been updated, keep the old asset id to use for image key in S3 bucket
     const oldVehicleData = await VehicleModel.findOne({ asset_id: req.params.asset_id }).exec()
-    oldVehicleData.asset_id !== req.body.asset_id && !req.files
-      ? url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${oldVehicleData.asset_id}.png`
-      : url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.key}.png`
+    oldVehicleData.asset_id === req.body.asset_id && !req.files
+      ? url = oldVehicleData.vehicleImage_URL
+      : url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.key}`
 
     const vehicleUpdated = {
       ...req.body,

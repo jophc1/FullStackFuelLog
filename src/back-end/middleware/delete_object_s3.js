@@ -1,5 +1,7 @@
 import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3'
 
+
+// middleware for amazon s3 server to delete image
 async function deleteObjectS3 (req, res, next) {
   try {
     if (process.env.NODE_ENV === 'test') { // this is for the testing routes so it skips middleware so it wont delete images on server

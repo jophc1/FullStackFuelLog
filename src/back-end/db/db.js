@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 
+// database connection for production or development servers
 async function dbConnect () {
   try {
     if (process.env.ENV === 'prod') {
@@ -13,7 +14,7 @@ async function dbConnect () {
     console.log({ error: err.message })
   }
 }
-
+  // database close connection
 async function dbClose () {
   mongoose.connection.close()
   console.log('Mongoose disconnected')

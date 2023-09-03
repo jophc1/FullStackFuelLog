@@ -1,5 +1,9 @@
 # Fuel Log Application (Full-stack)
 
+#### [link to github repository](https://github.com/jophc1/FullStackFuelLog)
+#### [link to deployed fuel log application](https://fuel-log.onrender.com/)
+
+
 ### Purpose of this Application
 
 Fuel usage is one of the largest expenses for a company that operates and maintains a fleet of vehicles for business usage. To help keep track of the fuel usages for a company, a fast and easy to use application that is centered around logging instances of fuel refilling of a vehicle can give assistance to determining how much fuel different company assets require.    
@@ -95,6 +99,157 @@ As an employee, I want a user friendly UI with minimual input so that I can reco
 ![desktop-wire-frame](./docs/Fuel%20App%20Wireframes/Desktop.png)
 
 ### Jira Kanban Screenshots
+#### Initial Kanban board state
 
+Timeline screenshot showing the epics created from user stories
+![timeline-screenshot](./docs/Jira-screenshots/timeline.png)
 
+Timeline expanded
+![timeline-screenshot](./docs/Jira-screenshots/timeline-expanded.png)
 
+Timeline Task selected
+![timeline-task-screenshot](./docs/Jira-screenshots/task-selected.png)
+
+Board with tasks filtered for Jordan
+![board-task-screenshot-Jordan](./docs/Jira-screenshots/board-filtered-jordan.png)
+
+Board with tasks filtered for Josh
+![board-task-screenshot-Josh](./docs/Jira-screenshots/josh_filter.png)
+
+Board with tasks currently in progress filtered for Jordan
+![board-task-screenshot-in-progress](./docs/Jira-screenshots/tasks-in-progress.png)
+
+#### Final Jira Kanban state 
+
+#####Jira timeline   
+![final-timeline](./docs/Jira-screenshots/final-state-1.png)
+
+###### Timeline expanded
+Section 1
+![final-timeline-expanded-1](./docs/Jira-screenshots/final-state-2.png)
+###### Section 2
+![final-timeline-expanded-1](./docs/Jira-screenshots/final-state-3.png)
+###### Section 3
+![final-timeline-expanded-1](./docs/Jira-screenshots/final-state-4.png)
+   
+###### Individual tasks
+![final-tasks-1](./docs/Jira-screenshots/final-task-1.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-2.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-3.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-4.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-5.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-6.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-7.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-8.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-9.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-10.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-11.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-12.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-13.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-14.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-15.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-16.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-17.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-18.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-19.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-20.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-21.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-22.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-23.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-24.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-25.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-26.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-27.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-28.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-29.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-30.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-31.png)
+___
+![final-tasks-1](./docs/Jira-screenshots/final-task-32.png)
+___
+
+### Third-party packages/libries used in application
+
+##### Front-end
+React: JavaScript library that provides creation of html in form of components by a JavaScript parser for html syntax in an extended JavaScript format .jsx   
+
+react-router-dom: Gives functionality of Routes and other link navigation for React   
+
+recharts: Provides established React components to enable rendering of different graph types   
+
+styled-components: Helps creats styled components with the use of CSS that can provide styling by acting as a wrapper   
+
+##### Back-end
+Express: Popular Javascript framework for API/server development   
+
+Mongoose: ODM used with Express to allow usage of Models and Schemas for query operations with the MongoDB NoSQL database   
+
+Node: Provides a JavaScript runtime environment for the API   
+
+Mongoose-pagination-v2: Used for counting documents in a collection and returing documents based on page limit conditions   
+
+CORS: Identifies and sets Access-Control-Allow-Origin so target clients are provided access to the request   
+
+Bcrypt: Provides hashing of passwords with salting   
+
+jsonwebtoken: Enables creating and checking a JWT, mainly used for password authorization   
+
+helmet: Helps hide sensitive server response headers   
+
+aws-sdk/client-s3: Connecting to the Amazon s3 instance and manipulating objects in the instance   
+
+cookie-parser:  Middleware that allows express access and parse cookies   
+
+express-fileupload: middleware that allows express to access file properties in a request   
+
+dotenv: allow express to access environmental variables from .env file   
+
+envfile: Allows writing env variables to a env file   
+
+##### Testing libraries/frameworks for application
+jest: testing runner and assertion library/framework for JavaScript   
+
+vitest: Built in testing framework in Vite that is expanded on from testing-library  
+
+supertest: API testing framework that allows testing of routes and database properties, also built on and expanded from jest    
+
+testing-library: library that allows DOM simulation 
+
+### Testing
+
+##### User testing
+[document for manual user testing](./docs/testing/testing.pdf)
+
+##### Framework testing JEST for backend fuel log API on local server
+ran by using npm script in package.json 'npm run test'
+![picture of test outcome for back end](./docs/testing/back-end-testing.png)

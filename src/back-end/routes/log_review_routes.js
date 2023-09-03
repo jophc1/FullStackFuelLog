@@ -7,6 +7,7 @@ const router = Router()
 
 router.use(authAccess)
 
+// Create a new log request, performed by employee
 router.post('/', async (req, res) => {
   try {
     const employeeId = new mongoose.Types.ObjectId(req.jwtIdentity.id)
@@ -20,11 +21,13 @@ router.post('/', async (req, res) => {
 
 router.use(verifyAdmin)
 
+// Get all log deletion requests, employer only
 router.get('/', async (req, res) => {
   const allLogReviews = await LogReviewModel.find().populate('employee_id', '-_id username_id').populate({ path: 'log_id', populate: { path: 'vehicle_id' } }).exec()
   allLogReviews ? res.send(allLogReviews) : res.status(200).send({ LogReviews: 'No log reviews found' })
 })
 
+// Get a specific log review by id number, employer only
 router.get('/:id', async (req, res) => {
   try {
     const review = await LogReviewModel.findById(req.params.id)
@@ -34,6 +37,7 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+// Delete a specific log review by id number, employer only
 router.delete('/:id', async (req, res) => {
   try {
     const deletedReview = await LogReviewModel.findByIdAndDelete(req.params.id)
