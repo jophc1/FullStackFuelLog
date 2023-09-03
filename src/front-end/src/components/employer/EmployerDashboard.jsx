@@ -7,16 +7,14 @@ import fetchMod from '../../fetch/fetch.js'
 import fetchFiles from '../../fetch/fetch_files.js'
 
 const EmployerDashboard = ({ children }) => {
-
-  
-
+  /* CONTEXTS */
+  const { userAccess, authorised, navigate, allVehicles,  errorHandler } = useContext(FuelLogContext)
+  /* ====================== */
+  /* STATES */
   const [store, dispatch] = useReducer(reducer, initialState)
   const { propsObject, allLogs, paginationInfo } = store
-
-  const { userAccess, authorised, navigate, allVehicles,  errorHandler } = useContext(FuelLogContext)
-  
-
-  // EMPLOYEES
+  /* ====================== */
+  // EMPLOYEES methods
 
   async function getAllEmployees () {
     const res = await fetchMod('GET', 'employed', '')
@@ -31,9 +29,11 @@ const EmployerDashboard = ({ children }) => {
       return res.body
     }
   }
-
+  /* ====================== */
+  // VEHICLES methods
   
   async function postUpdateVehicle ({ make, model, year, asset_id, registration, image, method, urlSuffix }) {
+    // add the incoming vehicle data to FormData
     let formData = new FormData()
     formData.append('make', make)
     formData.append('model', model)
@@ -41,11 +41,13 @@ const EmployerDashboard = ({ children }) => {
     formData.append('asset_id', asset_id)
     formData.append('registration', registration) 
     formData.append('image', image)
+
     const res = await fetchFiles(method, urlSuffix, formData)
-     // TODO: gather response data and render a succeful component display
+    // check response and return user feed back
     if (res.status == 201 || res.status == 200) {
-      navigate('/employer/dashboard/all/vehicles/') // TODO: show new vehicle details
+      navigate('/employer/dashboard/all/vehicles/')
     } else {
+      // Regex for error responses from the server
       if (new RegExp('(?=.*asset_id)(?=.*dup)', 'i').test(res.body.error)) {
         errorHandler(<p>Asset ID already exists.</p>)
       } else if (new RegExp('(?=.*registration)(?=.*dup)', 'i').test(res.body.error)) {
@@ -55,16 +57,15 @@ const EmployerDashboard = ({ children }) => {
       }
     }
   }
-
-    
-
+  /* ====================== */
   // LOGS
-
   async function getAllLogs (page, queryCase, dateTo, dateFrom, assetId) {
     let res
     let expression = `.*${assetId}.*`
     const re = new RegExp(expression, 'i')
     let searchedVehicle
+    // switch statement to select the correct query string based on user input
+    // do a fetch request based on the case
     switch (queryCase) {
       case 'vehicle':
         searchedVehicle = allVehicles.find(vehcile => re.test(vehcile.asset_id))
@@ -74,14 +75,12 @@ const EmployerDashboard = ({ children }) => {
         searchedVehicle = allVehicles.find(vehcile => re.test(vehcile.asset_id))
         res =  await fetchMod('GET', `logs?page=${page}&limit=20&vehicle_id=${searchedVehicle._id}&dateTo=${dateTo}&dateFrom=${dateFrom}`)
         break
-      case 'date':
-        res =  await fetchMod('GET', `logs?page=${page}&dateTo=${dateTo}&dateFrom=${dateFrom}`)
-        break
       default:
         res = await fetchMod('GET', `logs?page=${page}&limit=20`, '')
     }
-
+    // grab the paginated object. The object contains the array collection of documents in the property 'docs'
     const paginationLogs = res.body
+    // remove the time from ISODate
     const LogsDateFormatted = paginationLogs.docs.map(log => log.date = new Date(log.date).toISOString().split('T')[0])
     dispatch({
       type: 'allLogs',
@@ -102,6 +101,7 @@ const EmployerDashboard = ({ children }) => {
     const res = await fetchMod('DELETE', `logs/${logID}`, '')
     if (res == 'OK') { 
       if (allLogs.length > 0) {
+        // filter out the deleted log from the allLogs array
         newAllLogs = allLogs.filter(log => {return log._id != logID})
         dispatch({
           type: 'allLogs',
@@ -114,17 +114,15 @@ const EmployerDashboard = ({ children }) => {
       errorHandler(<p>Something went wrong trying to delete log. Try again later!</p>)
     }
   }
-
+  /* ====================== */
   // REPORTS
-
   async function getEmployerTableReports(fromDateArray, toDateArray) {
     const res = await fetchMod('GET', `reports/${fromDateArray[0]}/${fromDateArray[1]}/${fromDateArray[2]}/to/${toDateArray[0]}/${toDateArray[1]}/${toDateArray[2]}`, '')
     if (res.status === 200) {
       return res.body
     }
-    // TODO: if fetch fails, return an error message
   }
-
+  /* ====================== */
   // Employer Dashboard Graphs
   async function graphData(path, graphType) {
     const res = await fetchMod('GET', path, '')
@@ -132,14 +130,9 @@ const EmployerDashboard = ({ children }) => {
     if (res.status === 200) {
       return res.body
     }
-    else {
-      // TODO: have a error message popup with error, not easy to do at the moment without completely reworking how graphs load onto page
-      // as the current error Modal causes an infinite render loop with graphing loops
-      console.log(`problem occured with graph ${graphType}`) 
-    }
   }
-
-  // Log reviews
+  /* ====================== */
+  // LOG REVIEWS
   async function getAllReviews() {
     const res = await fetchMod('GET', 'logs/reviews', '')
     return res.body

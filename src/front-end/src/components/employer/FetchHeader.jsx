@@ -1,6 +1,4 @@
-import React, { useContext } from 'react'
-import { FuelLogContext } from '../../context.js'
-import CompanyButton from '../styled/CompanyButton.jsx'
+import React from 'react'
 
 const FetchHeader = ({ children }) => {
 

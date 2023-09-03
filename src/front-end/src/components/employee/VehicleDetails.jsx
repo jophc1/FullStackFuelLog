@@ -4,16 +4,17 @@ import { FuelLogContext } from '../../context.js'
 import Row from '../styled/Row'
 
 const VehicleDetails = ({ displayDetails, data, style = '' }) => {
-
+  /* CONTEXTS */
   const { currentVehicle } = useContext(FuelLogContext)
-
+  /* ====================== */
+  /* IMAGE LOADING */
   let isVehicleImageReady = false
-
   if (currentVehicle.vehicleImage_URL) {
     const vehicleImage = new Image()
     vehicleImage.src = currentVehicle.vehicleImage_URL
     vehicleImage.onload = async () => isVehicleImageReady = true
   }
+  /* ====================== */
 
   return displayDetails &&
     <Card className={'vehicleCard ' + `${style}`}>

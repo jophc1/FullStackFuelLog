@@ -1,15 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react'
 import PaginationButtons from './styled/PaginationButtons'
 
-const Pagination = ({ currentPage = 1, totalPages, hasPrevPage, hasNextPage, nextPage, prevPage, setPage }) => {
-
-  const [pages, setPages] = useState([])
+const Pagination = ({ currentPage = 1, totalPages, nextPage, prevPage, setPage }) => {
+  /* STATES */
   const [pagesToDisplay, setPagesToDisplay] = useState([])
   const [hidePrevPage, setHidePrevPage] = useState(false)
   const [hideNextPage, setHideNextPage] = useState(true)
   const [startIndex, setStartIndex] = useState(0)
   const [endIndex, setEndIndex] = useState(2)
-
+  /* ====================== */
+  /* EVENT HANDLER FUNCTIONS */
   const handlePageClick = event => {
     event.preventDefault()
     setPage(event.target.value)
@@ -38,7 +38,7 @@ const Pagination = ({ currentPage = 1, totalPages, hasPrevPage, hasNextPage, nex
     setStartIndex(startIndex - 1)
     setEndIndex(endIndex - 1)
   }
-
+   /* ====================== */
 
   useEffect(() => {
     let pushArr = []

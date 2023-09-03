@@ -4,7 +4,10 @@ import Card from '../styled/ProfileCard'
 import EmployeeReport from './EmployeeReport'
 
 const EmployeeProfile = () => {
+  /* CONTEXTS */
   const { userName } = useContext(FuelLogContext)
+  /* ====================== */
+  // Setting the user profile initials
   const firstUserInitial = userName.substring(0,1)
   const secondUserInital = userName.substring(userName.indexOf(' ') + 1, userName.indexOf(' ') + 2)
   return (

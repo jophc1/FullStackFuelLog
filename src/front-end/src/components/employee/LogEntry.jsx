@@ -8,15 +8,18 @@ import placeHolderImage from '../../assets/no-image.png'
 import ModalText from '../ModalText.jsx'
 
 const LogEntry = () => {
-
-  const [fuel, setFuel] = useState(0)
-  const [odometer, setOdometer] = useState(0)
-
-  const emptyVehicleProfile = { make: '', model: '', year: '', asset_id: '', registration: '', vehicleImage_URL: placeHolderImage }
-
+  /* CONTEXTS */
   const { postLogEntry, allVehicles, currentVehicleDetails, currentVehicle, authorised, backButton, 
     displayVehicleInfo, displayPlaceholderVehicleInfo, modalErrorRender, setModalErrorRender, errorMessage } = useContext(FuelLogContext)
-
+  /* ====================== */
+  /* STATES */
+  const [fuel, setFuel] = useState(0)
+  const [odometer, setOdometer] = useState(0)
+  /* ====================== */
+  // Props for VehicleDetails Component
+  const emptyVehicleProfile = { make: '', model: '', year: '', asset_id: '', registration: '', vehicleImage_URL: placeHolderImage }
+  /* ====================== */
+  /* IMAGE LOADING */
   let isVehicleImageReady = false
   let isPlaceHolderImageReady = false
   let isCompanyIconReady = false
@@ -34,17 +37,16 @@ const LogEntry = () => {
     vehicleImage.src = currentVehicle.vehicleImage_URL
     vehicleImage.onload = () => isVehicleImageReady = true
   }
-
+  /* ====================== */
+  /* EVENT HANDLER FUNCTIONS */
   function selectVehicle(event) {
     currentVehicleDetails(event.target.value)
-    // setVehicleID(event.target.value)
   }
 
   // calling post method for log
   async function handleSubmit(event) {
     event.preventDefault()
-    
-      const postLog = {
+    const postLog = {
       vehicle_id: currentVehicle._id,
       fuel_added: parseInt(fuel),
       current_odo: parseInt(odometer)

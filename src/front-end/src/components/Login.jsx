@@ -26,7 +26,7 @@ const Login = () => {
     loginAccess(username, password)
   }
   /* ====================== */
-  /* STATES */
+  /* IMAGE LOADING */
   let isLogoImageReady = false
   const logo = new Image()
   logo.src = companyIcon

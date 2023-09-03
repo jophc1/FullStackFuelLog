@@ -12,11 +12,15 @@ import { Navigate } from 'react-router-dom'
 import ModalFields from '../ModalField.jsx'
 
 const EmployeeHome = ({ children }) => {
+  /* CONTEXTS */ 
+  const { authorised, userLogout, userAccess, navigate, newLogCreated, userId, modalFieldOperation, userName } = useContext(FuelLogContext)
+  /* ====================== */
+  /* STATES */
+  const [modalFieldProps, setModalFieldProps] = useState({})
+  const [showForm, setShowForm] = useState(false)
 
-const { authorised, userLogout, userAccess, navigate, newLogCreated, userId, modalFieldOperation, userName } = useContext(FuelLogContext)
-const [modalFieldProps, setModalFieldProps] = useState({})
-const [showForm, setShowForm] = useState(false)
-
+  /* ====================== */
+  /* EVENT HANDLER FUNCTIONS */
   const handleLogoutClick = event => {
     event.preventDefault()
     userLogout()
@@ -40,7 +44,7 @@ const [showForm, setShowForm] = useState(false)
     event.preventDefault()
     navigate('/employee/dashboard/new/log/all')
   }
-  
+  /* ====================== */
   // IMAGES 
   const logoutImg = new Image()
   const passIcon = new Image()
@@ -53,8 +57,6 @@ const [showForm, setShowForm] = useState(false)
   logoutImg.onload = () => isLogoutImgReady = true
   passIcon.onload = () => isPasswordImgReady = true
   logImg.onload = () => isLogImgReady = true
-
-
 
   return authorised && !userAccess ? 
   <>

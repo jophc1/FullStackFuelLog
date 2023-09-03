@@ -2,7 +2,8 @@ import React from 'react'
 import logo from '../../assets/fuel-log-logo.png'
 
 const Header = ({ children }) => {
-
+  
+  /* IMAGE LOADING */
   const fuelLogo = new Image()
   fuelLogo.src = logo
 

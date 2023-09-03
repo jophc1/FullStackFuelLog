@@ -4,12 +4,15 @@ import fuelLogo from '../../assets/fuel-log-logo.png'
 import { FuelLogContext } from '../../context.js'
 
 const NavBar = () => {
+  /* CONTEXTS */ 
   const { userLogout } = useContext(FuelLogContext)
-
+  /* ====================== */
+  /* EVENT HANDLER FUNCTIONS */
   const handleLogoutClick = event => {
     event.preventDefault()
     userLogout()
   }
+  /* ====================== */
 
   return <>
     <nav className="navbar navbar-expand-lg bg-body-tertiary">

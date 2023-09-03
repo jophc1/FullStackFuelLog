@@ -5,19 +5,12 @@ import { EmployerContext } from '../../context';
 
 
 const DonutGraphVehicleUsage = () => {
-
+  /* CONTEXTS */
   const { graphData } = useContext(EmployerContext)
-
+  /* ====================== */
+  /* STATES */
   const [pieData, setPieData] = useState([])
-
-  useEffect(() => {
-    (async () => {
-      const data = await graphData("reports/graph/pie/vehicles/usage/all/time", "pie")
-      const filteredVehicles = data.vehicles.filter(vehicle => vehicle.vehicleID.length > 0)
-      setPieData(filteredVehicles)
-    })()
-  }, [])
-
+  /* ====================== */
   // colours on the pie graph
   const COLORS = ['#0088FE', '#00C49F', '#FF80FF', '#FFBB28', '#FF8042'];
 
@@ -36,10 +29,18 @@ const DonutGraphVehicleUsage = () => {
         </text>
       )
     }
-
+  // centre's the pie graph on component mount
   useEffect(() => {
     const overflowContainer = document.getElementById('pieContent')
     overflowContainer.scrollTo(( overflowContainer.offsetWidth / 6 ), 0)
+  }, [])
+  // fetch pie data
+  useEffect(() => {
+    (async () => {
+      const data = await graphData("reports/graph/pie/vehicles/usage/all/time", "pie")
+      const filteredVehicles = data.vehicles.filter(vehicle => vehicle.vehicleID.length > 0)
+      setPieData(filteredVehicles)
+    })()
   }, [])
 
   return (pieData &&

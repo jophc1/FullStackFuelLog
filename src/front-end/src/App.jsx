@@ -8,7 +8,6 @@ import EmployerDashboard from './components/employer/EmployerDashboard.jsx'
 import basicAuthFetch from './fetch/auth/basic_fetch.js'
 import fetchMod from './fetch/fetch.js'
 import DashboardTable from './components/employer/DashboardTable.jsx'
-
 import './App.css'
 import { FuelLogContext } from './context.js'
 import VehiclesListFetch from './components/employer/VehiclesListFetch.jsx'
@@ -24,6 +23,7 @@ import loaderGif from './assets/loader.gif'
 
 
 function App() {
+   /* CONTEXTS */
   const [store, dispatch] = useReducer(reducer, initialState)
   const { userAccess,
           authorised,
@@ -39,13 +39,14 @@ function App() {
           newLogCreated,
           userId,
           errorMessage } = store
-  
+  /* ====================== */
+  /* STATES */
   const navigate = useNavigate()
   const [modalErrorRender, setModalErrorRender] = useState(false)
   const [renderLoadingGif, setRenderLoadingGif] = useState(false)
   const location = useLocation()
-
-  // USER ACCESS
+  /* ====================== */
+  // USER ACCESS methods
 
    // Check if client already has user object in storage
   // if client does, disptach to 'userAccess'. This persists user access on refresh
@@ -95,8 +96,8 @@ function App() {
     console.log(res)
     res === 'OK' ? navigate('/') : console.log('logout failed') // TODO: put in error handler message here for logout
   }
-
-  // Employee components
+  /* ====================== */
+  // EMPLOYEE methods
    async function postUpdateEmployee (userObject, initialEmployeeId, method, path) {
     
     if (method === 'PUT') {
@@ -135,6 +136,8 @@ function App() {
       navigate('/employee/dashboard/home')
     } 
     else {
+      // if response returns error, display back to user based on error msgs
+      // regexp used for different cases and messages customised for end user
       if (new RegExp('(?=.*fuel_added)(?=.*value)', 'i').test(res.body.error)) {
         errorHandler(<p>Fuel field must be greater than 0</p>)
       }
@@ -162,9 +165,7 @@ function App() {
       console.log('new log request post failed', res.status, res.body.error) // TODO: if post of log review is unsuccessful, display error on screen
     }
   }
-
-
-
+   /* ====================== */
   // NAV
 
   function backButton(path) {
@@ -177,7 +178,7 @@ function App() {
     })
     navigate(path)
   }
-
+   /* ====================== */
   // VEHICLES
 
   async function getAllVehicles () {
@@ -233,7 +234,7 @@ function App() {
       errorHandler(<p>Something went wrong trying to delete vehicle. Try again later!</p>)
     }
   }
-
+  /* ====================== */
   // MODALS
   // toggle modals
   function modalTextOperation (toggle) {
@@ -249,7 +250,7 @@ function App() {
       toggleModal: toggle,
     })
   }
-
+   /* ====================== */
   // ERRORS 
 
   function errorHandler (message) {
@@ -266,7 +267,7 @@ function App() {
       setModalErrorRender(false)
     }, [5000])
   }
-
+   /* ====================== */
   // WRAPPERS
 
   function HomeReportWrapper() {

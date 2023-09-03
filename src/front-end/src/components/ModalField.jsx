@@ -1,22 +1,27 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { EmployerContext, FuelLogContext } from '../context.js'
+import React, { useContext, useState } from 'react'
+import { FuelLogContext } from '../context.js'
 import CompanyButton from './styled/CompanyButton'
 import ModalText from './ModalText.jsx'
 
 const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree, heading, initialName = '', initalEmployeeId = '', setShowForm, style='', styleSpecial = '', method='POST', path='employed', employeeForm = false}) => {
-  
+  /* CONTEXTS */ 
   const { showModalField, modalFieldOperation, postUpdateEmployee, errorMessage, modalErrorRender, setModalErrorRender } = useContext(FuelLogContext)
-  // const { postUpdateEmployee } = useContext(EmployerContext)
+  /* ====================== */
+  /* MODAL CLASS */
   const changeModalClass = showModalField ? `modal show ${style}` : "modal hide"
-
+  /* ====================== */
+  /* STATES */
   const [name, setName] = useState(initialName)
   const [employeeId, setEmployeeId] = useState(initalEmployeeId)
   const [password, setPassword] = useState('')
-
+  /* ====================== */
+  /* EVENT HANDLER FUNCTIONS */
   const handleNewSubmit = async event => {
     event.preventDefault()
     let res
     let updatedEmployeeDetails
+    // check if the method is a POST or PUT and pass data to
+    // postUpdateEmployee function
     if (employeeForm) {
       updatedEmployeeDetails = {
         username_id: employeeId,
@@ -32,6 +37,7 @@ const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree, heading, i
         }
       res = await postUpdateEmployee(updatedEmployeeDetails, initalEmployeeId, method, path)
     }
+    // set the states for the error or field modals
     if (res.status != 500) {
       setShowForm(false)
       modalFieldOperation(false)
@@ -45,6 +51,7 @@ const ModalFields = ({ fieldLabelOne, fieldLabelTwo, fieldLabelThree, heading, i
     setShowForm(false)
     modalFieldOperation(false)
   }
+   /* ====================== */
   
   return  <>
       <div className={changeModalClass} >

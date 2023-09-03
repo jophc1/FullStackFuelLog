@@ -6,45 +6,42 @@ import noRequest from '../../assets/request.png'
 import Card from '../styled/ProfileCard.jsx'
 
 const ReviewsFetchList = () => {
-  
-  
+  /* CONTEXTS */
   const { deleteLog, getAllReviews, deleteReview } = useContext(EmployerContext)
   const { modalTextOperation, modalErrorRender, setModalErrorRender, errorMessage } = useContext(FuelLogContext)
+  /* ====================== */
+  /* STATES */
   const [renderModal, setRenderModal] = useState(false)
-  const [modalDeleteRender, setModalDeleteRender] = useState(false)
-  const [totalDocs, setTotalDocs] = useState(0)
-  const [totalPages, setTotalPages] = useState(0)
-  const [page, setPage] = useState(1)
   const [reviews, setReviews] = useState([])
-  const selectedLog = useRef({})
   const selectedReview = useRef({})
   const [ reRender, setReRender ] = useState(false)
-
+  /* ====================== */
+  /* EVENT HANDLER FUNCTIONS */ 
   const handleReviewClick = event => {
     event.preventDefault()
     const reviewId = event.target.parentNode.attributes.value.value
+    // filter selected review based on reviewId
     selectedReview.current = reviews.find(review => reviewId === review._id)
+    // turn modal on
     modalTextOperation(true)
     setRenderModal(true)
   }
 
   async function handleDeleteButtonClick (event) {
     event.preventDefault()
-
+    // keep or delete log
     if (selectedReview.current.log_id && event.target.name === 'delete') {
       const deletionLogResponse = await deleteLog(selectedReview.current.log_id._id)
     }
-
     if (selectedReview.current.log_id && event.target.name === 'keep') {
       const deletionReviewResponse = await deleteReview(selectedReview.current._id)
     }
-    
+    // turn modals off
     setReRender(!reRender)
     modalTextOperation(false)
     setRenderModal(false)
   }
-
-
+  
   useEffect(() => {
     (async () => {
       const allReviews = await getAllReviews()

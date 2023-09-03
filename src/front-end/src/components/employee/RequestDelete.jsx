@@ -4,13 +4,14 @@ import CompanyButton from '../styled/CompanyButton'
 import { FuelLogContext } from '../../context'
 
 const RequestDelete = () => {
+  /* CONTEXTS */
   const { newLogRequest } = useContext(FuelLogContext)
-
+  /* ====================== */
   function handleNewLogRequest (event) {
     event.preventDefault()
     newLogRequest(event)
   }
-
+  /* ====================== */
   return <>
     <Card className='requestDelete'>
         <h4>Log entry added successfully!</h4>

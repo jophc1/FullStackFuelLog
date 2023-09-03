@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import fetchMod from '../../fetch/fetch.js'
 
 const EmployeeReport = () => {
+  /* STATES */
   const [employeeReport, setEmployeeReport] = useState({})
-
+  /* ====================== */
+  
   useEffect(() =>{
     (async () => {
       const res = await fetchMod('GET', 'reports/employee/current/month', '')

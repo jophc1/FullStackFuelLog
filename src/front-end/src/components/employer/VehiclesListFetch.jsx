@@ -8,6 +8,7 @@ import noRequest from '../../assets/request.png'
 import Card from '../styled/ProfileCard.jsx'
 
 const VehiclesListFetch = () => {
+  /* CONTEXTS */
   const { allVehicles, 
           getAllVehicles,
           modalTextOperation,
@@ -20,12 +21,14 @@ const VehiclesListFetch = () => {
           currentVehicleDetails,
           currentVehicle,
           displayVehicleInfo } = useContext(FuelLogContext)
-  
+  /* ====================== */
+  /* STATES */
   const [modalRender, setModalRender] = useState(false)
   const [assetId, setAssetId] = useState('')
   const [vehicleDetailsModal, setVehicleDetailsModal] = useState(false)
   const assetID = useRef('')
-
+  /* ====================== */
+  /* EVENT HANDLER FUNCTIONS */
   const handleEditClick = event => {
     event.preventDefault()
     editVehicle(event.target.value)
@@ -48,6 +51,7 @@ const VehiclesListFetch = () => {
   }
 
   const handleNewVehicle = event => {
+    // navigate to vehicle form
     navigate('/employer/dashboard/vehicle/new')
   }
 
@@ -57,11 +61,13 @@ const VehiclesListFetch = () => {
 
   const handleVehicleClick = event => {
     event.preventDefault()
+    // turn the modal on and set the current vehicle state to selected vehicle
     setVehicleDetailsModal(true)
     currentVehicleDetails(event.target.attributes.value.value)
+    // set the modal on
     modalTextOperation(true)
   }
-
+  /* ====================== */
 
 
   useEffect(() => {

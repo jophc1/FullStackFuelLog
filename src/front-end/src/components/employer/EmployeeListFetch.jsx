@@ -10,22 +10,24 @@ import Card from '../styled/ProfileCard.jsx'
 
 
 const EmployeeListFetch = () => {
-  
+   /* CONTEXTS */
+   const { getAllEmployees, deleteEmployee } = useContext(EmployerContext)
+   const { modalTextOperation, modalFieldOperation } = useContext(FuelLogContext)
+  /* ====================== */
+  /* STATES */
   const [allEmployees, setAllEmployees] = useState([])
   const [modalFieldProps, setModalFieldProps] = useState({})
   const [modalRender, setModalRender] = useState(false)
-
   const [showForm, setShowForm] = useState(false)
-  const { getAllEmployees, deleteEmployee } = useContext(EmployerContext)
-  const { modalTextOperation, modalFieldOperation, backButton } = useContext(FuelLogContext)
   const [assetId, setAssetId] = useState('')
   const employeeID = useRef('')
   const employeeName = useRef('')
-
-
+  /* ====================== */
+  /* EVENT HANDLER FUNCTIONS */
   const handleEditClick = event => {
     event.preventDefault()
     const targetEmployee = allEmployees.find(employee => event.target.value == employee.username_id)
+    // set the form values with the targetted employee details
     employeeID.current = targetEmployee.username_id
     employeeName.current = targetEmployee.name
 
@@ -39,10 +41,9 @@ const EmployeeListFetch = () => {
       setShowForm: setShowForm,
       method: 'PUT'
     })
-
+    // turn modal on
     setShowForm(true)
     modalFieldOperation(true)
-    
   }
 
   const handleDeleteIconClick = event => {
@@ -56,6 +57,7 @@ const EmployeeListFetch = () => {
   async function handleDeleteButtonClick (event) {
     event.preventDefault()
     const deleteEmployeeResponse = await deleteEmployee(event.target.value)
+    // turn modal off
     setModalRender(false)
     modalTextOperation(false)
   }
@@ -64,15 +66,8 @@ const EmployeeListFetch = () => {
     event.preventDefault()
   }
 
-  useEffect(() => {
-    (async () => {
-      setAllEmployees(await getAllEmployees())
-    })()
-  }, [showForm, modalRender])
-
   const handleAddButton = event => {
     event.preventDefault()
-    
     setModalFieldProps({
       fieldLabelOne: 'Full name (Capatilized e.g John Smith)',
       fieldLabelTwo: 'Employee ID (Number only, greater than 10000)',
@@ -81,10 +76,16 @@ const EmployeeListFetch = () => {
       setShowForm: setShowForm,
       styleSpecial: 'special-modal'
     })
-
+    // turn modal on
     modalFieldOperation(true)
     setShowForm(true)
   }
+   /* ====================== */
+  useEffect(() => {
+    (async () => {
+      setAllEmployees(await getAllEmployees())
+    })()
+  }, [showForm, modalRender])
 
   return <>
     <h3>All Employees</h3>

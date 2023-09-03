@@ -3,24 +3,21 @@ import { EmployerContext, FuelLogContext } from '../../context'
 import ModalText from '../ModalText'
 
 const DashboardTable = () => {
-  
-  // const [employerTableDate, setEmployerTableData] = useState({})
+  /* CONTEXTS */
   const { errorHandler, modalErrorRender, setModalErrorRender, errorMessage } = useContext(FuelLogContext)
   const { getEmployerTableReports } = useContext(EmployerContext)
+  /* ====================== */
+  /* STATES */
   const [reportArray, setReportArray] = useState([])
   const [renderReset, setRenderReset] = useState(true)
   const [tableData, setTableData] = useState({ totalLogsRecorded: 0, totalFuel: 0, totalDistance: 0 })
   const toDate = useRef('')
   const fromDate = useRef('')
-  
-  useEffect(() => {
-    setRenderReset(true)
-  }, [reportArray])
-
+  /* ====================== */
+  /* EVENT HANDLER FUNCTIONS */
   // on change, parse dates and compare against each other to see if the 'from' is further ahead of the 'to'
-
   async function handleEmployerTableDate(event) {
-
+    // assigning date ranges
     if (event.target.name === 'to-date'){
       toDate.current = event.target.value
     } else {
@@ -28,32 +25,31 @@ const DashboardTable = () => {
     }
     // check that both dates are defined
     if (toDate.current && fromDate.current) {
+      // split the date strings to use in API URL route
       const formatToDateString = toDate.current.split('-')
       const formatFromDateString = fromDate.current.split('-')
-  
+      // checking the date ranges
       if (new Date(fromDate.current) <= new Date(toDate.current)){
         const reports = await getEmployerTableReports(formatFromDateString, formatToDateString)
         setReportArray(reports)
-       
       } else {
         errorHandler(<p>"From date" must be before or on "To date"</p>)
       }
-      
       setRenderReset(false)
     }
   }
-
+  /* ====================== */
+  // when dates are confirmed, send a request to retrieve all the reports on all cars
+  // use the car asset ID to populate a dropdown menu with all the availiable cars 
+  // when a car asset ID is selected (onChange), filter out the array report to get the correct one and use it to populate the table
   function selectedVehicle(event) {
     const tableData = reportArray.find(report => report._id.vehicle === event.target.value)
     setTableData(tableData)
   }
 
-
-  // when dates are confirmed, send a request to retrieve all the reports on all cars
-
-  // use the car asset ID to populate a dropdown menu with all the availiable cars 
-
-  // when a car asset ID is selected (onChange), filter out the array report to get the correct one and use it to populate the table
+  useEffect(() => {
+    setRenderReset(true)
+  }, [reportArray])
 
   return <>
   <h4 className='dashboardTitle'>Reports</h4>

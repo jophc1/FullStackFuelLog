@@ -5,7 +5,7 @@ import ModalText from '../ModalText.jsx'
 import Pagination from '../Pagination.jsx'
 
 const LogsFetchList = () => {
-
+  /* CONTEXTS */
   const { getAllLogs,
           allLogs,
           deleteLog,
@@ -14,6 +14,8 @@ const LogsFetchList = () => {
           modalErrorRender,
           setModalErrorRender } = useContext(EmployerContext)
   const { modalTextOperation } = useContext(FuelLogContext)
+  /* ====================== */
+  /* STATES */
   const [renderModal, setRenderModal] = useState(false)
   const [modalDeleteRender, setModalDeleteRender] = useState(false)
   const [page, setPage] = useState(1)
@@ -22,10 +24,13 @@ const LogsFetchList = () => {
   const logID = useRef('')
   const toDate = useRef('')
   const fromDate = useRef('')
-
+  /* ====================== */
+  /* EVENT HANDLER FUNCTIONS */
   const handleLogClick = event => {
     event.preventDefault()
+    // filter the selected log
     selectedLog.current = allLogs.find(log => log._id === event.target.attributes.value.value)
+    // turn modal on
     modalTextOperation(true)
     setRenderModal(true)
   }
@@ -41,7 +46,7 @@ const LogsFetchList = () => {
   const handleCompanyButtonClick = event => {
     event.preventDefault()
     deleteLog(event.target.value)
-
+    // turn modal off
     setModalDeleteRender(false)
     modalTextOperation(false)
   }
@@ -66,7 +71,7 @@ const LogsFetchList = () => {
       fromDate.current = event.target.value
     }
   }
-
+  /* ====================== */
   useEffect(() => {
     (async () => getAllLogs(page))()
     setAssetId('')

@@ -5,11 +5,14 @@ import { EmployerContext, FuelLogContext } from '../../context'
 
 
 const ScatterGraphVehicleDistanceFuel = () => {
-
+  /* CONTEXTS */
   const { graphData } = useContext(EmployerContext)
-  const { allVehicles, getAllVehicles } = useContext(FuelLogContext)
+  const { allVehicles } = useContext(FuelLogContext)
+  /* ====================== */
+  /* STATES */
   const [scatterData, setScatterData] = useState([])
-
+  /* ====================== */
+  /* EVENT HANDLER FUNCTIONS */ 
   async function handleVehicleSelect(event) {
     const data = await graphData(`reports/graph/${event.target.value}/line/distance/`, 'scatter') // may need to convert value from object to string
     if (data.length > 0) {
@@ -18,8 +21,9 @@ const ScatterGraphVehicleDistanceFuel = () => {
       setScatterData([{ distance: 0, fuelAdded: 0 }])
     }
   }
-
+  /* ====================== */
   useEffect(() => {
+    // center the graph container on load
     const overflowContainer = document.getElementById('scatterContainer')
     overflowContainer.scrollTo(( overflowContainer.offsetWidth / 4.25 ), 0)
   }, [])

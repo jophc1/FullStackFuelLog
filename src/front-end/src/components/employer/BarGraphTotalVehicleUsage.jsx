@@ -3,11 +3,12 @@ import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Resp
 import { EmployerContext } from '../../context'
 
 const BarGraphTotalVehicleUsage = () => {
-
+  /* CONTEXTS */
   const { graphData } = useContext(EmployerContext)
-
+  /* ====================== */
+  /* STATES */
   const [barData, setBarData] = useState([])
-
+  /* ====================== */
   useEffect(() => {
     (async () => {
       const data = await graphData('reports/graph/bar/vehicles/usage/past/6/months', 'bar')
@@ -15,7 +16,6 @@ const BarGraphTotalVehicleUsage = () => {
       setBarData(sortedData) 
     })()
   }, [])
-
 
   return (<>
   <h4 id='barTitle'>All Vehicle usage past 6 months</h4>
