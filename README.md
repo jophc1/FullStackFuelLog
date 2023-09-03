@@ -250,6 +250,10 @@ testing-library: library that allows DOM simulation
 ##### User testing
 [document for manual user testing](./docs/testing/testing.pdf)
 
-##### Framework testing JEST for backend fuel log API on local server
-ran by using npm script in package.json 'npm run test'
-![picture of test outcome for back end](./docs/testing/back-end-testing.png)
+##### Framework testing for backend fuel log API on local server
+ran by using npm script in package.json 'npm run test' in ./src/back-end/
+![picture of test outcome for back end](./docs/testing/back-end-testing.png)   
+
+##### Framework testing for frontend fuel log React web app on local server
+ran by using npm script in package.json 'npm test' in ./src/front-end/
+![picture of test outcome for back end](./docs/testing/front-end-testing.png)
