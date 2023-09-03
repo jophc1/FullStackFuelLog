@@ -199,4 +199,10 @@ ___
 ___
 
 ### Testing
+
+##### User testing
 [document for manual user testing](./docs/testing/manual%20testing.pdf)
+
+##### Framework testing JEST for backend fuel log API on local server
+ran by using npm script in package.json 'npm run test'
+![picture of test outcome for back end](./docs/testing/back-end-testing.png)
