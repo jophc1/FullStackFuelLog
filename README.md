@@ -35,7 +35,7 @@ This application is targetted towards companies that are in need of tracking fle
 * AWS S3
 
 ##### Documentation
-* Microsoft powerpoint
+* Google Slides
 * Canva.com
 * Jira
 * Draw.io
