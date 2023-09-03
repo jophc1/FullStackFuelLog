@@ -21,13 +21,13 @@ const users = [
   {
     name: 'Empolyer Admin',
     username_id: 10001,
-    password: await bcrypt.hash('test password', saltRound),
+    password: await bcrypt.hash('test password', saltRounds),
     isAdmin: true
   },
   {
     name: 'John Smith',
     username_id: 10002,
-    password: await bcrypt.hash('johnSmith', saltRound)
+    password: await bcrypt.hash('johnSmith', saltRounds)
   },
   {
     name: 'Dom Torretto',
