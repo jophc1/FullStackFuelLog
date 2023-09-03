@@ -104,9 +104,9 @@ const LogsFetchList = () => {
                 <td onClick={handleLogClick} value={log._id}>Log Date:</td>
                 <td onClick={handleLogClick} value={log._id}>{log.date}</td>
                 <td onClick={handleLogClick} value={log._id}>Asset ID:</td>
-                <td onClick={handleLogClick} value={log._id}>{log.vehicle_id.asset_id}</td>
+                <td onClick={handleLogClick} value={log._id}>{log.vehicle_id?.asset_id ?? <>deleted</>}</td>
                 <td onClick={handleLogClick} value={log._id}>Employee ID:</td>
-                <td onClick={handleLogClick} value={log._id}>{log.user_id.username_id}</td>
+                <td onClick={handleLogClick} value={log._id}>{log.user_id?.username_id ?? <>deleted</>}</td>
               </tr>
             ))}
           </tbody>
@@ -132,15 +132,15 @@ const LogsFetchList = () => {
                 </tr>
                 <tr>
                   <td>Asset ID:</td>
-                  <td>&rarr; {selectedLog.current.vehicle_id ? selectedLog.current.vehicle_id.asset_id : <></>}</td>
+                  <td>&rarr; {selectedLog.current.vehicle_id ? selectedLog.current.vehicle_id.asset_id : <>deleted</>}</td>
                 </tr>
                 <tr>
                   <td>Employee:</td>
-                  <td>&rarr; {selectedLog.current.user_id ? selectedLog.current.user_id.name : <></>}</td>
+                  <td>&rarr; {selectedLog.current.user_id ? selectedLog.current.user_id.name : <>deleted</>}</td>
                 </tr>
                 <tr>
                   <td>Employee ID:</td>
-                  <td>&rarr; {selectedLog.current.user_id ? selectedLog.current.user_id.username_id : <></>}</td>
+                  <td>&rarr; {selectedLog.current.user_id ? selectedLog.current.user_id.username_id : <>deleted</>}</td>
                 </tr>
               </tbody>
             </table>
