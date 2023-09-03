@@ -3,6 +3,7 @@
 #### [link to github repository](https://github.com/jophc1/FullStackFuelLog)
 #### [link to deployed fuel log application](https://fuel-log.onrender.com/)
 
+![employer-dash-dektop](./docs/fuel-app-screenshots/employer-dash-desktop.png)
 
 ### Purpose of this Application
 
@@ -34,7 +35,7 @@ This application is targetted towards companies that are in need of tracking fle
 * AWS S3
 
 ##### Documentation
-* Microsoft powerpoint
+* Google Slides
 * Canva.com
 * Jira
 * Draw.io
@@ -200,50 +201,50 @@ ___
 
 ### Third-party packages/libries used in application
 
-##### Front-end
-React: JavaScript library that provides creation of html in form of components by a JavaScript parser for html syntax in an extended JavaScript format .jsx   
+#### Front-end
+**React**: JavaScript library that provides creation of html in form of components by a JavaScript parser for html syntax in an extended JavaScript format .jsx   
 
-react-router-dom: Gives functionality of Routes and other link navigation for React   
+**react-router-dom**: Gives functionality of Routes and other link navigation for React   
 
-recharts: Provides established React components to enable rendering of different graph types   
+**recharts**: Provides established React components to enable rendering of different graph types   
 
-styled-components: Helps creats styled components with the use of CSS that can provide styling by acting as a wrapper   
+**styled-components**: Helps creats styled components with the use of CSS that can provide styling by acting as a wrapper   
 
 ##### Back-end
-Express: Popular Javascript framework for API/server development   
+**Express**: Popular Javascript framework for API/server development   
 
-Mongoose: ODM used with Express to allow usage of Models and Schemas for query operations with the MongoDB NoSQL database   
+**Mongoose**: ODM used with Express to allow usage of Models and Schemas for query operations with the MongoDB NoSQL database   
 
-Node: Provides a JavaScript runtime environment for the API   
+**Node**: Provides a JavaScript runtime environment for the API   
 
-Mongoose-pagination-v2: Used for counting documents in a collection and returing documents based on page limit conditions   
+**Mongoose-pagination-v2**: Used for counting documents in a collection and returing documents based on page limit conditions   
 
-CORS: Identifies and sets Access-Control-Allow-Origin so target clients are provided access to the request   
+**CORS**: Identifies and sets Access-Control-Allow-Origin so target clients are provided access to the request   
 
-Bcrypt: Provides hashing of passwords with salting   
+**Bcrypt**: Provides hashing of passwords with salting   
 
-jsonwebtoken: Enables creating and checking a JWT, mainly used for password authorization   
+**jsonwebtoken**: Enables creating and checking a JWT, mainly used for password authorization   
 
-helmet: Helps hide sensitive server response headers   
+**helmet**: Helps hide sensitive server response headers   
 
-aws-sdk/client-s3: Connecting to the Amazon s3 instance and manipulating objects in the instance   
+**@aws-sdk/client-s3**: Connecting to the Amazon s3 instance and manipulating objects in the instance   
 
-cookie-parser:  Middleware that allows express access and parse cookies   
+**cookie-parser**:  Middleware that allows express access and parse cookies   
 
-express-fileupload: middleware that allows express to access file properties in a request   
+**express-fileupload**: middleware that allows express to access file properties in a request   
 
-dotenv: allow express to access environmental variables from .env file   
+**dotenv**: allow express to access environmental variables from .env file   
 
-envfile: Allows writing env variables to a env file   
+**envfile**: Allows writing env variables to a env file   
 
-##### Testing libraries/frameworks for application
-jest: testing runner and assertion library/framework for JavaScript   
+#### Testing libraries/frameworks for application
+**jest**: testing runner and assertion library/framework for JavaScript   
 
-vitest: Built in testing framework in Vite that is expanded on from testing-library  
+**vitest**: Built in testing framework in Vite that is expanded on from testing-library  
 
-supertest: API testing framework that allows testing of routes and database properties, also built on and expanded from jest    
+**supertest**: API testing framework that allows testing of routes and database properties, also built on and expanded from jest    
 
-testing-library: library that allows DOM simulation 
+**testing-library**: library that allows DOM simulation 
 
 ### Testing
 
