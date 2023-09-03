@@ -36,8 +36,6 @@ const DashboardTable = () => {
         setReportArray(reports)
        
       } else {
-        // setReportArray([])
-        // setTableData({ totalLogsRecorded: 0, totalFuel: 0, totalDistance: 0})
         errorHandler(<p>"From date" must be before or on "To date"</p>)
       }
       

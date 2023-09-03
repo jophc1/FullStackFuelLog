@@ -17,7 +17,6 @@ import DonutGraphVehicleUsage from './components/employer/DonutGraphVehicleUsage
 import BarGraphTotalVehicleUsage from './components/employer/BarGraphTotalVehicleUsage.jsx'
 import ScatterGraphVehicleDistanceFuel from './components/employer/ScatterGraphVehicleDistanceFuel.jsx'
 import EmployeeListFetch from './components/employer/EmployeeListFetch.jsx'
-import EmployeeContextLayout from './components/employee/EmployeeContextLayout.jsx'
 import LogsFetchList from './components/employer/LogsFetchList.jsx'
 import ReviewsFetchList from './components/employer/ReviewsFetchList.jsx'
 import loaderGif from './assets/loader.gif'
@@ -93,6 +92,7 @@ function App() {
     dispatch({
       type: 'logout',
     })
+    console.log(res)
     res === 'OK' ? navigate('/') : console.log('logout failed') // TODO: put in error handler message here for logout
   }
 
