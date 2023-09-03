@@ -198,10 +198,49 @@ ___
 ![final-tasks-1](./docs/Jira-screenshots/final-task-32.png)
 ___
 
+### Third-party packages/libries used in application
+
+##### Front-end
+React:
+
+
+
+
+##### Back-end
+Express: Popular Javascript framework for API/server development   
+
+Mongoose: ODM used with Express to allow usage of Models and Schemas for query operations with the MongoDB NoSQL database   
+
+Node: Provides a JavaScript runtime environment for the API   
+
+Mongoose-pagination-v2: Used for counting documents in a collection and returing documents based on page limit conditions   
+
+CORS: Identifies and sets Access-Control-Allow-Origin so target clients are provided access to the request   
+
+Bcrypt: Provides hashing of passwords with salting   
+
+jsonwebtoken: Enables creating and checking a JWT, mainly used for password authorization   
+
+helmet: Helps hide sensitive server response headers   
+
+aws-sdk/client-s3: Connecting to the Amazon s3 instance and manipulating objects in the instance   
+
+cookie-parser:  Middleware that allows express access and parse cookies   
+
+express-fileupload: middleware that allows express to access file properties in a request   
+
+dotenv: allow express to access environmental variables from .env file   
+
+envfile: Allows writing env variables to a env file   
+
+
+
+
+
 ### Testing
 
 ##### User testing
-[document for manual user testing](./docs/testing/manual%20testing.pdf)
+[document for manual user testing](./docs/testing/testing.pdf)
 
 ##### Framework testing JEST for backend fuel log API on local server
 ran by using npm script in package.json 'npm run test'
