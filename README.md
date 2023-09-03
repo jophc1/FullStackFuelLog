@@ -201,10 +201,13 @@ ___
 ### Third-party packages/libries used in application
 
 ##### Front-end
-React:
+React: JavaScript library that provides creation of html in form of components by a JavaScript parser for html syntax in an extended JavaScript format .jsx   
 
+react-router-dom: Gives functionality of Routes and other link navigation for React   
 
+recharts: Provides established React components to enable rendering of different graph types   
 
+styled-components: Helps creats styled components with the use of CSS that can provide styling by acting as a wrapper   
 
 ##### Back-end
 Express: Popular Javascript framework for API/server development   
@@ -233,9 +236,14 @@ dotenv: allow express to access environmental variables from .env file
 
 envfile: Allows writing env variables to a env file   
 
+##### Testing libraries/frameworks for application
+jest: testing runner and assertion library/framework for JavaScript   
 
+vitest: Built in testing framework in Vite that is expanded on from testing-library  
 
+supertest: API testing framework that allows testing of routes and database properties, also built on and expanded from jest    
 
+testing-library: library that allows DOM simulation 
 
 ### Testing
 
