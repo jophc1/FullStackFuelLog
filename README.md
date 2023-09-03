@@ -1,7 +1,24 @@
 # Fuel Log Application (Full-stack)
 
+#### Table of Contents
+- [Purpose of this Application](#purpose-of-this-application)
+- [Features](#features)
+- [Target Audience](#target-audience)
+- [Tech Stack](#tech-stack)
+- [Dataflow Diagram](#dataflow-diagram)
+- [Application Architecture Diagram](#application-architecture-diagram)
+- [User Stories](#user-stories)
+- [Wireframes](#wireframes)
+- [Jira Kanban Screenshots](#jira-kanban-screenshots)
+- [Third-party packages/libries used in application](#third-party-packageslibries-used-in-application)
+- [Testing](#testing)
+- [Setup on local machine](#setup-on-local-machine)
+
+
 #### [link to github repository](https://github.com/jophc1/FullStackFuelLog)
 #### [link to deployed fuel log application](https://fuel-log.onrender.com/)
+
+
 
 ![employer-dash-dektop](./docs/fuel-app-screenshots/employer-dash-desktop.png)
 
@@ -258,3 +275,27 @@ ran by using npm script in package.json 'npm run test' in ./src/back-end/
 ##### Framework testing for frontend fuel log React web app on local server
 ran by using npm script in package.json 'npm test' in ./src/front-end/
 ![picture of test outcome for back end](./docs/testing/front-end-testing.png)
+
+### Setup on local machine
+
+For both Front-end and Back-end:
+
+Change into respective directories i.e. back-end and front-end. Update the env.sample files. Run for both directories:
+
+```
+npm install
+```
+
+To run the back-end server:
+
+```
+npm run salt
+npm run seed
+npm start
+```
+
+To run the front-end server:
+
+```
+npm run dev
+```
