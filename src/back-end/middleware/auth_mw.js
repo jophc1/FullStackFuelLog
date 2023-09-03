@@ -76,15 +76,13 @@ const authAccess = async (req, res, next) => {
       req.jwtIdentity = jwtIdentity
     })
 
-    // const jwtIdentity = getJwtIdentityFromCookie(req.cookies)
     const user = await UserModel.findOne({ username_id: req.jwtIdentity.username_id })
     // if user no longer exists in db
     if (!user) {
       res.cookie('accessToken', ' ', { httpOnly: true, maxAge: 0 })
       throw new Error('User no longer exists')
     }
-    // valid cookie and jwt with a user, continue
-    // req.jwtIdentity = jwtIdentity
+   
     next()
   } catch (err) {
     next(err)

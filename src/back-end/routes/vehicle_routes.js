@@ -10,10 +10,12 @@ router.use(fileUpload())
 
 router.use(authAccess)
 
+// Get all vehicle assets
 router.get('/', async (req, res) => {
   res.send(await VehicleModel.find())
 })
 
+// Get specific vehicle asset by asset ID (not the mongoDB generated _id)
 router.get('/:asset_id', async (req, res) => {
   try {
     const vehicle = await VehicleModel.findOne({ asset_id: `${req.params.asset_id}` })
@@ -23,6 +25,7 @@ router.get('/:asset_id', async (req, res) => {
   }
 })
 
+// Create a new vehicle, employer only
 router.post('/', verifyAdmin, postToS3, async (req, res) => {
   try {
     // save this in database with vehicle data to use to retrive img .png from S3 bucket
@@ -40,6 +43,7 @@ router.post('/', verifyAdmin, postToS3, async (req, res) => {
   }
 })
 
+// Delete a specific vehicle by asset ID, employer only
 router.delete('/:asset_id', verifyAdmin, deleteObjectS3, async (req, res) => {
   try {
     const targetVehicle = await VehicleModel.deleteOne({ asset_id: req.params.asset_id })
@@ -49,6 +53,7 @@ router.delete('/:asset_id', verifyAdmin, deleteObjectS3, async (req, res) => {
   }
 })
 
+// Update a specific vehicle by asset ID, employer only
 router.put('/:asset_id', verifyAdmin, postToS3, async (req, res) => {
   try {
     let url

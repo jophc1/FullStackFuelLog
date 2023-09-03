@@ -1,5 +1,7 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 
+
+// middleware for amazon s3 server to add images
 async function postToS3 (req, res, next) {
   try {
     if (process.env.NODE_ENV === 'test') { // this is for the testing routes so it skips middleware so it wont upload images on server during test, sorry if it breaks your stuff jordan

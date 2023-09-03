@@ -8,6 +8,8 @@ const router = express.Router()
 
 router.use(authAccess)
 
+// all routes in user require admin access (employer status)
+
 // Update an employee route
 router.put('/:username_id', async (req, res) => {
   try {

@@ -14,6 +14,7 @@ router.get('/login', validateBasicAuth, verifyAuth, async (req, res) => {
   res.status(200).send({ message: 'Login successful', isAdmin: req.isAdmin, usernameId: req.userAuthKey.username_id, name: req.name })
 })
 
+// lotout route, send response with an empty JWT token which expires immediently
 router.get('/logout', async (req, res) => {
   res.cookie('accessToken', ' ', { httpOnly: true, maxAge: 0 })
   res.sendStatus(200)

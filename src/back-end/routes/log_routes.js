@@ -8,6 +8,7 @@ const router = Router()
 
 router.use(authAccess)
 
+// Get all logs, employer only
 router.get('/', verifyAdmin, async (req, res) => {
   // access the query params
   // query
@@ -38,7 +39,8 @@ router.get('/', verifyAdmin, async (req, res) => {
   })
   logPagination ? res.send(logPagination) : res.status(404).send({ error: 'Logs not found' })
 })
-// the log id will be the mongoDB generated _id
+
+// Get a specific log by id number, employer only
 router.get('/:id', verifyAdmin, async (req, res) => {
   try {
     const logs = await LogModel.findById(req.params.id)
@@ -48,6 +50,7 @@ router.get('/:id', verifyAdmin, async (req, res) => {
   }
 })
 
+// Create a log entry, usually done by emmployee therefore no admin authorization is needed
 router.post('/', async (req, res) => {
   try {
     // get
@@ -76,7 +79,8 @@ router.post('/', async (req, res) => {
     res.status(500).send({ error: err.message })
   }
 })
-// the log id will be the mongoDB generated _id
+
+// Delete a log by id number, employer only
 router.delete('/:id', verifyAdmin, async (req, res) => {
   try {
     const logDetails = await LogModel.findById(req.params.id)
