@@ -26,7 +26,6 @@ const LogsFetchList = () => {
   const handleLogClick = event => {
     event.preventDefault()
     selectedLog.current = allLogs.find(log => log._id === event.target.attributes.value.value)
-    // logID.current = (allLogs.totalDocs - allLogs.limit * (allLogs.page - 1)) - allLogs.docs.map(log => log._id).indexOf(event.target.attributes.value.value)
     modalTextOperation(true)
     setRenderModal(true)
   }
@@ -99,8 +98,6 @@ const LogsFetchList = () => {
             {allLogs.map((log, index) => (
               <tr key={log._id}>
                 <td value={log._id} onClick={handleDeleteIconClick}><span value={log._id} className='fa fa-trash-alt'></span></td>
-                {/* <td onClick={handleLogClick} value={log._id}>Log ID:</td> */}
-                {/* <td onClick={handleLogClick} value={log._id}>{(paginationInfo.totalDocs - paginationInfo.limit * (paginationInfo.page - 1)) - index }</td> */}
                 <td onClick={handleLogClick} value={log._id}>Log Date:</td>
                 <td onClick={handleLogClick} value={log._id}>{log.date}</td>
                 <td onClick={handleLogClick} value={log._id}>Asset ID:</td>

@@ -1,26 +1,19 @@
+import React from 'react'
 import '@testing-library/jest-dom'
 import { BrowserRouter} from 'react-router-dom'
 import App from './App.jsx'
-import { useReducer } from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { expect, it, describe } from'vitest'
 import userEvent from '@testing-library/user-event'
 import { EmployerContext, FuelLogContext } from './context.js'
-import { reducer, initialState } from "./reducer.js"
 import Login from './components/Login.jsx'
 import EmployerDashboard from './components/employer/EmployerDashboard.jsx'
 import VehicleForm from './components/employer/VehicleForm.jsx'
-import API_URL from './config.js'
+import VehiclesListFetch from './components/employer/VehiclesListFetch.jsx'
+import LogsFetchList from './components/employer/LogsFetchList.jsx'
 
-// setup userEvent function
-function setup(component) {
-  return {
-    user: userEvent.setup(),
-    ...render(component),
-  };
-}
 
-describe ('/ route', () => {
+describe ('Login component', () => {
   let container
   function TestWrapper ({ loginAccess = vi.fn() }) {
       const fuelContxt = {
@@ -53,7 +46,7 @@ describe ('/ route', () => {
     })
 })
 
-describe ('/employer/dashboard/vehicle/new', () => {
+describe ('Vehicle form component', () => {
     let container
 
     function TestWrapper ({ postUpdateVehicle = vi.fn(), backButton =vi.fn() }) {
@@ -114,6 +107,106 @@ describe ('/employer/dashboard/vehicle/new', () => {
       await userEvent.click(backButton)
       expect(mockBackButton).toHaveBeenCalled()
     })
+})
+
+describe('Vehicle list fetch component', () => {
+  let container
+
+  function TestWrapper ({ getAllVehicles = vi.fn(), editVehicle = vi.fn() }) {
+    const fuelContxt = {
+      getAllVehicles
+    }
+
+    return (
+      <FuelLogContext.Provider value={fuelContxt}>
+          <BrowserRouter>
+              <VehiclesListFetch />
+          </BrowserRouter>
+      </FuelLogContext.Provider>
+    )
+  }
+
+  it ('renders the component with h3 heading', async () => {
+    container = render(<TestWrapper />).container
+    expect(container.querySelector('h3')).not.toBeNull()
+    expect(container.querySelector('h3')).toHaveTextContent('All Vehicles')
+  })
+
+  it('calls getAllVehicles on mount', async () => {
+    const mockGetAllVehicles = vi.fn()
+    container = render(<TestWrapper getAllVehicles={mockGetAllVehicles} />).container
+    vi.spyOn(React, 'useEffect').mockImplementationOnce(func => {
+      onMount = func()
+    })
+    expect(mockGetAllVehicles).toHaveBeenCalled()
+  })
+})
+
+describe('Log list fetch component', () => {
+  let container
+
+  function TestWrapper ({ getAllLogs = vi.fn()}) {
+    const fuelContxt = {
+      getAllLogs
+    }
+
+    return (
+      <EmployerContext.Provider value={fuelContxt}>
+          <BrowserRouter>
+              <LogsFetchList />
+          </BrowserRouter>
+      </EmployerContext.Provider>
+    )
+  }
+
+  it ('renders the component with h3 heading', async () => {
+    container = render(<TestWrapper />).container
+    expect(container.querySelector('h3')).not.toBeNull()
+    expect(container.querySelector('h3')).toHaveTextContent('All Logs')
+  })
+
+  it('calls getAllVehicles on mount', async () => {
+    const mockGetAllVehicles = vi.fn()
+    container = render(<TestWrapper getAllVehicles={mockGetAllVehicles} />).container
+    vi.spyOn(React, 'useEffect').mockImplementationOnce(func => {
+      onMount = func()
+    })
+    expect(mockGetAllVehicles).toHaveBeenCalled()
+  })
+})
+
+describe('Employer list fetch component', () => {
+  let container
+
+  function TestWrapper ({ getAllVehicles = vi.fn(), editVehicle = vi.fn() }) {
+    const fuelContxt = {
+      getAllVehicles,
+      editVehicle
+    }
+
+    return (
+      <FuelLogContext.Provider value={fuelContxt}>
+          <BrowserRouter>
+              <VehiclesListFetch />
+          </BrowserRouter>
+      </FuelLogContext.Provider>
+    )
+  }
+
+  it ('renders the component with h3 heading', async () => {
+    container = render(<TestWrapper />).container
+    expect(container.querySelector('h3')).not.toBeNull()
+    expect(container.querySelector('h3')).toHaveTextContent('All Vehicles')
+  })
+
+  it('calls getAllVehicles on mount', async () => {
+    const mockGetAllVehicles = vi.fn()
+    container = render(<TestWrapper getAllVehicles={mockGetAllVehicles} />).container
+    vi.spyOn(React, 'useEffect').mockImplementationOnce(func => {
+      onMount = func()
+    })
+    expect(mockGetAllVehicles).toHaveBeenCalled()
+  })
 })
 
 

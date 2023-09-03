@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useRef, useState } from 'react'
 import CompanyButton from '../styled/CompanyButton.jsx'
-import { EmployerContext, FuelLogContext } from '../../context.js'
+import { FuelLogContext } from '../../context.js'
 import FetchHeader from './FetchHeader.jsx'
 import ModalText from '../ModalText.jsx'
 import VehicleDetails from '../employee/VehicleDetails.jsx'
